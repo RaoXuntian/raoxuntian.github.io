@@ -13,19 +13,78 @@ C++关键字之const
 
 
 
-## 1.const限定符
+### 1.const含义
 
 const 是 constant 的缩写，本意是不变的，不易改变的意思。在 C++ 中是用来修饰内置类型变量，自定义对象，成员函数，返回值，函数参数。
 
-**作用**
+### 2.const作用
+
+#### 2.1定义const常量
+
+`const int* bufSize = 64;`
+
+#### 2.2便于进行类型检查
+
+const*常量有数据类型，而宏常量没有数据类型。编译器可以对前者进行类型安全检查，而对后者只进行字符替换，没有类型安全检查，并且在字符替换时可能会产生意料不到的错误。
+
+<!--more-->
+
+#### 2.3可以保护别修饰的东西
+
+防止修改，起保护作用，增加程序健壮性
+
+```cpp
+void f(const int i){
+	i++; //error!    
+}
+
+```
+
+#### 2.4为函数重载提供一个参考
+
+```cpp
+class A
+{
+           ......
+  void f(int i)       {......} //一个函数
+  void f(int i) const {......} //上一个函数的重载
+           ......
+};
+
+```
+
+#### 2.5可以节省空间，避免不必要的内存分配
+
+const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是象#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干个拷贝
+
+```cpp
+#define PI 3.14159         //常量宏
+const doulbe  Pi=3.14159;  //此时并未将Pi放入ROM中
+              ......
+double i=Pi;   //此时为Pi分配内存，以后不再分配！
+double I=PI;  //编译期间进行宏替换，分配内存
+double j=Pi;  //没有内存分配
+double J=PI;  //再进行宏替换，又一次分配内存！
+
+```
+
+#### 2.6提高了效率
+
+可以很方便地进行参数的调整和修改，同宏定义一样，可以做到不变则已，一变都变。
+
+编译器通常不为普通const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高
+
+
+
+### 3.const使用
 
 1. 修饰变量，说明该变量不可以被改变；
 2. 修饰指针，分为指向常量的指针（pointer to const）和自身是常量的指针（常量指针，const pointer）；
 3. 修饰引用，指向常量的引用（reference to const），用于形参类型，即避免了拷贝，又避免了函数对值的修改；
-4. 修饰成员函数，说明该成员函数内不能修改成员变量。
+4. 修饰函数相关，包括修饰函数参数和函数返回值；
+5. 修饰类成员函数，说明该成员函数内不能修改成员变量。
 
-<!--more-->
-#### 1.1修饰变量
+#### 3.1修饰变量
 
 ```cpp
 const int bufSize = 512; 
@@ -37,13 +96,14 @@ int a = 64;
 const int ci = a;	// ci=64
 const int cis = sizeof(a);	// cis=4
 const int k;	// 错误：k是一个未经初始化的变量
+
 ```
 
-#### 1.2修饰指针
+#### 3.2修饰指针
 
 将const用于指针有一些很微妙的地方（指针本身看上去就很微妙），我们将详细探讨一下用两种不同的方式将const关键字用于指针。
 
-##### 1.2.1 pointer to const
+##### 3.2.1 pointer to const
 
 ```cpp
 int age = 17;
@@ -58,9 +118,10 @@ cin >> *pt	// 错误：同上
 // pt的声明并不意味着它指向的值实际上就是一个常量，而只是意味着对pt而言，这个值是常量。
 *pt = 23;	// 错误：指针pt指向的对象是const int
 age = 23;	// valid:beacause age is not declared to be const
+
 ```
 
-##### 1.2.2 const pointer
+##### 3.2.2 const pointer
 
 ```cpp
 int sloth = 3;
@@ -72,9 +133,10 @@ finger = &age;	// invalid
 *finger = 5;	// valid
 
 // 简言之：finger和*ps都是const，而*finger和ps不是
+
 ```
 
-##### 1.2.3 summary
+##### 3.2.3 summary
 
 - 指针所指向的内容是常量不可变。
   `const int *pt; `
@@ -102,7 +164,7 @@ finger = &age;	// invalid
 >
 > 如果条件允许，则应该将指针形参声明为指向const的指针。
 
-#### 1.3修饰引用
+#### 3.3修饰引用
 
 可以把引用绑定到const对象上，就像绑定到其它对象上一样，我们称之为对**常量的引用**(**reference to const**)。
 
@@ -113,6 +175,7 @@ const int ci = 1024;
 const int &r1 = ci;	// 正确：引用及其对应的对象都是常量
 r1 = 42;	// 错误：r1是对常量的引用
 int &r2 = ci;	// 错误：试图让一个非常量引用(r2)指向一个常量对象(ci)
+
 ```
 
 因为不允许直接为ci赋值，当然也不能通过引用去改变ci。因此，对r2的初始化是错误的。假设该初始化合法，则可以通过r2来改变它引用对象的值，这显然是不正确的。
@@ -138,13 +201,59 @@ int &r1 = i; 		// 引用r1绑定对象i
 const int &r2 = i;	// r2也绑定对象i，但不允许通过r2修改i的值
 r1 = 0;			// r1并非常量，i的值修改为0
 r2 = 0;			// 错误：r2是一个常量引用
+
 ```
 
 
 
-#### 1.4修饰成员函数
+#### 3.4修饰函数相关
 
-##### 1.4.1 const修饰成员变量
+##### 3.4.1修饰函数参数
+
+1. 传递过来的参数在函数内不可以改变(无意义，因为Var本身就是形参)
+
+   `void function(const int Var);`
+
+2. 参数指针所指内容为常量不可变
+
+   `void function(const char* Var);`
+
+3. 参数指针本身为常量不可变(也无意义，因为char* Var也是形参)
+
+   `void function(char* const Var);`
+
+4. 参数为引用，为了增加效率同时防止修改。修饰引用参数时：
+
+   `void function(const Class& Var); //引用参数在函数内不可以改变`
+
+   `void function(const TYPE& Var); //引用参数在函数内为常量不可变`
+
+这样的一个const引用传递和最普通的函数按值传递的效果是一模一样的，他禁止对引用的对象的一切修改，唯一不同的是按值传递会先建立一个类对象的副本， 然后传递过去,而它直接传递地址，所以这种传递比按值传递更有效。另外只有引用的const传递可以传递一个临时对象，因为临时对象都是const属性，且是不可见的，他短时间存在一个局部域中，所以不能使用指针，只有引用的const传递能够捕捉到这个家伙。
+
+##### 3.4.2修饰函数返回值
+
+ const修饰函数返回值其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。
+
+1. `const int fun1()`	
+
+      //这个其实无意义，因为参数返回本身就是赋值。
+
+2. `const int * fun2()`
+
+      //调用时 const int *pValue = fun2();
+      //我们可以把fun2()看作成一个变量，即指针内容不可变。
+
+3. `int* const fun3()`
+
+      //调用时 int * const pValue = fun2();
+      //我们可以把fun2()看作成一个变量，即指针本身不可变。
+
+***一般情况下，函数的返回值为某个对象时，如果将其声明为const时，多用于操作符的重载。通常，不建议用const修饰函数的返回值类型为某个对象或对某个对象引用的情况。***原因如下：如果返回值为某个对象为const（const A test = A 实例）或某个对象的引用为const（const A& test = A实例） ，则返回值具有const属性，则返回实例只能访问类A中的公有（保护）数据成员和const成员函数，并且不允许对其进行赋值操作，这在一般情况下很少用到。
+
+
+#### 3.5修饰类成员函数
+
+##### 3.5.1 const修饰成员变量
 
 const修饰类的成员函数，表示成员常量，不能被修改，同时它只能在初始化列表中赋值。
 
@@ -155,13 +264,14 @@ class A {
         …
         A(int x): nValue(x) { } ; //只能在初始化列表中赋值
 }
+
 ```
 
 
 
-##### 1.4.2 const修饰成员函数
+##### 3.5.2 const修饰成员函数
 
-const修饰类的成员函数，则该成员函数不能修改类中任何非const成员函数。一般写在函数的最后来修饰。
+const修饰类的成员函数，则该成员函数不能修改类中任何非const成员函数。一般写在函数的最后来修饰。**也就是说，这些函数是"只读"函数。**
 
 ```cpp
 class A {
@@ -170,6 +280,7 @@ class A {
 
 				//也不能调用类中任何非const成员函数。
 }
+
 ```
 
 对于const类对象/指针/引用，只能调用类的const成员函数，因此，const修饰成员函数的最重要作用就是限制对于const对象的使用。
@@ -180,11 +291,14 @@ b. const成员函数能够访问对象的const成员，而其他成员函数不�
 
  
 
-##### 1.4.3 const修饰类对象/对象指针/对象引用
+##### 3.5.3 const修饰类对象/对象指针/对象引用
 
 ·             const修饰类对象表示该对象为常量对象，其中的任何成员都不能被修改。对于对象指针和对象引用也是一样。
 
 ·             const修饰的对象，该对象的任何非const成员函数都不能被调用，因为任何非const成员函数会有修改成员变量的企图。
+
+·             const对象只能访问const成员函数，而非const对象可以访问任意的成员函数,包括const成员函数。
+
 例如：
 
 ```cpp
@@ -199,11 +313,31 @@ aObj.func2();	// valid
 const AAA* aObj = new AAA();
 aObj-> func1();	// invalid
 aObj-> func2();	// valid
+
 ```
 
-------
+##### 3.5.4 const修饰重载运算符
 
-## 2.const使用
+```cpp
+bool operator <(const student &a ) const{     
+        if(score!=a.score) return score<a.score;
+        else if(name.compare(a.name)!=0) return name<a.name;
+        else if(age!=a.age)return age<a.age;
+        else
+            return false;
+    }
+};
+
+```
+
+**加const是因为：**
+
+1. 我们不希望在这个函数中对用来进行赋值的“原版”做任何修改。**函数加上const后缀的作用是表明函数本身不会修改类成员变量。**
+
+2. 加上const，对于const的和非const的实参，函数就能接受；如果不加，就只能接受非const的实参。
+
+**另外补充，用引用是因为：**
+这样可以避免在函数调用时对实参的一次拷贝，提高了效率。
 
 ```cpp
 // 类
@@ -248,12 +382,18 @@ void function4(const int& Var);          // 引用参数在函数内为常量
 const int function5();      // 返回一个常数
 const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();
 int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();
+
 ```
 
-## 3.相关文章
+### 4.const对象默认为文件局部变量
+
+注意：非const变量默认为extern。要使const变量能够在其他文件中访问，必须在文件中显式地指定它为extern。
+
+### 5.相关文章
 
 - C++ Primer中文版第5版
 - C++ Primer Plus中文版第五版
 - https://blog.csdn.net/Eric_Jo/article/details/4138548
 - https://interview.huihut.com/#/?id=const
+- https://blog.csdn.net/qq_36770641/article/details/89884807
 
