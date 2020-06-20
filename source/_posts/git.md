@@ -387,8 +387,22 @@ git push [远程仓库S] :[远程分支R]
 
 
 
-## 12.相关文章
+## 12.恢复之前的版本
+
+```bash
+# 查看之前版本号
+git log
+# 版本回退
+git reset --hard 目标版本号
+# 提交更改
+git push -f
+```
+
+
+
+## 13.相关文章
 
 - https://github.com/windard/learngit/blob/master/git.txt
 - https://www.jianshu.com/p/15a4dee9c5df
+- https://blog.csdn.net/yxlshk/article/details/79944535
 
