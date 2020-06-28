@@ -311,7 +311,7 @@ printf("%s %s\n", p1, ch);
 - [C++ 数组在内存中的分配](https://blog.csdn.net/u011555996/article/details/79496156)
 - [c/c++中string与char的区别](https://blog.csdn.net/yejinxiong001/article/details/78436310)
 
-### 五.文章中的源码
+## 五.文章中的源码
 
 ```c
 #include <cstdio>
