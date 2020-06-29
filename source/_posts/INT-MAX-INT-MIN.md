@@ -1,5 +1,5 @@
 ---
-title: 浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算
+title: 浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算
 date: 2020-06-28 23:31:59
 updated: 2020-06-28
 tags:
