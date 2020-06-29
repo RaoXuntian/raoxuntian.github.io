@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, interview, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> 浅谈c++的指针与引用 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-06-04</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          浅谈c++的指针与引用
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <h3 id="1-指针与引用"><a href="#1-指针与引用" class="headerlink" title="1.指针与引用"></a>1.指针与引用</h3><h4 id="1-1指针和引用的区别"><a href="#1-1指针和引用的区别" class="headerlink" title="1.1指针和引用的区别"></a>1.1指针和引用的区别</h4><p>1.指针有自己的一块空间，而引用只是一个别名；</p>
+<p>2.使用sizeof看一个指针的大小是4或8，而引用则是被引用对象的大小；</p>
+<p>3.指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象的引用；</p>
+<p>4.作为参数传递时，指针需要被解引用才可以对对象进行操作，而直接对引用的修改都会改变引用所指向的对象；</p>
+<p>5.可以有const指针，但是没有const引用；</p>
+<p>6.指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，不能被改变；</p>
+<p>7.指针可以有多级指针（**p），而引用只有一级；</p>
+<p>8.指针和引用使用++运算符的意义不一样；</p>
+<p>9.如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</p>
+<a id="more"></a>
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">int</span> *pt = &amp;i, &amp;ri = i;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; pt &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//pt = 0x7ffee43d269c</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ri &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//ri = 3</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(pt) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// sizeof(pt) = 8</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(ri) &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// sizeof(ri) = 4</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> *ptt;	<span class="comment">// 合法，但ptt为野指针，需要小心使用</span></span><br><span class="line">	<span class="keyword">int</span> *pttt = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//int &amp;rii;	// 错误：引用必须初始化</span></span><br><span class="line">	<span class="comment">//int &amp;riii = 1;	// 错误：非const引用不能指向const</span></span><br><span class="line">	<span class="comment">//上面语句实际的操作是分两步</span></span><br><span class="line">	<span class="comment">//const int tmp = 1;</span></span><br><span class="line">	<span class="comment">//int &amp;riii = tmp;	// 这一步错误</span></span><br><span class="line"></span><br><span class="line">	ri++;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// i = 4</span></span><br><span class="line">	(*pt)++;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// i = 5</span></span><br><span class="line">	<span class="comment">//*pt++;</span></span><br><span class="line">	<span class="comment">//cout &lt;&lt; pt &lt;&lt; endl; // pt = 0x7ffee43d26a0</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-引用"><a href="#2-引用" class="headerlink" title="2.引用"></a>2.引用</h3><h4 id="2-1引用概念"><a href="#2-1引用概念" class="headerlink" title="2.1引用概念"></a>2.1引用概念</h4><p><strong>引用</strong>(<strong>reference</strong>)为对象起了另外一个名字，引用类型引用(refers to)另外一种类型。通过将声明符写成&amp;d的形式来定义引用类型，其中d是声明的变量名：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;refVal = ival;	<span class="comment">// refVal指向ival(是ival的另一个名字)</span></span><br><span class="line"><span class="keyword">int</span> &amp;refVal2;	<span class="comment">// 报错：引用必须被初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>一般在初始化话变量时，初始值会被拷贝到新建的对象中。然而定义引用时，程序吧引用和它的初始值<strong>绑定</strong>(<strong>bind</strong>)在一起，而不是将初始值拷贝给引用。一旦初始化完成，引用将和它的初始值对象一直绑定在一起。因为无法令引用重新绑定到另外一个对象，因此引用必须初始化。</p>
+<p><strong>引用即别名</strong></p>
+<p>引用并非对象，相反的，它只是为一个已经存在的对象所起的另外一个名字。</p>
+<p>定义一个引用之后，对其进行的所有操作都是在与之绑定的对象上进行的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">refVal = <span class="number">2</span>;	<span class="comment">// 把2赋给refVal指向的对象，此处即是赋给了ival</span></span><br><span class="line"><span class="keyword">int</span> ii = refVal;	<span class="comment">// 与ii = ival执行结果一样</span></span><br></pre></td></tr></table></figure>
+
+<p>为引用赋值，实际上是把值赋给了与引用绑定的对象。获取引用的值，实际上是获取了与引用绑定的对象的值。同理，以引用作为初始值，实际上是以与引用绑定的对象作为初始值：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// valid:refVal3绑定到了那个与refVal绑定的对象上，这里就是绑定到ival上</span></span><br><span class="line"><span class="keyword">int</span> &amp;refVal3 = refVal;</span><br><span class="line"><span class="comment">// 利用与refVal绑定的对象的值初始化变量i</span></span><br><span class="line"><span class="keyword">int</span> i = refVal;	<span class="comment">//valid:i被初始化为ival的值</span></span><br></pre></td></tr></table></figure>
+
+<p>因为引用本事不是一个对象，所以不能定义引用的引用。</p>
+<h4 id="2-2引用的定义"><a href="#2-2引用的定义" class="headerlink" title="2.2引用的定义"></a>2.2引用的定义</h4><p>允许在一条语句中定义多个引用，其中每个引用标识符都必须以符号&amp;开头：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1024</span>, i2 = <span class="number">2048</span>;	<span class="comment">// i和i2都是int</span></span><br><span class="line"><span class="keyword">int</span> &amp;r = i, r2 = i2;	<span class="comment">// r是一个引用，与i绑定在一起，r2是int</span></span><br><span class="line"><span class="keyword">int</span> i3 = <span class="number">1024</span>, &amp;ri = i3;	<span class="comment">// i3是int，ri是一个引用，与i3绑定在一起</span></span><br><span class="line"><span class="keyword">int</span> &amp;r3 = i3, &amp;r4 = i2;	<span class="comment">// r3和r4都是引用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> &amp;refVal4 = <span class="number">10</span>;	<span class="comment">// 错误：引用类型初始值必须是一个对象</span></span><br><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;refVal5 = dval;	<span class="comment">// 错误：此处引用类型的初始值必须是int型对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;refVal4 = <span class="number">10</span>; <span class="comment">// valid</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;refVal5 = dval;	<span class="comment">// valid</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-3左值引用"><a href="#2-3左值引用" class="headerlink" title="2.3左值引用"></a>2.3左值引用</h4><p>严格来说，当我们使用术语“引用(reference)”时，指的其实就是“左值引用(lvalue reference)”。</p>
+<p>常规引用，一般表示对象的身份</p>
+<h4 id="2-4右值引用"><a href="#2-4右值引用" class="headerlink" title="2.4右值引用"></a>2.4右值引用</h4><p>敬请期待。。。</p>
+<h3 id="3-指针"><a href="#3-指针" class="headerlink" title="3.指针"></a>3.指针</h3><h4 id="3-1指针概念"><a href="#3-1指针概念" class="headerlink" title="3.1指针概念"></a>3.1指针概念</h4><p><strong>指针</strong>(<strong>pointer</strong>)是“指向(<strong>point to</strong>)”另外一种类型的复合类型。</p>
+<p>与引用类似，指针也实现了对其他对象的间接访问。然而指针与引用相比又有很多不同点。</p>
+<ol>
+<li>指针本身就是一个对象，允许对指针赋值和拷贝，而且在指针的生命周期内它可以先后指向几个不同的对象。</li>
+<li>指针无须在定义时赋值。和其他内置类型一样，在块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值。</li>
+</ol>
+<h4 id="3-2指针值"><a href="#3-2指针值" class="headerlink" title="3.2指针值"></a>3.2指针值</h4><p>指针的值（即地址）应该属于下列4种状态之一：</p>
+<ol>
+<li>指向一个对象。</li>
+<li>指向紧邻对象所占空间的下一个位置。</li>
+<li>空指针，意味着指针没有指向任何对象。</li>
+<li>无效指针，也就是上述情况之外的其他值。</li>
+</ol>
+<p>试图拷贝或以其他方式访问无效指针的值都将引发错误。编译器并不负责检查此类错误，这一点和试图使用未经初始化的变量是一样的。访问无效指针的后果无法估计，因此程序猿必须清楚任意给定的指针是否有效。</p>
+<p>尽管第2、3种形式的指针是有效的，但其使用同样受到限制。显然这些指针没有指向任何具体对象，所以试图访问此类指针（假定的）对象的行为不被允许。如果这样做了，后果也无法预计。</p>
+<h4 id="3-3空指针"><a href="#3-3空指针" class="headerlink" title="3.3空指针"></a>3.3空指针</h4><p><strong>空指针</strong>(null pointer)不指向任何对象，在试图使用一个指针之前代码可以首先检查它是否为空。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>;	<span class="comment">// 等价于int *p1 = 0;</span></span><br><span class="line"><span class="keyword">int</span> *p2 = <span class="number">0</span>;	<span class="comment">// 直接将p2初始化为字母常量0</span></span><br><span class="line"><span class="keyword">int</span> *p3 = <span class="literal">NULL</span>;	<span class="comment">// 等价于int *p3 = 0;</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p1 &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 0x0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p2 &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 0x0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p3 &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 0x0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (<span class="keyword">long</span>)p1 &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<p>在效验一个指针是否为一个有效指针时，我们应该倾向于</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ip != <span class="literal">NULL</span>)</span><br></pre></td></tr></table></figure>
+
+<p>而不是</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ip)</span><br></pre></td></tr></table></figure>
+
+<p>为什么有人会用if(ip)这种方式校验一个指针非空，而且在C++中不会出现错误呢？而且现在很多人都会这样写。<br>原因是这样的，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Define   NULL   pointer   value   */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span>   NULL   </span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">ifdef</span>   __cplusplus   </span></span><br><span class="line"><span class="meta">#     <span class="meta-keyword">define</span>   NULL      0   </span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">else</span>   </span></span><br><span class="line"><span class="meta">#     <span class="meta-keyword">define</span>   NULL      ((void   *)0)   </span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">endif</span>   </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">//   NULL</span></span></span><br></pre></td></tr></table></figure>
+
+<p>思考一道腾讯面试题：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> a = (<span class="keyword">long</span>)(((<span class="keyword">int</span> *)<span class="number">0</span>)+<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>a = 8</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> b = (<span class="keyword">long</span>)(((<span class="keyword">int</span> *)<span class="number">8</span>)+<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+<p>b = 24</p>
+<h4 id="3-4野指针"><a href="#3-4野指针" class="headerlink" title="3.4野指针"></a>3.4野指针</h4><p>野指针不是空指针，是一个指向垃圾内存的指针。</p>
+<p><strong>形成原因</strong></p>
+<ol>
+<li><p>指针变量没有初始化。</p>
+<p>任何指针变量被刚创建时不会被自动初始化为<strong>NULL</strong>指针，它的缺省值是随机的。所以，指针变量在创建的同时应当被初始化，要么将指针设置为<strong>NULL</strong>，要么让它指向合法的内存。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>* p = <span class="literal">NULL</span>;  </span><br><span class="line"><span class="keyword">char</span>* str = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>指针被free或delete之后，没有设置NULL，让人误以为是合法指针。</p>
+<p><strong>free</strong>和<strong>delete</strong>只是把指针所指向的内存给释放掉，但并没有把指针本身给清理掉。这时候的指针依然指向原来的位置，只不过这个位置的内存数据已经被毁尸灭迹，此时的这个指针指向的内存就是一个垃圾内存。但是此时的指针由于并不是一个<strong>NULL</strong>指针（在没有置为<strong>NULL</strong>的前提下），在做如下指针校验的时候：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (p != <span class="literal">NULL</span>)</span><br></pre></td></tr></table></figure>
+
+<p>会逃过校验，此时的p不是一个NULL指针，也不指向一个合法的内存块，造成会面程序中指针访问的失败。</p>
+</li>
+<li><p>指针操作超越了变量的作用范围。</p>
+<p>由于C/C++中指针有++操作，因而在执行该操作的时候，稍有不慎，就容易指针访问越界，访问了一个不该访问的内存，结果程序崩溃<br>另一种情况是指针指向一个临时变量的引用，当该变量被释放时，此时的指针就变成了一个野指针，如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A *p;	<span class="comment">// A为一个自定义对象  </span></span><br><span class="line">&#123;  </span><br><span class="line">    A a;  </span><br><span class="line">    p = &amp;a;	<span class="comment">// 注意 a 的生命期 ，只在这个程序块中（花括号里面的两行），而不是整个test函数  </span></span><br><span class="line">&#125;  </span><br><span class="line">p-&gt;Func();	<span class="comment">// p是“野指针”</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h3 id="4-相关文章"><a href="#4-相关文章" class="headerlink" title="4.相关文章"></a>4.相关文章</h3><ul>
+<li><a href="https://blog.csdn.net/u014647208/article/details/53383223" target="_blank" rel="noopener">https://blog.csdn.net/u014647208/article/details/53383223</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+        <a href="/tags/interview/">interview</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/06/04/pointer-and-reference/">https://raoxuntian.github.io/2020/06/04/pointer-and-reference/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2020/06/05/learnCpp-static/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>浅谈C++关键字之static
+        </span>
+      </a>
+    
+    
+      <a href="/2020/06/03/learnCpp-const/" id="art-right" class="art-right">
+        <span class="prev-title">
+          浅谈C++关键字之const<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-指针与引用"><span class="toc-text">1.指针与引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1指针和引用的区别"><span class="toc-text">1.1指针和引用的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-引用"><span class="toc-text">2.引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1引用概念"><span class="toc-text">2.1引用概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2引用的定义"><span class="toc-text">2.2引用的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3左值引用"><span class="toc-text">2.3左值引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4右值引用"><span class="toc-text">2.4右值引用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-指针"><span class="toc-text">3.指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1指针概念"><span class="toc-text">3.1指针概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2指针值"><span class="toc-text">3.2指针值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3空指针"><span class="toc-text">3.3空指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4野指针"><span class="toc-text">3.4野指针</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-相关文章"><span class="toc-text">4.相关文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>

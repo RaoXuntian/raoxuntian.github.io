@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="git, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> git常用指令小结 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-06-02</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          git常用指令小结
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <!--
+<font face="黑体" size=6>Git常用指令小结</font>
+-->
+
+<p>废话不多说，直接总结，方便自己以后查~</p>
+<h2 id="1-获得项目的git仓库"><a href="#1-获得项目的git仓库" class="headerlink" title="1.获得项目的git仓库"></a>1.获得项目的git仓库</h2><h3 id="1-1通过git-init初始化本地的新仓库"><a href="#1-1通过git-init初始化本地的新仓库" class="headerlink" title="1.1通过git init初始化本地的新仓库"></a>1.1通过git init初始化本地的新仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir git</span><br><span class="line"><span class="built_in">cd</span> git</span><br><span class="line">git init <span class="comment"># 初始化git仓库</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="1-2通过git-clone克隆已有的仓库"><a href="#1-2通过git-clone克隆已有的仓库" class="headerlink" title="1.2通过git clone克隆已有的仓库"></a>1.2通过git clone克隆已有的仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
+
+<p>比如克隆一个具体的项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/RaoXuntian/raoxuntian.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>如果希望在克隆的时候，自己定义要新建的项目目录名称，可以在上面的命令末尾指定新的名字：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/RaoXuntian/raoxuntian.github.io.git myBlog</span><br></pre></td></tr></table></figure>
+
+<p>如果希望克隆时直检出指定的分支，可以指定 <code>-b &lt;分支名&gt;</code> 选项，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b hexo https://github.com/RaoXuntian/raoxuntian.github.io.git myBlog</span><br></pre></td></tr></table></figure>
+
+<p>通常clone命令会把整个仓库的(包含所有分支的)版本数据给克隆下来，如果只想获取某个分支的版本数据，只需要加上 <code>--single-branch</code>选项，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --single-branch -b hexo https://github.com/RaoXuntian/raoxuntian.github.io.git myBlog</span><br></pre></td></tr></table></figure>
+
+<p>如果你想在克隆仓库时给仓库设置一些不同于全局的git配置，可以通过 <code>--config</code> 选项，其简写选项是 <code>-c</code>，比如，你想给克隆的仓库设置 用户名 和 邮箱：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --config user.name=小饶 -c user.email=raoxuntian@gmail.com https://github.com/RaoXuntian/raoxuntian.github.io.git myBlog</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-添加跟踪文件、暂存"><a href="#2-添加跟踪文件、暂存" class="headerlink" title="2.添加跟踪文件、暂存"></a>2.添加跟踪文件、暂存</h2><p>用命令git add告诉Git，把文件添加到仓库(实际上就是把文件修改添加到暂存区)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add filename</span><br><span class="line"></span><br><span class="line">git add -A</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-提交更新"><a href="#3-提交更新" class="headerlink" title="3.提交更新"></a>3.提交更新</h2><p>用命令git commit告诉Git，把文件提交到仓库(实际上就是把暂存区的所有内容提交到当前分支)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"有意义的附加说明"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-检测当前工作区状态"><a href="#4-检测当前工作区状态" class="headerlink" title="4.检测当前工作区状态"></a>4.检测当前工作区状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"></span><br><span class="line">git status -sb</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-查看修改内容"><a href="#5-查看修改内容" class="headerlink" title="5.查看修改内容"></a>5.查看修改内容</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-移除文件"><a href="#6-移除文件" class="headerlink" title="6.移除文件"></a>6.移除文件</h2><p>要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除（确切地说，是从暂存区域移除），然后提交。可以用 <code>git rm</code> 命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm 文件</span><br></pre></td></tr></table></figure>
+
+<p>如果删除之前修改过并且已经放到暂存区域的话，则必须要用强制删除选项 -f（译注：即 force 的首字母），以防误删除文件后丢失修改的内容。</p>
+<p>另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。换句话说，仅是从跟踪清单中删除。比如一些大型日志文件或者一堆.a 编译文件，不小心纳入仓库后，要移除跟踪但不删除文件，以便稍后在 .gitignore 文件中补上，用 –cached 选项即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached 文件</span><br></pre></td></tr></table></figure>
+
+<p>后面可以列出文件或者目录的名字，也可以使用 glob 模式。比方说：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm <span class="built_in">log</span>/\*.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到星号 * 之前的反斜杠 \，因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 shell 来帮忙展开（译注：实际上不加反斜杠也可以运行，只不过按照 shell 扩展的话，仅仅删除指定目录下的文件而不会递归匹配。上面的例子本来就指定了目录，所以效果等同，但下面的例子就会用递归方式匹配，所以必须加反斜杠。）。此命令删除所有log/ 目录下扩展名为 .log 的文件。类似的比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm \*~</span><br></pre></td></tr></table></figure>
+
+<p>会递归删除当前目录及其子目录中所有 ~ 结尾的文件。</p>
+<h2 id="7-查看历史"><a href="#7-查看历史" class="headerlink" title="7.查看历史"></a>7.查看历史</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline   <span class="comment">#——要求版本信息只能在一行中显示</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-撤销修改"><a href="#8-撤销修改" class="headerlink" title="8.撤销修改"></a>8.撤销修改</h2><h3 id="8-1修改最后一次提交"><a href="#8-1修改最后一次提交" class="headerlink" title="8.1修改最后一次提交"></a>8.1修改最后一次提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+
+<p>此命令将使用当前的暂存区域快照提交。如果刚才提交完没有作任何改动，直接运行此命令的话，相当于有机会重新编辑提交说明，但将要提交的文件快照和之前的一样。<br> 如果刚才提交时忘了暂存某些修改，可以先补上暂存操作，然后再运行 <code>--amend</code> 提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'initial commit'</span></span><br><span class="line">git add forgotten_file</span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+
+<p>上面的三条命令最终只是产生一个提交，第二个提交命令修正了第一个的提交内容。</p>
+<h3 id="8-2取消已经暂存的文件"><a href="#8-2取消已经暂存的文件" class="headerlink" title="8.2取消已经暂存的文件"></a>8.2取消已经暂存的文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD &lt;file&gt;…</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3取消对文件的修改"><a href="#8-3取消对文件的修改" class="headerlink" title="8.3取消对文件的修改"></a>8.3取消对文件的修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- &lt;file&gt;…</span><br></pre></td></tr></table></figure>
+
+<p>命令git checkout – filename意思就是，把filename文件在工作区的修改全部撤销，这里有两种情况：</p>
+<p>一种是filename自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
+<p>一种是filename已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
+<p>总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
+<p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。</p>
+<p>git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。</p>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，版本回退，不过前提是没有推送到远程库。</p>
+<h2 id="9-移动文件"><a href="#9-移动文件" class="headerlink" title="9.移动文件"></a>9.移动文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git mv 文件_from  文件_to</span><br></pre></td></tr></table></figure>
+
+<p>其实，运行 git mv 就相当于运行了下面三条命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv  文件_from  文件_to </span><br><span class="line">git rm  文件_from </span><br><span class="line">git add  文件_to</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-远程仓库"><a href="#10-远程仓库" class="headerlink" title="10.远程仓库"></a>10.远程仓库</h2><h3 id="10-1查看当前远程库"><a href="#10-1查看当前远程库" class="headerlink" title="10.1查看当前远程库"></a>10.1查看当前远程库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote</span><br></pre></td></tr></table></figure>
+
+<p>查看当前配置的远程仓库。它会列出每个远程库的简短名字。在克隆完某个项目后，至少可以看到一个名为 origin 的远程库，Git 默认使用这个名字来标识你所克隆的原始仓库；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-v ：（译注：此为 --verbose 的简写，取首字母），显示对应的克隆地址，提供更多信息；</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2添加远程仓库"><a href="#10-2添加远程仓库" class="headerlink" title="10.2添加远程仓库"></a>10.2添加远程仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add [仓库名] [url]</span><br></pre></td></tr></table></figure>
+
+<p>添加一个新的远程仓库，指定名字为 <code>仓库名</code>，以便将来引用；</p>
+<h3 id="10-3从远程仓库抓取数据"><a href="#10-3从远程仓库抓取数据" class="headerlink" title="10.3从远程仓库抓取数据"></a>10.3从远程仓库抓取数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch [远程仓库名]</span><br></pre></td></tr></table></figure>
+
+<p>此命令会到名为 <code>远程仓库名</code> 的远程仓库中拉取所有你本地仓库中还没有的数据。运行完成后，你就可以在本地访问该远程仓库中的所有分支，将其中某个分支合并到本地，或者只是取出某个分支，一探究竟。</p>
+<p>如果是克隆了一个仓库，此命令会自动将远程仓库归于 origin 名下。所以，<code>git fetch origin</code> 会抓取从你上次克隆以来别人上传到此远程仓库中的所有更新（或是上次 fetch 以来别人提交的更新）。有一点很重要，需要记住，fetch 命令只是将远端的数据拉到本地仓库，并不自动合并到当前工作分支，只有当你确实准备好了，才能手工合并。<br> 如果设置了某个分支用于跟踪某个远端仓库的分支，可以使用 <code>git pull</code>  命令自动抓取数据下来，然后将远端分支自动合并到本地仓库中当前分支。在日常工作中我们经常这么用，既快且好。实际上，默认情况下 <code>git clone</code> 命令本质上就是自动创建了本地的 master 分支用于跟踪远程仓库中的 master 分支（假设远程仓库确实有 master 分支）。所以一般我们运行 <code>git pull</code>，目的都是要从原始克隆的远端仓库中抓取数据后，合并到工作目录中的当前分支。</p>
+<h3 id="10-4推送数据到远程仓库"><a href="#10-4推送数据到远程仓库" class="headerlink" title="10.4推送数据到远程仓库"></a>10.4推送数据到远程仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push [远程仓库S] [本地分支L]:[远程分支R]</span><br></pre></td></tr></table></figure>
+
+<p>表示：把 <code>本地分支L</code> 推送到 <code>远程仓库S</code> 的 <code>远程分支R</code> 中，如果 <code>远程仓库S</code> 中不存在 <code>远程分支R</code>，则会在 <code>远程仓库S</code> 中 创建 <code>远程分支R</code> 并把 <code>本地分支L</code> 推送到 <code>远程分支R</code> 中；如果本地分支L和远程分支R名字相同，则可以简写为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push [远程仓库S] [本地分支L]</span><br></pre></td></tr></table></figure>
+
+<p>只有在所克隆的服务器上有写权限，或者同一时刻没有其他人在推数据，这条命令才会如期完成任务。如果在你推数据前，已经有其他人推送了若干更新，那 你的推送操作就会被驳回。你必须先把他们的更新抓取到本地，合并到自己的项目中，然后才可以再次推送。</p>
+<h3 id="10-5删除远程分支"><a href="#10-5删除远程分支" class="headerlink" title="10.5删除远程分支"></a>10.5删除远程分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push [远程仓库S] :[远程分支R]</span><br></pre></td></tr></table></figure>
+
+<p>这个命令的格式意义比较无理头，为了方便记忆，可以这样理解：它是省略了本地分支名的推送命令 <code>git push [远程仓库S] [本地分支L]:[远程分支R]</code>，省略 <code>本地分支L</code> 表示：在这里提取空白然后把它变成 <code>远程分支R</code>。</p>
+<h3 id="10-6查看远程仓库信息"><a href="#10-6查看远程仓库信息" class="headerlink" title="10.6查看远程仓库信息"></a>10.6查看远程仓库信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote show [远程仓库名]</span><br></pre></td></tr></table></figure>
+
+<p>查看名为 <code>远程仓库名</code> 的远程仓库的详细信息</p>
+<h3 id="10-7远程仓库的重命名"><a href="#10-7远程仓库的重命名" class="headerlink" title="10.7远程仓库的重命名"></a>10.7远程仓库的重命名</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rename  [远程仓库旧名]   [远程仓库新名]</span><br></pre></td></tr></table></figure>
+
+<p>修改某个远程仓库在本地的名称（新版 Git 中支持）；<br>注意，对远程仓库的重命名，也会使对应的分支名称发生变化;</p>
+<h3 id="10-8远程仓库的删除"><a href="#10-8远程仓库的删除" class="headerlink" title="10.8远程仓库的删除"></a>10.8远程仓库的删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm  [远程仓库名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-9本地仓库同步远程仓库"><a href="#10-9本地仓库同步远程仓库" class="headerlink" title="10.9本地仓库同步远程仓库"></a>10.9本地仓库同步远程仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/RaoXuntian/raoxuntian.github.io.git	<span class="comment"># 本地添加远程仓库</span></span><br><span class="line">git push -u origin master:hexo	<span class="comment"># 本地master分支同步到远程的hexo分支</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="11-分支"><a href="#11-分支" class="headerlink" title="11.分支"></a>11.分支</h2><h3 id="11-1新建分支"><a href="#11-1新建分支" class="headerlink" title="11.1新建分支"></a>11.1新建分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch  [分支名]</span><br></pre></td></tr></table></figure>
+
+<p>注意：此命令仅仅是建立了一个新的分支，但不会自动切换到这个分支中去；</p>
+<h3 id="11-2切换分支"><a href="#11-2切换分支" class="headerlink" title="11.2切换分支"></a>11.2切换分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout [分支名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-3新建并切换分支"><a href="#11-3新建并切换分支" class="headerlink" title="11.3新建并切换分支"></a>11.3新建并切换分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b [分支名]</span><br></pre></td></tr></table></figure>
+
+<p>相当于以下2条命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch [分支名]</span><br><span class="line">git checkout [分支名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-4合并分支"><a href="#11-4合并分支" class="headerlink" title="11.4合并分支"></a>11.4合并分支</h3><p>设当前分支为A</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge [分支B]</span><br></pre></td></tr></table></figure>
+
+<p>此命令表示，把分支B合并到分支A</p>
+<h3 id="11-5删除分支"><a href="#11-5删除分支" class="headerlink" title="11.5删除分支"></a>11.5删除分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d [分支名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-6强制删除分支"><a href="#11-6强制删除分支" class="headerlink" title="11.6强制删除分支"></a>11.6强制删除分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -D [分支名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-7查看当前分支列表"><a href="#11-7查看当前分支列表" class="headerlink" title="11.7查看当前分支列表"></a>11.7查看当前分支列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br><span class="line">git branch -a <span class="comment"># 包括远端的分支</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* master</span><br><span class="line">  remotes&#x2F;origin&#x2F;hexo</span><br></pre></td></tr></table></figure>
+
+<p>带有 <code>*</code> 的分支表示是当前所在的分支；</p>
+<h3 id="11-8查看各个分支最后一次提交对象的信息"><a href="#11-8查看各个分支最后一次提交对象的信息" class="headerlink" title="11.8查看各个分支最后一次提交对象的信息"></a>11.8查看各个分支最后一次提交对象的信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-9查看已经合并到当前所在分支的分支"><a href="#11-9查看已经合并到当前所在分支的分支" class="headerlink" title="11.9查看已经合并到当前所在分支的分支"></a>11.9查看已经合并到当前所在分支的分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch --merged</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-10查看未合并到当前所在分支的分支"><a href="#11-10查看未合并到当前所在分支的分支" class="headerlink" title="11.10查看未合并到当前所在分支的分支"></a>11.10查看未合并到当前所在分支的分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch --no-merged</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-11删除远程分支"><a href="#11-11删除远程分支" class="headerlink" title="11.11删除远程分支"></a>11.11删除远程分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push [远程仓库S] :[远程分支R]</span><br></pre></td></tr></table></figure>
+
+<p>这个命令的格式意义比较无理头，为了方便记忆，可以这样理解：它是省略了本地分支名的推送命令 <code>git push [远程仓库S] [本地分支L]:[远程分支R]</code>，省略 <code>本地分支L</code> 表示：在这里提取空白然后把它变成 <code>远程分支R</code>。</p>
+<h2 id="12-恢复之前的版本"><a href="#12-恢复之前的版本" class="headerlink" title="12.恢复之前的版本"></a>12.恢复之前的版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看之前版本号</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 版本回退</span></span><br><span class="line">git reset --hard 目标版本号</span><br><span class="line"><span class="comment"># 提交更改</span></span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="13-相关文章"><a href="#13-相关文章" class="headerlink" title="13.相关文章"></a>13.相关文章</h2><ul>
+<li><a href="https://github.com/windard/learngit/blob/master/git.txt" target="_blank" rel="noopener">https://github.com/windard/learngit/blob/master/git.txt</a></li>
+<li><a href="https://www.jianshu.com/p/15a4dee9c5df" target="_blank" rel="noopener">https://www.jianshu.com/p/15a4dee9c5df</a></li>
+<li><a href="https://blog.csdn.net/yxlshk/article/details/79944535" target="_blank" rel="noopener">https://blog.csdn.net/yxlshk/article/details/79944535</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/git/">git</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/06/02/git/">https://raoxuntian.github.io/2020/06/02/git/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2020/06/03/learnCpp-const/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>浅谈C++关键字之const
+        </span>
+      </a>
+    
+    
+      <a href="/2020/05/29/myFirstBlog/" id="art-right" class="art-right">
+        <span class="prev-title">
+          我的第一篇博客<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-获得项目的git仓库"><span class="toc-text">1.获得项目的git仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1通过git-init初始化本地的新仓库"><span class="toc-text">1.1通过git init初始化本地的新仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2通过git-clone克隆已有的仓库"><span class="toc-text">1.2通过git clone克隆已有的仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-添加跟踪文件、暂存"><span class="toc-text">2.添加跟踪文件、暂存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-提交更新"><span class="toc-text">3.提交更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-检测当前工作区状态"><span class="toc-text">4.检测当前工作区状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-查看修改内容"><span class="toc-text">5.查看修改内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-移除文件"><span class="toc-text">6.移除文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-查看历史"><span class="toc-text">7.查看历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-撤销修改"><span class="toc-text">8.撤销修改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1修改最后一次提交"><span class="toc-text">8.1修改最后一次提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2取消已经暂存的文件"><span class="toc-text">8.2取消已经暂存的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3取消对文件的修改"><span class="toc-text">8.3取消对文件的修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-移动文件"><span class="toc-text">9.移动文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-远程仓库"><span class="toc-text">10.远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1查看当前远程库"><span class="toc-text">10.1查看当前远程库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2添加远程仓库"><span class="toc-text">10.2添加远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3从远程仓库抓取数据"><span class="toc-text">10.3从远程仓库抓取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4推送数据到远程仓库"><span class="toc-text">10.4推送数据到远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-5删除远程分支"><span class="toc-text">10.5删除远程分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-6查看远程仓库信息"><span class="toc-text">10.6查看远程仓库信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-7远程仓库的重命名"><span class="toc-text">10.7远程仓库的重命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-8远程仓库的删除"><span class="toc-text">10.8远程仓库的删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-9本地仓库同步远程仓库"><span class="toc-text">10.9本地仓库同步远程仓库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-分支"><span class="toc-text">11.分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1新建分支"><span class="toc-text">11.1新建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2切换分支"><span class="toc-text">11.2切换分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3新建并切换分支"><span class="toc-text">11.3新建并切换分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4合并分支"><span class="toc-text">11.4合并分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-5删除分支"><span class="toc-text">11.5删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-6强制删除分支"><span class="toc-text">11.6强制删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-7查看当前分支列表"><span class="toc-text">11.7查看当前分支列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-8查看各个分支最后一次提交对象的信息"><span class="toc-text">11.8查看各个分支最后一次提交对象的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-9查看已经合并到当前所在分支的分支"><span class="toc-text">11.9查看已经合并到当前所在分支的分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-10查看未合并到当前所在分支的分支"><span class="toc-text">11.10查看未合并到当前所在分支的分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-11删除远程分支"><span class="toc-text">11.11删除远程分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-恢复之前的版本"><span class="toc-text">12.恢复之前的版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-相关文章"><span class="toc-text">13.相关文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>

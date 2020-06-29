@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, interview, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> 浅谈C++关键字之const · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-06-03</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          浅谈C++关键字之const
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>C++关键字之const</p>
+<h3 id="1-const含义"><a href="#1-const含义" class="headerlink" title="1.const含义"></a>1.const含义</h3><p>const 是 constant 的缩写，本意是不变的，不易改变的意思。在 C++ 中是用来修饰内置类型变量，自定义对象，成员函数，返回值，函数参数。</p>
+<h3 id="2-const作用"><a href="#2-const作用" class="headerlink" title="2.const作用"></a>2.const作用</h3><h4 id="2-1定义const常量"><a href="#2-1定义const常量" class="headerlink" title="2.1定义const常量"></a>2.1定义const常量</h4><p><code>const int* bufSize = 64;</code></p>
+<h4 id="2-2便于进行类型检查"><a href="#2-2便于进行类型检查" class="headerlink" title="2.2便于进行类型检查"></a>2.2便于进行类型检查</h4><p>const*常量有数据类型，而宏常量没有数据类型。编译器可以对前者进行类型安全检查，而对后者只进行字符替换，没有类型安全检查，并且在字符替换时可能会产生意料不到的错误。</p>
+<a id="more"></a>
+
+<h4 id="2-3可以保护别修饰的东西"><a href="#2-3可以保护别修饰的东西" class="headerlink" title="2.3可以保护别修饰的东西"></a>2.3可以保护别修饰的东西</h4><p>防止修改，起保护作用，增加程序健壮性</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	i++; <span class="comment">//error!    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4为函数重载提供一个参考"><a href="#2-4为函数重载提供一个参考" class="headerlink" title="2.4为函数重载提供一个参考"></a>2.4为函数重载提供一个参考</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">           ......</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> i)</span>       </span>&#123;......&#125; <span class="comment">//一个函数</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> i)</span> <span class="keyword">const</span> </span>&#123;......&#125; <span class="comment">//上一个函数的重载</span></span><br><span class="line">           ......</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-5可以节省空间，避免不必要的内存分配"><a href="#2-5可以节省空间，避免不必要的内存分配" class="headerlink" title="2.5可以节省空间，避免不必要的内存分配"></a>2.5可以节省空间，避免不必要的内存分配</h4><p>const定义常量从汇编的角度来看，只是给出了对应的内存地址，而不是象#define一样给出的是立即数，所以，const定义的常量在程序运行过程中只有一份拷贝，而#define定义的常量在内存中有若干个拷贝</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.14159         <span class="comment">//常量宏</span></span></span><br><span class="line"><span class="keyword">const</span> doulbe  Pi=<span class="number">3.14159</span>;  <span class="comment">//此时并未将Pi放入ROM中</span></span><br><span class="line">              ......</span><br><span class="line"><span class="keyword">double</span> i=Pi;   <span class="comment">//此时为Pi分配内存，以后不再分配！</span></span><br><span class="line"><span class="keyword">double</span> I=PI;  <span class="comment">//编译期间进行宏替换，分配内存</span></span><br><span class="line"><span class="keyword">double</span> j=Pi;  <span class="comment">//没有内存分配</span></span><br><span class="line"><span class="keyword">double</span> J=PI;  <span class="comment">//再进行宏替换，又一次分配内存！</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6提高了效率"><a href="#2-6提高了效率" class="headerlink" title="2.6提高了效率"></a>2.6提高了效率</h4><p>可以很方便地进行参数的调整和修改，同宏定义一样，可以做到不变则已，一变都变。</p>
+<p>编译器通常不为普通const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高</p>
+<h3 id="3-const使用"><a href="#3-const使用" class="headerlink" title="3.const使用"></a>3.const使用</h3><ol>
+<li>修饰变量，说明该变量不可以被改变；</li>
+<li>修饰指针，分为指向常量的指针（pointer to const）和自身是常量的指针（常量指针，const pointer）；</li>
+<li>修饰引用，指向常量的引用（reference to const），用于形参类型，即避免了拷贝，又避免了函数对值的修改；</li>
+<li>修饰函数相关，包括修饰函数参数和函数返回值；</li>
+<li>修饰类成员函数，说明该成员函数内不能修改成员变量。</li>
+</ol>
+<h4 id="3-1修饰变量"><a href="#3-1修饰变量" class="headerlink" title="3.1修饰变量"></a>3.1修饰变量</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> bufSize = <span class="number">512</span>; </span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> bufSize1 = <span class="number">1024</span>; </span><br><span class="line"><span class="comment">// 以上两种定义形式在本质上是一样的，const修饰的类型为int的变量是不可变的</span></span><br><span class="line">bufSize = <span class="number">1024</span>	<span class="comment">// 错误：试图向const int对象写值，不能改变bufSize</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">64</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = a;	<span class="comment">// ci=64</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cis = <span class="keyword">sizeof</span>(a);	<span class="comment">// cis=4</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> k;	<span class="comment">// 错误：k是一个未经初始化的变量</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2修饰指针"><a href="#3-2修饰指针" class="headerlink" title="3.2修饰指针"></a>3.2修饰指针</h4><p>将const用于指针有一些很微妙的地方（指针本身看上去就很微妙），我们将详细探讨一下用两种不同的方式将const关键字用于指针。</p>
+<h5 id="3-2-1-pointer-to-const"><a href="#3-2-1-pointer-to-const" class="headerlink" title="3.2.1 pointer to const"></a>3.2.1 pointer to const</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> age = <span class="number">17</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *pt = &amp;age;	<span class="comment">// a pointer to const int</span></span><br><span class="line"><span class="comment">// 该声明指出，pt指向一个const int(这里是17)，因此不能用pt来改变这个值。</span></span><br><span class="line"><span class="comment">// 换句话说，*pt的值为const，不能修改。</span></span><br><span class="line"></span><br><span class="line">(*pt)++;	<span class="comment">// 错误：指针pt指向的对象是const int</span></span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; *pt	<span class="comment">// 错误：同上</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// 现在来看一个微妙的问题。</span></span><br><span class="line"><span class="comment">// pt的声明并不意味着它指向的值实际上就是一个常量，而只是意味着对pt而言，这个值是常量。</span></span><br><span class="line">*pt = <span class="number">23</span>;	<span class="comment">// 错误：指针pt指向的对象是const int</span></span><br><span class="line">age = <span class="number">23</span>;	<span class="comment">// valid:beacause age is not declared to be const</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-2-const-pointer"><a href="#3-2-2-const-pointer" class="headerlink" title="3.2.2 const pointer"></a>3.2.2 const pointer</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sloth = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *ps = &amp;sloth;	<span class="comment">// a pointer to const int</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> finger = &amp;sloth;	<span class="comment">// a const pointer to int</span></span><br><span class="line"><span class="comment">// finger只能指向sloth，但允许使用finger来修改sloth的值。</span></span><br><span class="line"><span class="comment">// ps不能修改sloth的值，但允许ps指向另一个位置。</span></span><br><span class="line">finger = &amp;age;	<span class="comment">// invalid</span></span><br><span class="line">*finger = <span class="number">5</span>;	<span class="comment">// valid</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 简言之：finger和*ps都是const，而*finger和ps不是</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-3-summary"><a href="#3-2-3-summary" class="headerlink" title="3.2.3 summary"></a>3.2.3 summary</h5><ul>
+<li><p>指针所指向的内容是常量不可变。<br><code>const int *pt;</code></p>
+</li>
+<li><p>指针本身是常量不可变。<br><code>int * const pt;</code></p>
+</li>
+<li><p>两者都不可变。<br><code>const int * const pt;</code></p>
+</li>
+</ul>
+<p><strong>const在*前面，对象是const；</strong><br><strong>const在*后面，指针是const。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Pointers and constants</th>
+<th align="left">int i;</th>
+<th align="left">const int ci = 3;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">int *ip;//可以通过ip修改</td>
+<td align="left">ip = &i;</td>
+<td align="left">ip = &ci;  // ERROR!</td>
+</tr>
+<tr>
+<td align="left">const int *cip;//不可以通过cip修改</td>
+<td align="left">cip = &i;</td>
+<td align="left">cip = &ci;</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>尽可能使用const</strong></p>
+<p>将指针参数声明为指向常量数据的指针有两条理由：</p>
+<ul>
+<li>这样可以避免由于无意间修改数据而导致的编程错误。</li>
+<li>使用const使得函数能够处理const和非const实参，否则将只能接受非const数据。</li>
+</ul>
+<p>如果条件允许，则应该将指针形参声明为指向const的指针。</p>
+</blockquote>
+<h4 id="3-3修饰引用"><a href="#3-3修饰引用" class="headerlink" title="3.3修饰引用"></a>3.3修饰引用</h4><p>可以把引用绑定到const对象上，就像绑定到其它对象上一样，我们称之为对<strong>常量的引用</strong>(<strong>reference to const</strong>)。</p>
+<p>与普通引用不同的是，对常量的引用不能被用作修改它所绑定的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = ci;	<span class="comment">// 正确：引用及其对应的对象都是常量</span></span><br><span class="line">r1 = <span class="number">42</span>;	<span class="comment">// 错误：r1是对常量的引用</span></span><br><span class="line"><span class="keyword">int</span> &amp;r2 = ci;	<span class="comment">// 错误：试图让一个非常量引用(r2)指向一个常量对象(ci)</span></span><br></pre></td></tr></table></figure>
+
+<p>因为不允许直接为ci赋值，当然也不能通过引用去改变ci。因此，对r2的初始化是错误的。假设该初始化合法，则可以通过r2来改变它引用对象的值，这显然是不正确的。</p>
+<blockquote>
+<p><strong>术语：常量引用是对const的引用</strong></p>
+<hr>
+<p>c++程序猿们经常把词组”对const的引用“简称为“常量引用”，这一简称还是挺靠谱的，不过前提是你得时刻记得这就是个简称而已。</p>
+<p>严格来说，并不存在常量引用。因为引用不是一个对象，所以我们没法让引用本身恒定不变。事实上，由于c++语言并不允许随意改变引用所绑定的对象，所以从这层意思上理解所有的引用又都算是常量。引用的对象是常量还是非常量可以决定其所能参与的操作，却无论如何都不会影响到引用和对象的绑定关系本身。</p>
+</blockquote>
+<ul>
+<li>指向常量的引用(reference to const)</li>
+<li>没有const reference，因为引用本身就是const pointer</li>
+</ul>
+<p><strong>对const的引用可能引用一个并非const的对象</strong></p>
+<p>必须认识到，<strong>常量引用仅对引用可参与的操作做出了限定</strong>，对应引用的对象本身是不是一个常量未作限定。因为对象也可能是个非常量，所以允许通过其他途径改变它的值：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r1 = i; 		<span class="comment">// 引用r1绑定对象i</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r2 = i;	<span class="comment">// r2也绑定对象i，但不允许通过r2修改i的值</span></span><br><span class="line">r1 = <span class="number">0</span>;			<span class="comment">// r1并非常量，i的值修改为0</span></span><br><span class="line">r2 = <span class="number">0</span>;			<span class="comment">// 错误：r2是一个常量引用</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-4修饰函数相关"><a href="#3-4修饰函数相关" class="headerlink" title="3.4修饰函数相关"></a>3.4修饰函数相关</h4><h5 id="3-4-1修饰函数参数"><a href="#3-4-1修饰函数参数" class="headerlink" title="3.4.1修饰函数参数"></a>3.4.1修饰函数参数</h5><ol>
+<li><p>传递过来的参数在函数内不可以改变(无意义，因为Var本身就是形参)</p>
+<p><code>void function(const int Var);</code></p>
+</li>
+<li><p>参数指针所指内容为常量不可变</p>
+<p><code>void function(const char* Var);</code></p>
+</li>
+<li><p>参数指针本身为常量不可变(也无意义，因为char* Var也是形参)</p>
+<p><code>void function(char* const Var);</code></p>
+</li>
+<li><p>参数为引用，为了增加效率同时防止修改。修饰引用参数时：</p>
+<p><code>void function(const Class&amp; Var); //引用参数在函数内不可以改变</code></p>
+<p><code>void function(const TYPE&amp; Var); //引用参数在函数内为常量不可变</code></p>
+</li>
+</ol>
+<p>这样的一个const引用传递和最普通的函数按值传递的效果是一模一样的，他禁止对引用的对象的一切修改，唯一不同的是按值传递会先建立一个类对象的副本， 然后传递过去,而它直接传递地址，所以这种传递比按值传递更有效。另外只有引用的const传递可以传递一个临时对象，因为临时对象都是const属性，且是不可见的，他短时间存在一个局部域中，所以不能使用指针，只有引用的const传递能够捕捉到这个家伙。</p>
+<h5 id="3-4-2修饰函数返回值"><a href="#3-4-2修饰函数返回值" class="headerlink" title="3.4.2修饰函数返回值"></a>3.4.2修饰函数返回值</h5><p> const修饰函数返回值其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。</p>
+<ol>
+<li><p><code>const int fun1()</code>    </p>
+<p>   //这个其实无意义，因为参数返回本身就是赋值。</p>
+</li>
+<li><p><code>const int * fun2()</code></p>
+<p>   //调用时 const int *pValue = fun2();<br>   //我们可以把fun2()看作成一个变量，即指针内容不可变。</p>
+</li>
+<li><p><code>int* const fun3()</code></p>
+<p>   //调用时 int * const pValue = fun2();<br>   //我们可以把fun2()看作成一个变量，即指针本身不可变。</p>
+</li>
+</ol>
+<p><strong><em>一般情况下，函数的返回值为某个对象时，如果将其声明为const时，多用于操作符的重载。通常，不建议用const修饰函数的返回值类型为某个对象或对某个对象引用的情况。</em></strong>原因如下：如果返回值为某个对象为const（const A test = A 实例）或某个对象的引用为const（const A&amp; test = A实例） ，则返回值具有const属性，则返回实例只能访问类A中的公有（保护）数据成员和const成员函数，并且不允许对其进行赋值操作，这在一般情况下很少用到。</p>
+<h4 id="3-5修饰类成员函数"><a href="#3-5修饰类成员函数" class="headerlink" title="3.5修饰类成员函数"></a>3.5修饰类成员函数</h4><h5 id="3-5-1-const修饰成员变量"><a href="#3-5-1-const修饰成员变量" class="headerlink" title="3.5.1 const修饰成员变量"></a>3.5.1 const修饰成员变量</h5><p>const修饰类的成员函数，表示成员常量，不能被修改，同时它只能在初始化列表中赋值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">        …</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> nValue;         <span class="comment">//成员常量不能被修改</span></span><br><span class="line">        …</span><br><span class="line">        A(<span class="keyword">int</span> x): nValue(x) &#123; &#125; ; <span class="comment">//只能在初始化列表中赋值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3-5-2-const修饰成员函数"><a href="#3-5-2-const修饰成员函数" class="headerlink" title="3.5.2 const修饰成员函数"></a>3.5.2 const修饰成员函数</h5><p>const修饰类的成员函数，则该成员函数不能修改类中任何非const成员函数。一般写在函数的最后来修饰。<strong>也就是说，这些函数是”只读”函数。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">        …</span><br><span class="line">       <span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span> <span class="keyword">const</span></span>;	<span class="comment">//常成员函数, 它不改变对象的成员变量.                        </span></span><br><span class="line"></span><br><span class="line">				<span class="comment">//也不能调用类中任何非const成员函数。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于const类对象/指针/引用，只能调用类的const成员函数，因此，const修饰成员函数的最重要作用就是限制对于const对象的使用。</p>
+<p>a. const成员函数不被允许修改它所在对象的任何一个数据成员。</p>
+<p>b. const成员函数能够访问对象的const成员，而其他成员函数不可以。</p>
+<h5 id="3-5-3-const修饰类对象-对象指针-对象引用"><a href="#3-5-3-const修饰类对象-对象指针-对象引用" class="headerlink" title="3.5.3 const修饰类对象/对象指针/对象引用"></a>3.5.3 const修饰类对象/对象指针/对象引用</h5><p>·             const修饰类对象表示该对象为常量对象，其中的任何成员都不能被修改。对于对象指针和对象引用也是一样。</p>
+<p>·             const修饰的对象，该对象的任何非const成员函数都不能被调用，因为任何非const成员函数会有修改成员变量的企图。</p>
+<p>·             const对象只能访问const成员函数，而非const对象可以访问任意的成员函数,包括const成员函数。</p>
+<p>例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AAA</span> &#123;</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> AAA aObj;</span><br><span class="line">aObj.func1();	<span class="comment">// invalid</span></span><br><span class="line">aObj.func2();	<span class="comment">// valid</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AAA* aObj = <span class="keyword">new</span> AAA();</span><br><span class="line">aObj-&gt; func1();	<span class="comment">// invalid</span></span><br><span class="line">aObj-&gt; func2();	<span class="comment">// valid</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-5-4-const修饰重载运算符"><a href="#3-5-4-const修饰重载运算符" class="headerlink" title="3.5.4 const修饰重载运算符"></a>3.5.4 const修饰重载运算符</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> student &amp;a ) <span class="keyword">const</span>&#123;     </span><br><span class="line">        <span class="keyword">if</span>(score!=a.score) <span class="keyword">return</span> score&lt;a.score;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(name.compare(a.name)!=<span class="number">0</span>) <span class="keyword">return</span> name&lt;a.name;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(age!=a.age)<span class="keyword">return</span> age&lt;a.age;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>加const是因为：</strong></p>
+<ol>
+<li><p>我们不希望在这个函数中对用来进行赋值的“原版”做任何修改。<strong>函数加上const后缀的作用是表明函数本身不会修改类成员变量。</strong></p>
+</li>
+<li><p>加上const，对于const的和非const的实参，函数就能接受；如果不加，就只能接受非const的实参。</p>
+</li>
+</ol>
+<p><strong>另外补充，用引用是因为：</strong><br>这样可以避免在函数调用时对实参的一次拷贝，提高了效率。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> a;                <span class="comment">// 常对象成员，只能在初始化列表赋值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    A() : a(<span class="number">0</span>) &#123; &#125;;</span><br><span class="line">    A(<span class="keyword">int</span> x) : a(x) &#123; &#125;;        <span class="comment">// 初始化列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// const可用于对重载函数的区分</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span></span>;             <span class="comment">// 普通成员函数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="keyword">const</span></span>;       <span class="comment">// 常成员函数，不得修改类中的任何数据成员的值</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 对象</span></span><br><span class="line">    A b;                        <span class="comment">// 普通对象，可以调用全部成员函数、更新常成员变量</span></span><br><span class="line">    <span class="keyword">const</span> A a;                  <span class="comment">// 常对象，只能调用常成员函数</span></span><br><span class="line">    <span class="keyword">const</span> A *p = &amp;a;            <span class="comment">// 指针变量，指向常对象</span></span><br><span class="line">    <span class="keyword">const</span> A &amp;q = a;             <span class="comment">// 指向常对象的引用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指针</span></span><br><span class="line">    <span class="keyword">char</span> greeting[] = <span class="string">"Hello"</span>;</span><br><span class="line">    <span class="keyword">char</span>* p1 = greeting;                <span class="comment">// 指针变量，指向字符数组变量</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* p2 = greeting;          <span class="comment">// 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）</span></span><br><span class="line">    <span class="keyword">char</span>* <span class="keyword">const</span> p3 = greeting;          <span class="comment">// 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> p4 = greeting;    <span class="comment">// 自身是常量的指针，指向字符数组常量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> Var)</span></span>;           <span class="comment">// 传递过来的参数在函数内不可变</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* Var)</span></span>;         <span class="comment">// 参数指针所指内容为常量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function3</span><span class="params">(<span class="keyword">char</span>* <span class="keyword">const</span> Var)</span></span>;         <span class="comment">// 参数指针为常量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function4</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; Var)</span></span>;          <span class="comment">// 引用参数在函数内为常量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数返回值</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">function5</span><span class="params">()</span></span>;      <span class="comment">// 返回一个常数</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span>* <span class="title">function6</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向常量的指针变量，使用：const int *p = function6();</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="keyword">const</span> <span class="title">function7</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向变量的常指针，使用：int* const p = function7();</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-const对象默认为文件局部变量"><a href="#4-const对象默认为文件局部变量" class="headerlink" title="4.const对象默认为文件局部变量"></a>4.const对象默认为文件局部变量</h3><p>注意：非const变量默认为extern。要使const变量能够在其他文件中访问，必须在文件中显式地指定它为extern。</p>
+<h3 id="5-相关文章"><a href="#5-相关文章" class="headerlink" title="5.相关文章"></a>5.相关文章</h3><ul>
+<li>C++ Primer中文版第5版</li>
+<li>C++ Primer Plus中文版第五版</li>
+<li><a href="https://blog.csdn.net/Eric_Jo/article/details/4138548" target="_blank" rel="noopener">https://blog.csdn.net/Eric_Jo/article/details/4138548</a></li>
+<li><a href="https://interview.huihut.com/#/?id=const" target="_blank" rel="noopener">https://interview.huihut.com/#/?id=const</a></li>
+<li><a href="https://blog.csdn.net/qq_36770641/article/details/89884807" target="_blank" rel="noopener">https://blog.csdn.net/qq_36770641/article/details/89884807</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+        <a href="/tags/interview/">interview</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/06/03/learnCpp-const/">https://raoxuntian.github.io/2020/06/03/learnCpp-const/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2020/06/04/pointer-and-reference/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>浅谈c++的指针与引用
+        </span>
+      </a>
+    
+    
+      <a href="/2020/06/02/git/" id="art-right" class="art-right">
+        <span class="prev-title">
+          git常用指令小结<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-const含义"><span class="toc-text">1.const含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-const作用"><span class="toc-text">2.const作用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1定义const常量"><span class="toc-text">2.1定义const常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2便于进行类型检查"><span class="toc-text">2.2便于进行类型检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3可以保护别修饰的东西"><span class="toc-text">2.3可以保护别修饰的东西</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4为函数重载提供一个参考"><span class="toc-text">2.4为函数重载提供一个参考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5可以节省空间，避免不必要的内存分配"><span class="toc-text">2.5可以节省空间，避免不必要的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6提高了效率"><span class="toc-text">2.6提高了效率</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-const使用"><span class="toc-text">3.const使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1修饰变量"><span class="toc-text">3.1修饰变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2修饰指针"><span class="toc-text">3.2修饰指针</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-1-pointer-to-const"><span class="toc-text">3.2.1 pointer to const</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-2-const-pointer"><span class="toc-text">3.2.2 const pointer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-3-summary"><span class="toc-text">3.2.3 summary</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3修饰引用"><span class="toc-text">3.3修饰引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4修饰函数相关"><span class="toc-text">3.4修饰函数相关</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-1修饰函数参数"><span class="toc-text">3.4.1修饰函数参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-2修饰函数返回值"><span class="toc-text">3.4.2修饰函数返回值</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5修饰类成员函数"><span class="toc-text">3.5修饰类成员函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-5-1-const修饰成员变量"><span class="toc-text">3.5.1 const修饰成员变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-5-2-const修饰成员函数"><span class="toc-text">3.5.2 const修饰成员函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-5-3-const修饰类对象-对象指针-对象引用"><span class="toc-text">3.5.3 const修饰类对象&#x2F;对象指针&#x2F;对象引用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-5-4-const修饰重载运算符"><span class="toc-text">3.5.4 const修饰重载运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-const对象默认为文件局部变量"><span class="toc-text">4.const对象默认为文件局部变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-相关文章"><span class="toc-text">5.相关文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>

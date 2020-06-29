@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, C, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> 浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-06-28</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>今天在刷题的时候，遇到几道关于处理32位有符号整数的题目：<a href="https://leetcode-cn.com/problems/reverse-integer/" target="_blank" rel="noopener">7.整数反转</a>和 <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">8.字符串转换整数 (atoi)</a>。题目看起来不算很难，但如果在面试时遇到这样的题目，想想面试官是要考察你什么？考察你用long抖机灵吗？考察你会捕获异常吗？我想应该是要考察你对C/C++中整型的上下限的理解以及这方面的细节处理。</p>
+<a id="more"></a>
+
+<h3 id="一-整型数据类型和数据大小"><a href="#一-整型数据类型和数据大小" class="headerlink" title="一.整型数据类型和数据大小"></a>一.整型数据类型和数据大小</h3><p>说到整型数据类型，很多人第一反应就是int。</p>
+<p>int占4个字节，1个字节通常是占8位，所以一个int占32位，根据二进制编码规则，int最大是2^32-1(2147483647)，最小是-2^32(-2147483648)。</p>
+<p>除了int还有吗？</p>
+<p>在C当中：</p>
+<table>
+<thead>
+<tr>
+<th>C声明</th>
+<th></th>
+<th>字节数</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有符号</td>
+<td>无符号</td>
+<td>32位</td>
+<td>64位</td>
+</tr>
+<tr>
+<td>[signed] char</td>
+<td>unsigned char</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>short</td>
+<td>unsigned short</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>int</td>
+<td>unsigned</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>long</td>
+<td>unsigned long</td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>uint32_t</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>uint64_t</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>char*</td>
+<td></td>
+<td>4</td>
+<td>8</td>
+</tr>
+<tr>
+<td>float</td>
+<td></td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>double</td>
+<td></td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>我们只讨论整数类型，整数我们可以分为两种类型，一种是<strong>有符号</strong>的，这种可以表示负数、零和正数；另一种是<strong>无符号</strong>的，这种只能表示非负数。</p>
+<p>在32位程序上，C语言整型数据类型的典型取值范围如下：</p>
+<table>
+<thead>
+<tr>
+<th>C数据类型</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[signed] char</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>0</td>
+<td>255</td>
+</tr>
+<tr>
+<td>short</td>
+<td>-32768</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>0</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>int</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>unsigned</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>long</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>uint32_t</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>-9223372036854775808</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>在64位程序上，C语言整型数据类型的典型取值范围如下：</p>
+<table>
+<thead>
+<tr>
+<th>C数据类型</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[signed] char</td>
+<td>-128</td>
+<td>127</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>0</td>
+<td>255</td>
+</tr>
+<tr>
+<td>short</td>
+<td>-32768</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>0</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>int</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>unsigned</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>long</td>
+<td>-9223372036854775808</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>uint32_t</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>-9223372036854775808</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>通过上面两张表我们可以注意到，有符号的整型的取值范围是不对称的——负数的范围比整数的范围大1。这个原因是计算机在用二进制表示负数的时候用到了<strong>补码编码</strong>，最前面一位是符号位，就不在这里啰嗦了……</p>
+<p>C语言标准定义了每种数据类型必须能够表示的最小取值范围：</p>
+<table>
+<thead>
+<tr>
+<th>C数据类型</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[signed] char</td>
+<td>-127</td>
+<td>127</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>0</td>
+<td>255</td>
+</tr>
+<tr>
+<td>short</td>
+<td>-32767</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>0</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>int</td>
+<td>-32767</td>
+<td>32767</td>
+</tr>
+<tr>
+<td>unsigned</td>
+<td>0</td>
+<td>65535</td>
+</tr>
+<tr>
+<td>long</td>
+<td>-2147483647</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int32_t</td>
+<td>-2147483648</td>
+<td>2147483647</td>
+</tr>
+<tr>
+<td>uint32_t</td>
+<td>0</td>
+<td>4294967295</td>
+</tr>
+<tr>
+<td>int64_t</td>
+<td>-9223372036854775808</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>uint64_t</td>
+<td>0</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>C++中的整型类型和范围如下：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>位</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>1 个字节</td>
+<td>-128 到 127 或者 0 到 255</td>
+</tr>
+<tr>
+<td>unsigned char</td>
+<td>1 个字节</td>
+<td>0 到 255</td>
+</tr>
+<tr>
+<td>signed char</td>
+<td>1 个字节</td>
+<td>-128 到 127</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4 个字节</td>
+<td>-2147483648 到 2147483647</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>4 个字节</td>
+<td>0 到 4294967295</td>
+</tr>
+<tr>
+<td>signed int</td>
+<td>4 个字节</td>
+<td>-2147483648 到 2147483647</td>
+</tr>
+<tr>
+<td>short int</td>
+<td>2 个字节</td>
+<td>-32768 到 32767</td>
+</tr>
+<tr>
+<td>unsigned short int</td>
+<td>2 个字节</td>
+<td>0 到 65,535</td>
+</tr>
+<tr>
+<td>signed short int</td>
+<td>2 个字节</td>
+<td>-32768 到 32767</td>
+</tr>
+<tr>
+<td>long int</td>
+<td>8 个字节</td>
+<td>-9,223,372,036,854,775,808 到 9,223,372,036,854,775,807</td>
+</tr>
+<tr>
+<td>signed long int</td>
+<td>8 个字节</td>
+<td>-9,223,372,036,854,775,808 到 9,223,372,036,854,775,807</td>
+</tr>
+<tr>
+<td>unsigned long int</td>
+<td>8 个字节</td>
+<td>0 到 18,446,744,073,709,551,615</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4 个字节</td>
+<td>精度型占4个字节（32位）内存空间，+/- 3.4e +/- 38 (~7 个数字)</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8 个字节</td>
+<td>双精度型占8 个字节（64位）内存空间，+/- 1.7e +/- 308 (~15 个数字)</td>
+</tr>
+<tr>
+<td>long double</td>
+<td>16 个字节</td>
+<td>长双精度型 16 个字节（128位）内存空间，可提供18-19位有效数字。</td>
+</tr>
+<tr>
+<td>wchar_t</td>
+<td>2 或 4 个字节</td>
+<td>1 个宽字符</td>
+</tr>
+</tbody></table>
+<p>其实 wchar_t 是这样来的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> short <span class="keyword">int</span> <span class="keyword">wchar_t</span>;</span><br></pre></td></tr></table></figure>
+
+<p>所以 wchar_t 实际上的空间是和 short int 一样。</p>
+<p><strong>注意：</strong>不同系统会有所差异，一字节为 8 位。</p>
+<p><strong>注意：</strong>long int 与 int 都是 4 个字节，因为早期的 C 编译器定义了 long int 占用 4 个字节，int 占用 2 个字节，新版的C/C++ 标准兼容了早期的这一设定。</p>
+<blockquote>
+<p>C和C++都支持有符号（默认）和无符号数，Java只支持有符号数</p>
+</blockquote>
+<h3 id="二-INT-MAX和INT-MIN"><a href="#二-INT-MAX和INT-MIN" class="headerlink" title="二.INT_MAX和INT_MIN"></a>二.INT_MAX和INT_MIN</h3><p>我们已经知道了C/C++中一个int占32位，于是为了方便表示int类型的范围，于是在头文件limits.h中，用常量INT_MAX和INT_MIN分别表示最大、最小整数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INT_MAX 2147483647</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INT_MIN (-INT_MAX - 1)</span></span><br><span class="line"><span class="comment">//這裏沒有簡單地將INT_MIN賦值成-2147483647，是因為-2147483648對於編譯器而言是個表達式，</span></span><br><span class="line"><span class="comment">//而2147483648對於32-bit整數是無法表示的，所以經過這個表達式的結果是未定義的。</span></span><br><span class="line"><span class="comment">//在GCC上直接寫-2147483648後，編譯器給出了警告，說結果是unsigned。</span></span><br></pre></td></tr></table></figure>
+
+<p>在C/C++語言中，不能夠直接使用-2147483648來代替最小負數，因為這不是一個數字，而是一個表達式。表達式的意思是對整數21473648取負，但是2147483648已經溢出了int的上限，所以定義為（-INT_MAX -1）。</p>
+<p>记住INT_MAX和INT_MIN的定义，在后面的运算中很重要。</p>
+<p>我们用二进制来表示INT_MAX和INT_MIN：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INT_MAX == <span class="number">0b01111111111111111111111111111111</span>;	<span class="comment">// 31个1</span></span><br><span class="line">INT_MIN == <span class="number">0b10000000000000000000000000000000</span>;	<span class="comment">// 31个0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三-运算"><a href="#三-运算" class="headerlink" title="三.运算"></a>三.运算</h3><p>当我们弄清楚了INT_MAX和INT_MIN的本质之后再来谈谈他们的运算。</p>
+<p>整数的运算离不开二进制编码的原码、补码和反码这些规则，所以当在刷算法题涉及到INT_MAX和INT_MIN时我们应该对边界情况考虑周到，考虑溢出的情况，当发生溢出的时候，就不会遵循数学规则了。</p>
+<p><strong>INT_MAX + 1 = INT_MIN</strong></p>
+<p><strong>INT_MIN - 1 = INT_MAX</strong></p>
+<p><strong>abs(INT_MIN) = INT_MIN</strong></p>
+<p>前两条对比二进制做加减法就能一目了然，那么第三条abs()这个怎么解释呢？别忘了<code>#define INT_MIN (-INT_MAX - 1)</code> 所以<code>abs(INT_MIN)</code>也就是<code>abs(-INT_MAX - 1)</code>，结果就是<code>INT_MAX+1</code>，还是<code>INT_MIN</code>。</p>
+<p>同理，<code>-INT_MIN == INT_MIN</code>。</p>
+<p>那么我们可以达到另外一种下溢：</p>
+<p><strong>INT_MIN + INT_MIN = 0</strong></p>
+<p>将上式中的<code>INT_MIN</code>用<code>INT_MAX+1</code>进行替换，我们就得到了另一种上溢：</p>
+<p><strong>INT_MAX + INT_MAX = -2</strong></p>
+<p>总结一下：</p>
+<ol>
+<li>最轻微的上溢是INT_MAX + 1 :结果是 INT_MIN; </li>
+<li>最严重的上溢是INT_MAX + INT_MAX :结果是-2; </li>
+<li>最轻微的下溢是INT_MIN - 1:结果是是INT_MAX; </li>
+<li>最严重的下溢是INT_MIN + INT_MIN:结果是0 。</li>
+</ol>
+<h3 id="四-代码"><a href="#四-代码" class="headerlink" title="四.代码"></a>四.代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0b10000000000000000000000000000000</span>;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0b01111111111111111111111111111111</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; (i == INT_MIN) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; (j == INT_MAX) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-INT_MIN = "</span> &lt;&lt; -INT_MIN &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MIN = "</span> &lt;&lt; INT_MIN &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MIN/10 = "</span> &lt;&lt; INT_MIN/<span class="number">10</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MIN%10 = "</span> &lt;&lt; INT_MIN%<span class="number">10</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-INT_MIN%10 = "</span> &lt;&lt; -INT_MIN%<span class="number">10</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"-(INT_MIN%10) = "</span> &lt;&lt; -(INT_MIN%<span class="number">10</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MAX + INT_MAX = "</span> &lt;&lt; INT_MAX + INT_MAX &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MIN + INT_MIN = "</span> &lt;&lt; INT_MIN + INT_MIN &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/Users/saladdays/Projects/Learn_CPP/INT/int.cpp:16:44: warning: overflow in expression; result is -2 with type 'int' [-Winteger-overflow]</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MAX + INT_MAX = "</span> &lt;&lt; INT_MAX + INT_MAX &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                                                  ^</span><br><span class="line">/Users/saladdays/Projects/Learn_CPP/INT/int.cpp:17:44: warning: overflow in expression; result is 0 with type 'int' [-Winteger-overflow]</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"INT_MIN + INT_MIN = "</span> &lt;&lt; INT_MIN + INT_MIN &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                                                  ^</span><br><span class="line"><span class="number">2</span> warnings generated.</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">-INT_MIN = <span class="number">-2147483648</span></span><br><span class="line">INT_MIN = <span class="number">-2147483648</span></span><br><span class="line">INT_MIN/<span class="number">10</span> = <span class="number">-214748364</span></span><br><span class="line">INT_MIN%<span class="number">10</span> = <span class="number">-8</span></span><br><span class="line">-INT_MIN%<span class="number">10</span> = <span class="number">-8</span></span><br><span class="line">-(INT_MIN%<span class="number">10</span>) = <span class="number">8</span></span><br><span class="line">INT_MAX + INT_MAX = <span class="number">-2</span></span><br><span class="line">INT_MIN + INT_MIN = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="五-参考文章"><a href="#五-参考文章" class="headerlink" title="五.参考文章"></a>五.参考文章</h3><ul>
+<li>深入理解计算机系统</li>
+<li><a href="https://www.runoob.com/cplusplus/cpp-data-types.html" target="_blank" rel="noopener">C++数据类型</a></li>
+<li><a href="https://www.itread01.com/content/1534661783.html" target="_blank" rel="noopener">INT_MIN和INT_MAX註意事項 //C++</a></li>
+<li><a href="https://stackoverflow.com/questions/54292185/why-int-min-is-not-2147483648-for-uint64-t-type" target="_blank" rel="noopener">Why -INT_MIN is NOT 2147483648 for uint64_t type</a></li>
+<li><a href="https://blog.csdn.net/weixin_42372777/article/details/83092086" target="_blank" rel="noopener">C/C++中int型上下限INT_MAX INT_MIN以及溢出</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+        <a href="/tags/C/">C</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/06/28/INT-MAX-INT-MIN/">https://raoxuntian.github.io/2020/06/28/INT-MAX-INT-MIN/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2020/06/29/byte-order/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>浅谈字节序
+        </span>
+      </a>
+    
+    
+      <a href="/2020/06/23/initializer-list/" id="art-right" class="art-right">
+        <span class="prev-title">
+          initializer_list<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-整型数据类型和数据大小"><span class="toc-text">一.整型数据类型和数据大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-INT-MAX和INT-MIN"><span class="toc-text">二.INT_MAX和INT_MIN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-运算"><span class="toc-text">三.运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-代码"><span class="toc-text">四.代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-参考文章"><span class="toc-text">五.参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIn及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
