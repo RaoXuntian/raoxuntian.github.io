@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> C/C++程序内存的各种变量存储区域和各个区域详解 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-07-02</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          C/C++程序内存的各种变量存储区域和各个区域详解
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>C/C++程序内存中各种变量的存储区域划分是C++面试时常问的一个问题，别的公司我不太清楚，至少某讯是挺爱问的……甚至面试官在面试的时候跟我说，“好的，你能说出这个三个区域就可以了，后面就不做要求了……”。之前看过<a href="https://blog.csdn.net/jirryzhang/article/details/79518408" target="_blank" rel="noopener">一篇博客</a>写的很详细，每次面试前临时背一背，现在不想背了，自己过一遍，画一画图加强理解吧。</p>
+<a id="more"></a>
+
+<h3 id="一-预备知识—程序的内存分配"><a href="#一-预备知识—程序的内存分配" class="headerlink" title="一.预备知识—程序的内存分配"></a>一.预备知识—程序的内存分配</h3><p>一个由C/C++编译的程序占用的内存分为以下几个部分</p>
+<ol>
+<li><p>栈区（stack）— 程序运行时由编译器自动分配，存放函数的参数值，局部变量的值等。</p>
+<p>其操作方式类似于数据结构中的栈。</p>
+</li>
+<li><p>堆区（heap） — 在内存开辟另一块存储区域。</p>
+<p>一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收。</p>
+<p>注意它与数据结构中的堆是两回事，分配方式倒是类似于链表。</p>
+</li>
+<li><p>全局区（静态区）（static）—编译器编译时即分配内存。   </p>
+<p>全局变量和静态变量的存储是放在一块的，</p>
+<p><strong>初始化</strong>的全局变量和静态变量在一块区域，</p>
+<p><strong>未初始化</strong>的全局变量和未初始化的静态变量在相邻的另一块区域。 </p>
+<p>（在C++中，由于全局变量和静态变量编译器会给这些变量自动初始化赋值，所以没有区分了）</p>
+<p>程序结束后由系统释放。</p>
+</li>
+<li><p>文字常量区 —常量字符串就是放在这里的。 程序结束后由系统释放。</p>
+</li>
+<li><p>程序代码区—存放函数体的二进制代码。</p>
+</li>
+</ol>
+<p>注意：静态局部变量和静态全局变量</p>
+<p>属于静态存储方式的量不一定就是静态变量。 </p>
+<p>例如：全局变量虽属于静态存储方式，但不一定是静态变量，</p>
+<p>必须由 static加以定义后才能成为静态外部变量，或称静态全局变量。</p>
+<p>把局部变量改变为静态变量后是改变了它的存储方式，即改变了它的生存期。<br>把全局变量改变为静态变量后是改变了它的作用域，限制了它的使用范围。</p>
+<h3 id="二-动-amp-静"><a href="#二-动-amp-静" class="headerlink" title="二.动&amp;静"></a>二.动&amp;静</h3><p>一个程序被加载到内存中，这块内存首先就存在两种<strong>属性</strong>：静态分配内存和动态分配内存。<br>静态分配内存：是在程序编译和链接时就确定好的内存。<br>动态分配内存：是在程序加载、调入、执行的时候分配/回收的内存。</p>
+<p><strong>Text &amp; Data &amp; Bss</strong></p>
+<ul>
+<li><p>.text： 也称为代码段(Code)，用来存放程序执行代码，同时也可能会包含一些常量(如一些字符串常量等）。该段内存为静态分配，只读(某些架构可能允许修改)。<br>这块内存是共享的,当有多个相同进程(Process)存在时，共用同一个text段。</p>
+</li>
+<li><p>.data： 也有的地方叫GVAR(global value)，用来存放程序中已经初始化的非零全局变量。静态分配。</p>
+<p>​    data又可分为读写（RW）区域和只读（RO）区域。<br>​    -&gt; RO段保存常量所以也被称为.constdata<br>​    -&gt; RW段则是普通非常全局变量，静态变量就在其中</p>
+</li>
+<li><p>.bss： 存放程序中为初始化的和零值全局变量。静态分配，在程序开始时通常会被清零。</p>
+</li>
+</ul>
+<p>text和data段都在可执行文件中，由系统从可执行文件中加载；而bss段不在可执行文件中，由系统初始化。<br>这三段内存就组成了我们编写的程序的本体，但是一个程序运行起来，还需要更多的数据和数据间的交互，否则这个程序就是死的，无用的。所以我们还需要为更多的数据和数据交互提供一块内存——堆栈。</p>
+<p><strong>堆栈（Heap&amp; Stack）</strong><br>堆和栈都是动态分配内存，两者空间大小都是可变的。</p>
+<ul>
+<li>Stack： 栈，存放Automatic Variables，按内存地址由高到低方向生长，其最大大小由编译时确定，速度快，但自由性差，最大空间不大。</li>
+</ul>
+<ul>
+<li>Heap： 堆，自由申请的空间，按内存地址由低到高方向生长，其大小由系统内存/虚拟内存上限决定，速度较慢，但自由性大，可用空间大。<br>每个线程都会有自己的栈，但是堆空间是共用的。</li>
+</ul>
+<h3 id="三-代码"><a href="#三-代码" class="headerlink" title="三.代码"></a>三.代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> global_i = <span class="number">0</span>;	<span class="comment">// global_i在全局（初始化）区</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>* global_p;		<span class="comment">// global_p在全局（未初始化）区</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;global_i = %p\n"</span>, &amp;global_i);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;global_p = %p\n"</span>, &amp;global_p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"global_p = %p\n"</span>, global_p);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> static_i = <span class="number">1</span>;	<span class="comment">// 全局静态区</span></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">2</span>;	<span class="comment">// 	栈</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> const_i = <span class="number">3</span>;	<span class="comment">// 栈</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">char</span> p1[] = <span class="string">"HUST"</span>;		<span class="comment">// p1在栈，"HUST"在常量区</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *p2 = <span class="string">"Computer Science"</span>;	<span class="comment">// p2在栈，"Computer Science"在常量区</span></span><br><span class="line">	global_p = <span class="keyword">new</span> <span class="keyword">char</span>(<span class="number">10</span>);	</span><br><span class="line">	<span class="comment">// 指针变量global_p依然在全局区，但在堆上开辟了10个char长度的空间，global_p的值是堆上开辟空间的首地址</span></span><br><span class="line">	<span class="keyword">char</span>* p3 = <span class="keyword">new</span> <span class="keyword">char</span>(<span class="number">20</span>);	</span><br><span class="line">	<span class="comment">// 这行代码在Heap中开辟了20个char长度的空间，同时在Stack上压入了p3，</span></span><br><span class="line">	<span class="comment">// 指针变量p3存在于栈上，其值为刚刚在堆上开辟的空间的首地址。</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;static_i = %p\n"</span>, &amp;static_i);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;i = %p\n"</span>, &amp;i);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;const_i = %p\n"</span>, &amp;const_i);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;p1 = %p\n"</span>, &amp;p1);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;p2 = %p\n"</span>, &amp;p2);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lu\n"</span>, <span class="keyword">sizeof</span>(p2));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"p1 = %p\n"</span>, p1);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"p2 = %p\n"</span>, p2);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;global_p = %p\n"</span>, &amp;global_p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"global_p = %p\n"</span>, global_p);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"&amp;p3 = %p\n"</span>, &amp;p3);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"p3 = %p\n"</span>, p3);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&amp;global_i = <span class="number">0x10e6a0020</span></span><br><span class="line">&amp;global_p = <span class="number">0x10e6a0028</span></span><br><span class="line">global_p = <span class="number">0x0</span></span><br><span class="line">&amp;static_i = <span class="number">0x10e6a0018</span></span><br><span class="line">&amp;i = <span class="number">0x7ffee15618ac</span></span><br><span class="line">&amp;const_i = <span class="number">0x7ffee15618a8</span></span><br><span class="line">&amp;p1 = <span class="number">0x7ffee15618a3</span></span><br><span class="line">&amp;p2 = <span class="number">0x7ffee1561898</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line">p1 = <span class="number">0x7ffee15618a3</span></span><br><span class="line">p2 = <span class="number">0x10e69ef3a</span></span><br><span class="line">&amp;global_p = <span class="number">0x10e6a0028</span></span><br><span class="line">global_p = <span class="number">0x7fc593c05850</span></span><br><span class="line">&amp;p3 = <span class="number">0x7ffee1561890</span></span><br><span class="line">p3 = <span class="number">0x7fc593c05860</span></span><br><span class="line">[Finished in <span class="number">0.9</span>s]</span><br></pre></td></tr></table></figure>
+
+<p>粗略地画了个草图……</p>
+<img src="/2020/07/02/variable-storage-areas-in-cpp/1.jpg" class="" title="image">
+
+<p>在全局静态区的有<code>global_p</code>，<code>global_i</code>，<code>static_i</code>，其中<code>global_i</code>，<code>static_i</code>是int类型，所以1个int数据直接在全局区占4字节存数据，而<code>global_p</code>是char类型的指针，一开始没有初始化，C++默认初始化为零指针，指向<code>0x00</code>，但指针变量<code>global_p</code>是在全局区上，后面new分配了地址，才指向了堆区。</p>
+<p>在栈上的有<code>i</code>，<code>const_i</code>，<code>p1</code>，<code>p2</code>，<code>p3</code>，其中<code>i</code>，<code>const_i</code>都是int，所以int数据之间存在栈上，但他们也有区别，加了const变量说明这块区域是不能“修改”的，你无法再给<code>const_i</code>重新赋值；<code>p1</code>是数组名，将常量区的<code>&quot;HUST\0&quot;</code>五个字符复制拷贝给p1数组，所以你会发现<code>p1</code>和<code>const_i</code>之间刚好有5个字节；<code>p2</code>是const char<em>，是指针，占8个字节，但如果仔细的算一下，你会发现，<code>p2</code>和<code>p1</code>之间有11个字节，好像对不上？其实不光这里对不上，你会发现在全局区里的int只占4个字节，但相邻int之间隔了8个字节，以及后面堆区上的<code>global_p</code>明明只分配10个字节，却和相邻区域隔了整整16个字节，其实这是C++里的*</em>内存对齐**规则，遵循4k/8k原则，这里不多说了。</p>
+<p>堆上的就是<code>global_p</code>和<code>p3</code>分配的空间，注意一下栈和堆的地址高低，等会要讲……</p>
+<p>常量区上的就是<code>p2</code>指向的常量，通过地址可以看得出来，常量区的地址和全局区很近，和堆栈区隔得比较远，那么这些区域在计算机内存中到底是如何分布的呢？</p>
+<h3 id="四-图解"><a href="#四-图解" class="headerlink" title="四.图解"></a>四.图解</h3><p>在 sw-at 的博客上扒了一张图，这张图中所示内存空间，地址由下往上增长，分别标示了 .text、.data、.bss、stack和heap的内存分部情况。<br>我们可以看到：</p>
+<ul>
+<li>text、data(gvar)、bss 在内存中地址较低低的位置（low level address），而堆栈则在相对较搞的位置。</li>
+<li>堆(Heap)往高地址方向生长，栈(Stack)往低地址方向生长。</li>
+</ul>
+<img src="/2020/07/02/variable-storage-areas-in-cpp/2.jpg" class="" title="image">
+
+<p>在C\C++中，通常可以把内存理解为4个分区：栈、堆、全局/静态存储区和常量存储区。下面我们分别简单地介绍一下各自的特点。</p>
+<p><strong>1 栈</strong><br>        通常是用于那些在编译期间就能确定存储大小的变量的存储区，用于在函数作用域内创建，在离开作用域后自动销毁的变量的存储区。通常是局部变量，函数参数等的存储区。他的存储空间是连续的，两个紧密挨着定义的局部变量，他们的存储空间也是紧挨着的。栈的大小是有限的，通常Visual C++编译器的默认栈的大小为1MB，所以不要定义int a[1000000]这样的超大数组。</p>
+<p><strong>2 堆</strong><br>        通常是用于那些在编译期间不能确定存储大小的变量的存储区，它的存储空间是不连续的，一般由malloc（或new）函数来分配内存块，并且需要用free（delete）函数释放内存。如果程序员没有释放掉，那么就会出现常说的内存泄漏问题。需要注意的是，两个紧挨着定义的指针变量，所指向的malloc出来的两块内存并不一定的是紧挨着的，所以会产生内存碎片。另外需要注意的一点是，堆的大小几乎不受限制，理论上每个程序最大可达4GB。</p>
+<p><strong>3 全局/静态存储区</strong><br>        和“栈”一样，通常是用于那些在编译期间就能确定存储大小的变量的存储区，但它用于的是在整个程序运行期间都可见的全局变量和静态变量。</p>
+<p><strong>4 常量存储区</strong><br>        和“全局/静态存储区”一样，通常是用于那些在编译期间就能确定存储大小的常量的存储区，并且在程序运行期间，存储区内的常量是全局可见的。这是一块比较特殊的存储去，他们里面存放的是常量，不允许被修改。</p>
+<h3 id="五-总结"><a href="#五-总结" class="headerlink" title="五.总结"></a>五.总结</h3><p> 根据上面的内容，分别将栈和堆、全局/静态存储区和常量存储区进行对比，结果如下。</p>
+<p><strong>表1 栈和堆的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>栈</th>
+<th>堆</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储内容</td>
+<td>局部变量</td>
+<td>变量</td>
+</tr>
+<tr>
+<td>作用域</td>
+<td>函数作用域、语句块作用域</td>
+<td>函数作用域、语句块作用域</td>
+</tr>
+<tr>
+<td>编译期间大小是否确定</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>1MB</td>
+<td>4GB</td>
+</tr>
+<tr>
+<td>内存分配方式</td>
+<td>地址由高向低减少</td>
+<td>地址由低向高增加</td>
+</tr>
+<tr>
+<td>内容是否可以修改</td>
+<td>是</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<p><strong>表2 全局/静态存储区和常量存储区的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>全局/静态存储区</th>
+<th>常量存储区</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储内容</td>
+<td>全局变量、静态变量</td>
+<td>常量</td>
+</tr>
+<tr>
+<td>编译期间大小是否确定</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>内容是否可以修改</td>
+<td>是</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>l          栈区：主要用来存放局部变量, 传递参数, 存放函数的返回地址。.esp 始终指向栈顶, 栈中的数据越多, esp的值越小。</p>
+<p>l          堆区：用于存放动态分配的对象, 当你使用 malloc和new 等进行分配时,所得到的空间就在堆中。动态分配得到的内存区域附带有分配信息, 所以你能够 free和delete它们。</p>
+<p>l          数据区：全局，静态和常量是分配在数据区中的，数据区包括bss（未初始化数据区）和初始化数据区。</p>
+<p>注意：</p>
+<p>1）     堆向高内存地址生长；</p>
+<p>2）     栈向低内存地址生长；</p>
+<p>3）     堆和栈相向而生，堆和栈之间有个临界点，称为stkbrk。</p>
+<p>全局区可以在编译期间确定大小，那么我们可以应该想到，<strong>static const</strong>关键词不光可以作为类的静态常量属性，还可以作为预编译声明。</p>
+<p>当作为<strong>预编译声明</strong>时，static const 属性必须在声明时即指定值，而且类型仅限基本数据类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>  </span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> a =<span class="number">1</span>;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时相当于C语言中的 <code>#define a 1</code> 宏定义了一个宏变量a，但是C++的这种方式比C的#define的优势在于，<strong>可以对类型进行检查和限制，减少了编译期间因为类型隐式转换而造成的潜在风险</strong>。</p>
+<p>此时的static const常量既不存在于动态区也不存在于静态区（应该是存在于常量区或代码区），而是由编译器在编译期间就直接进行了值替换。也因为这个原因不可以对其进行取地址操作，因为它根本没有地址。</p>
+<p>关于这些区域存取的效率，我们可以分析这样两行代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s1[] = <span class="string">"aaaaaaaaaaaaaaa"</span>; </span><br><span class="line"><span class="keyword">char</span> *s2 = <span class="string">"bbbbbbbbbbbbbbbbb"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>aaaaaaaaaaa是在运行时刻赋值给s1的，存在栈上；<br>而bbbbbbbbbbb是在编译时就确定的，存在常量区； </p>
+<p>但是，在以后的存取中，在栈上的数组比指针所指向的字符串(例如堆)快。 </p>
+<p>栈是机器系统提供的数据结构，计算机在底层提供支持，分配有专门的堆栈段寄存器，入栈出栈有专门的机器指令，这些都决定了栈的高效率执行。</p>
+<p>堆是由C/C++函数库提供的，机制比较复杂，有不同的分配算法，易产生内存碎片，需要对内存进行各种管理，效率比栈要低很多。</p>
+<p>堆和栈的区别可以用如下的比喻来看出：<br>使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br>使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
+<h3 id="六-参考文章"><a href="#六-参考文章" class="headerlink" title="六.参考文章"></a>六.参考文章</h3><ul>
+<li><a href="https://blog.csdn.net/jirryzhang/article/details/79518408" target="_blank" rel="noopener">C/C++程序内存的各种变量存储区域和各个区域详解</a></li>
+<li><a href="https://www.cnblogs.com/zhoug2020/p/10520341.html" target="_blank" rel="noopener">c/c++内存机制（一）（转）</a></li>
+<li><a href="https://www.cnblogs.com/ComputerG/archive/2012/02/01/2334898.html" target="_blank" rel="noopener">c/c++内存机制（一）（原）</a></li>
+<li><a href="https://blog.csdn.net/qq_33266987/article/details/51965221" target="_blank" rel="noopener">C/C++ 全局变量和局部变量在内存里的区别？堆和栈</a></li>
+<li><a href="https://blog.csdn.net/LYKXHTP/article/details/88877930" target="_blank" rel="noopener">C++ 常量区 静态区 堆区 栈区</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/07/02/variable-storage-areas-in-cpp/">https://raoxuntian.github.io/2020/07/02/variable-storage-areas-in-cpp/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2020/06/29/byte-order/" id="art-right" class="art-right">
+        <span class="prev-title">
+          浅谈字节序<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-预备知识—程序的内存分配"><span class="toc-text">一.预备知识—程序的内存分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-动-amp-静"><span class="toc-text">二.动&amp;静</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-代码"><span class="toc-text">三.代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-图解"><span class="toc-text">四.图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-总结"><span class="toc-text">五.总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-参考文章"><span class="toc-text">六.参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/02/variable-storage-areas-in-cpp/">
+            <time class="tagcloud-posttime">2020 / 07 / 02</time>
+            <span>C/C++程序内存的各种变量存储区域和各个区域详解</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
