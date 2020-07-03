@@ -287,7 +287,7 @@
 <ul>
 <li>假如我把B里的<code>char c</code>换个位置，移到最后会发生什么呢？读者可以花上一分钟时间自行计算一下此时的B的大小。</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]--&gt;[31]</span></span><br><span class="line">	<span class="keyword">double</span> d;	<span class="comment">// [32]...[39]</span></span><br><span class="line">  <span class="keyword">char</span> c;		<span class="comment">// [40]...[47]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]--&gt;[31]</span></span><br><span class="line">	<span class="keyword">double</span> d;	<span class="comment">// [32]...[39]</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [40]...[47]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>没错，你会发现我只是调换了一下位置，<code>sizeof(B)</code>就从40–&gt;48了！</p>
 <p>虽然我还没有接触过正式的C++工程开发项目，但我能感觉，在正式的项目中一定要考虑内存对齐的原则按顺序定义成员数据类型，稍微有顺序地定义成员数据类型可以提高机器内部的存储效率，积少成多，还是得注意细节问题。</p>
@@ -557,16 +557,16 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/04/pointer-and-reference/">
-            <time class="tagcloud-posttime">2020 / 06 / 04</time>
-            <span>浅谈c++的指针与引用</span>
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
           </a>
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/07/03/memory-alignment/">
-            <time class="tagcloud-posttime">2020 / 07 / 03</time>
-            <span>C/C++中的内存对齐</span>
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
           </a>
         </div>
       
