@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> C/C++中的内存对齐 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-07-03</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          C/C++中的内存对齐
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>内存对齐这个东西我一开始也不知道的，后来又一次面试被问到了，然后张总跟我随口普及了一下，其实还是蛮简单的，有一点点C的基础估计五分钟就能学会内存对齐的规则了。但如果你想刨根问底，为什么我们现有的计算机要内存对齐，里面的学问还是蛮深的，涉及到了处理器、寄存器这些很核心的内存硬件。</p>
+<a id="more"></a>
+
+<h3 id="一-引子"><a href="#一-引子" class="headerlink" title="一.引子"></a>一.引子</h3><p>我们知道，任何一个数据结构在计算机内存当中要占据一定的字节(byte)数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"type: \t\t"</span> &lt;&lt; <span class="string">"************size**************"</span>&lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"bool: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">bool</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"char: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">char</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"signed char: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">signed</span> <span class="keyword">char</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"unsigned char: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">char</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"wchar_t: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">wchar_t</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"short: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(short) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"int: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">int</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"unsigned: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"long: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">long</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"unsigned long: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">long</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"double: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">double</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"long double: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">long</span> <span class="keyword">double</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"float: \t\t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">float</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"size_t: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">size_t</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"string: \t"</span> &lt;&lt; <span class="string">"所占字节数："</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="built_in">string</span>) &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"type: \t\t"</span> &lt;&lt; <span class="string">"************size**************"</span>&lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p>output:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">type: 		************size**************</span><br><span class="line"><span class="keyword">bool</span>: 		所占字节数：<span class="number">1</span></span><br><span class="line"><span class="keyword">char</span>: 		所占字节数：<span class="number">1</span></span><br><span class="line"><span class="keyword">signed</span> <span class="keyword">char</span>: 	所占字节数：<span class="number">1</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span>: 	所占字节数：<span class="number">1</span></span><br><span class="line"><span class="keyword">wchar_t</span>: 	所占字节数：<span class="number">4</span></span><br><span class="line">short: 		所占字节数：<span class="number">2</span></span><br><span class="line"><span class="keyword">int</span>: 		所占字节数：<span class="number">4</span></span><br><span class="line"><span class="keyword">unsigned</span>: 	所占字节数：<span class="number">4</span></span><br><span class="line"><span class="keyword">long</span>: 		所占字节数：<span class="number">8</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span>: 	所占字节数：<span class="number">8</span></span><br><span class="line"><span class="keyword">double</span>: 	所占字节数：<span class="number">8</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">double</span>: 	所占字节数：<span class="number">16</span></span><br><span class="line"><span class="keyword">float</span>: 		所占字节数：<span class="number">4</span></span><br><span class="line"><span class="keyword">size_t</span>: 	所占字节数：<span class="number">8</span></span><br><span class="line"><span class="built_in">string</span>: 	所占字节数：<span class="number">24</span></span><br><span class="line">type: 		************size**************</span><br><span class="line">[Finished in <span class="number">0.9</span>s]</span><br></pre></td></tr></table></figure>
+
+<p>那我们来写一个class或struct</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	short s;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">5</span>];</span><br><span class="line">	<span class="keyword">float</span> f;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>那一个A的对象的大小是多少呢？</p>
+<p>1+2+4+5+4=16？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%lu\n"</span>, <span class="keyword">sizeof</span>(a));</span><br></pre></td></tr></table></figure>
+
+<p>打印的结果是20.</p>
+<p>多做几个实验，你会不会感到奇怪，sizeof的结果往往都比你声明的变量总长度要大，这是怎么回事呢？</p>
+<h3 id="二-内存（字节）对齐"><a href="#二-内存（字节）对齐" class="headerlink" title="二.内存（字节）对齐"></a>二.内存（字节）对齐</h3><p>网上随手一搜搜到的三个内存对齐的原则：</p>
+<ol>
+<li>结构体的总大小，必须要是其内部最大成员的整数倍，不足的要补齐。</li>
+<li>结构体或联合的数据成员，第一个数据成员是要放在offset == 0的地方，如果遇上子成员，要根据子成员的类型存放在对应的整数倍的地址上。</li>
+<li>如果结构体作为成员，则要找到这个结构体中的最大元素，然后从这个最大成员的整数倍地址开始存储。</li>
+</ol>
+<p>对照这三个原则，我们再来看看之前的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [0]--&gt;[1] 补齐1个字节</span></span><br><span class="line">	short s;	<span class="comment">// [2]...[3]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [4]...[7]</span></span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">5</span>];	<span class="comment">// [8]...[12]--&gt;[15] 补齐3个字节 (ch占8个字节 8是4的整数倍)</span></span><br><span class="line">	<span class="keyword">float</span> f;		<span class="comment">// [16]...[19]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>A的内部最大成员是int和float的4字节，所以内部成员在内存对齐的时候遵循4k原则，尽可能从4的整数倍的地址开始存放数据。我们再来看一个复杂点的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [22]--&gt;[23]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]--&gt;[31]</span></span><br><span class="line">	<span class="keyword">double</span> d;	<span class="comment">// [32]...[39]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>B当中有A，也多了一个8字节的double类型，那么根据原则三，B中最大成员是8字节的double（注意不是20字节的A！），所有每个内部成员在内存对齐的时候遵循8k原则，尽可能才能够8的整数倍的地址开始存放数据。</p>
+<p>稍微算一下，就可以得到sizeof(B)是40字节。</p>
+<p>讲到这里相信很多人已经弄清楚了内存字节对齐是个什么回事了，但我想接着这个<code>class B</code>再分享两点</p>
+<ul>
+<li>假如我把B里的<code>char c</code>换个位置，移到最后会发生什么呢？读者可以花上一分钟时间自行计算一下此时的B的大小。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]--&gt;[31]</span></span><br><span class="line">	<span class="keyword">double</span> d;	<span class="comment">// [32]...[39]</span></span><br><span class="line">  <span class="keyword">char</span> c;		<span class="comment">// [40]...[47]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>没错，你会发现我只是调换了一下位置，<code>sizeof(B)</code>就从40–&gt;48了！</p>
+<p>虽然我还没有接触过正式的C++工程开发项目，但我能感觉，在正式的项目中一定要考虑内存对齐的原则按顺序定义成员数据类型，稍微有顺序地定义成员数据类型可以提高机器内部的存储效率，积少成多，还是得注意细节问题。</p>
+<ul>
+<li>假如我把B里的<code>double d</code>换成float类型，会发生什么改变呢？再请读者花上一分钟时间自行计算一下此时的B的大小。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [22]--&gt;[23]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]</span></span><br><span class="line">	<span class="keyword">float</span> d;	<span class="comment">// [28]...[31]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>很好，如果你计算出来的结果是32说明这一块你应该已经基本掌握了。当我把double–&gt;float，此时B的最大成员大小只有4字节，所以我们只需要遵循4k原则去对齐，从double–&gt;float少了4个字节，但整个B少了8个字节。从这一点我又想到在定义成员变量的数据类型的时候，考虑到实际内存大小，我们不能盲目地想着用long、double这些类型一劳永逸，应该根据实际情况去选择适合实际情况的数据类型，在时间和空间中找到权衡。</p>
+<h3 id="三-pragma-pack"><a href="#三-pragma-pack" class="headerlink" title="三.#pragma pack()"></a>三.#pragma pack()</h3><p>假如我们不希望机器内存对齐，有办法吗？</p>
+<p>当然有。<code>#pragma pack()</code></p>
+<p>该预处理指令用来改变对齐参数。在缺省情况下，C编译器为每一个变量或数据单元按其自然对界条件分配空间。一般地，可以通过下面的方法来改变缺省的对齐参数：</p>
+<ul>
+<li>使用伪指令#pragma pack (n)，C编译器将按照n字节对齐。</li>
+<li>使用伪指令#pragma pack ()，取消自定义字节对齐方式。</li>
+</ul>
+<p>也可以写成：</p>
+<p><code>#pragma pack(push,n)</code></p>
+<p><code>#pragma pack(pop)</code></p>
+<p><code>#pragma pack (n)</code>表示每个成员的对齐单元<strong>不大于</strong>n（n为2的整数次幂）。这里规定的是上界，只影响对齐单元大于n的成员，对于对齐字节不大于n的成员没有影响。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	short s;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">5</span>];</span><br><span class="line">	<span class="keyword">float</span> f;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;</span><br><span class="line">	short s;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">float</span> d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">double</span> d;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	short s;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">	A a;</span><br><span class="line">	B b;</span><br><span class="line">	C c;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lu\n"</span>, <span class="keyword">sizeof</span>(a));		<span class="comment">// 16</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lu\n"</span>, <span class="keyword">sizeof</span>(b));		<span class="comment">// 27</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lu\n"</span>, <span class="keyword">sizeof</span>(c));		<span class="comment">// 15</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="四-参考文章"><a href="#四-参考文章" class="headerlink" title="四.参考文章"></a>四.参考文章</h3><ul>
+<li><a href="https://www.jianshu.com/p/9441a78062f3" target="_blank" rel="noopener">内存对齐三个原则</a></li>
+<li>５<a href="https://blog.csdn.net/hairetz/article/details/4084088" target="_blank" rel="noopener">分钟搞定内存字节对齐</a></li>
+<li><a href="https://blog.csdn.net/chy19911123/article/details/48894579" target="_blank" rel="noopener">C/C++ 内存对齐原则及作用</a></li>
+<li><a href="https://blog.csdn.net/lgouc/article/details/8235471" target="_blank" rel="noopener">为什么要内存对齐 Data alignment: Straighten up and fly right</a></li>
+<li><a href="https://blog.csdn.net/lgouc/article/details/8235616" target="_blank" rel="noopener">关于内存对齐</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/07/03/memory-alignment/">https://raoxuntian.github.io/2020/07/03/memory-alignment/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2020/07/02/variable-storage-areas-in-cpp/" id="art-right" class="art-right">
+        <span class="prev-title">
+          C/C++程序内存的各种变量存储区域和各个区域详解<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-引子"><span class="toc-text">一.引子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-内存（字节）对齐"><span class="toc-text">二.内存（字节）对齐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-pragma-pack"><span class="toc-text">三.#pragma pack()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-参考文章"><span class="toc-text">四.参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/02/variable-storage-areas-in-cpp/">
+            <time class="tagcloud-posttime">2020 / 07 / 02</time>
+            <span>C/C++程序内存的各种变量存储区域和各个区域详解</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
