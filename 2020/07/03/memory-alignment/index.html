@@ -251,7 +251,7 @@
     </header>
     <div class="post-content syuanpi fadeInRightShort back-3">
       
-        <p>内存对齐这个东西我一开始也不知道的，后来又一次面试被问到了，然后张总跟我随口普及了一下，其实还是蛮简单的，有一点点C的基础估计五分钟就能学会内存对齐的规则了。但如果你想刨根问底，为什么我们现有的计算机要内存对齐，里面的学问还是蛮深的，涉及到了处理器、寄存器这些很核心的内存硬件。</p>
+        <p>内存对齐这个东西我一开始也是不知道的，后来又一次面试被问到了，然后张总跟我随口普及了一下，其实还是蛮简单的，有一点点C的基础估计五分钟就能学会内存对齐的规则了。但如果你想刨根问底，为什么我们现有的计算机要内存对齐，里面的学问还是蛮深的，涉及到了处理器、寄存器这些很核心的内存硬件。</p>
 <a id="more"></a>
 
 <h3 id="一-引子"><a href="#一-引子" class="headerlink" title="一.引子"></a>一.引子</h3><p>我们知道，任何一个数据结构在计算机内存当中要占据一定的字节(byte)数：</p>
@@ -276,7 +276,7 @@
 <li>如果结构体作为成员，则要找到这个结构体中的最大元素，然后从这个最大成员的整数倍地址开始存储。</li>
 </ol>
 <p>对照这三个原则，我们再来看看之前的代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [0]--&gt;[1] 补齐1个字节</span></span><br><span class="line">	short s;	<span class="comment">// [2]...[3]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [4]...[7]</span></span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">5</span>];	<span class="comment">// [8]...[12]--&gt;[15] 补齐3个字节 (ch占8个字节 8是4的整数倍)</span></span><br><span class="line">	<span class="keyword">float</span> f;		<span class="comment">// [16]...[19]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [0]--&gt;[1] 补齐1个字节</span></span><br><span class="line">	short s;	<span class="comment">// [2]...[3]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [4]...[7]</span></span><br><span class="line">	<span class="keyword">char</span> ch[<span class="number">5</span>];	<span class="comment">// [8]...[12]--&gt;[15] 补齐3个字节 (ch占8个字节 8是4的整数倍)</span></span><br><span class="line">	<span class="keyword">float</span> f;	<span class="comment">// [16]...[19]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>A的内部最大成员是int和float的4字节，所以内部成员在内存对齐的时候遵循4k原则，尽可能从4的整数倍的地址开始存放数据。我们再来看一个复杂点的：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	A a;		<span class="comment">// [0]...[19]</span></span><br><span class="line">	short s;	<span class="comment">// [20]...[21]</span></span><br><span class="line">	<span class="keyword">char</span> c;		<span class="comment">// [22]--&gt;[23]</span></span><br><span class="line">	<span class="keyword">int</span> i;		<span class="comment">// [24]...[27]--&gt;[31]</span></span><br><span class="line">	<span class="keyword">double</span> d;	<span class="comment">// [32]...[39]</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -314,7 +314,7 @@
 
 <h3 id="四-参考文章"><a href="#四-参考文章" class="headerlink" title="四.参考文章"></a>四.参考文章</h3><ul>
 <li><a href="https://www.jianshu.com/p/9441a78062f3" target="_blank" rel="noopener">内存对齐三个原则</a></li>
-<li>５<a href="https://blog.csdn.net/hairetz/article/details/4084088" target="_blank" rel="noopener">分钟搞定内存字节对齐</a></li>
+<li><a href="https://blog.csdn.net/hairetz/article/details/4084088" target="_blank" rel="noopener">５分钟搞定内存字节对齐</a></li>
 <li><a href="https://blog.csdn.net/chy19911123/article/details/48894579" target="_blank" rel="noopener">C/C++ 内存对齐原则及作用</a></li>
 <li><a href="https://blog.csdn.net/lgouc/article/details/8235471" target="_blank" rel="noopener">为什么要内存对齐 Data alignment: Straighten up and fly right</a></li>
 <li><a href="https://blog.csdn.net/lgouc/article/details/8235616" target="_blank" rel="noopener">关于内存对齐</a></li>
@@ -509,11 +509,11 @@
     </div>
   
     <div class="tagcloud-tag">
-      <button>trie tree</button>
+      <button>life</button>
     </div>
   
     <div class="tagcloud-tag">
-      <button>life</button>
+      <button>trie tree</button>
     </div>
   
   </div>
@@ -543,20 +543,6 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/04/pointer-and-reference/">
-            <time class="tagcloud-posttime">2020 / 06 / 04</time>
-            <span>浅谈c++的指针与引用</span>
-          </a>
-        </div>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/07/03/memory-alignment/">
-            <time class="tagcloud-posttime">2020 / 07 / 03</time>
-            <span>C/C++中的内存对齐</span>
-          </a>
-        </div>
-      
-        <div class="tagcloud-post">
           <a href="/2020/06/05/learnCpp-static/">
             <time class="tagcloud-posttime">2020 / 06 / 05</time>
             <span>浅谈C++关键字之static</span>
@@ -567,6 +553,20 @@
           <a href="/2020/06/03/learnCpp-const/">
             <time class="tagcloud-posttime">2020 / 06 / 03</time>
             <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
           </a>
         </div>
       
@@ -676,13 +676,6 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/04/pointer-and-reference/">
-            <time class="tagcloud-posttime">2020 / 06 / 04</time>
-            <span>浅谈c++的指针与引用</span>
-          </a>
-        </div>
-      
-        <div class="tagcloud-post">
           <a href="/2020/06/05/learnCpp-static/">
             <time class="tagcloud-posttime">2020 / 06 / 05</time>
             <span>浅谈C++关键字之static</span>
@@ -693,6 +686,13 @@
           <a href="/2020/06/03/learnCpp-const/">
             <time class="tagcloud-posttime">2020 / 06 / 03</time>
             <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈c++的指针与引用</span>
           </a>
         </div>
       
@@ -730,24 +730,24 @@
     </div>
   
     <div class="tagcloud-postlist ">
-      <h2>trie tree</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/18/trie-tree/">
-            <time class="tagcloud-posttime">2020 / 06 / 18</time>
-            <span>Trie Tree</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
       <h2>life</h2>
       
         <div class="tagcloud-post">
           <a href="/2020/05/29/myFirstBlog/">
             <time class="tagcloud-posttime">2020 / 05 / 29</time>
             <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
           </a>
         </div>
       
