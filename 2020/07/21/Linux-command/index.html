@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="Linux, interview, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> Linux常用命令 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-07-21</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          Linux常用命令
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>在实际工作中，许多服务器是Linux操作系统，作为程序员无法避免和Linux打交道，所以在应届生面试的时候，Linux常用指令也是面试官经常考察的一个点。</p>
+<p>除了我们常用的<code>cd</code>、<code>ls</code>，我们应该掌握一些常用的指令</p>
+<h4 id="面试常见的Linux指令"><a href="#面试常见的Linux指令" class="headerlink" title="面试常见的Linux指令"></a>面试常见的Linux指令</h4><a id="more"></a>
+
+<h3 id="1-pwd"><a href="#1-pwd" class="headerlink" title="1.pwd"></a>1.pwd</h3><ul>
+<li><code>pwd</code>:显示当前目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez bin]<span class="comment"># pwd</span></span><br><span class="line">/root/miniconda3/bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-mkdir-rmdir"><a href="#2-mkdir-rmdir" class="headerlink" title="2.mkdir/rmdir"></a>2.mkdir/rmdir</h3><ul>
+<li><code>mkdir</code>:建立一个新目录</li>
+</ul>
+<p>这个指令在默认的情况下是要一层一层地建立你所需要的目录。默认的时候你要建立的目录的上级目录必须也要存在，如果想一次建立多层目录，可以<code>-p</code>选项。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># mkdir test1/test2</span></span><br><span class="line">mkdir: 无法创建目录<span class="string">"test1/test2"</span>: 没有那个文件或目录</span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># mkdir test1/test2 -p</span></span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># ll |grep test</span></span><br><span class="line">drwxr-xr-x  3 root root      4096 7月  22 15:45 test1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>rmdir</code>:删除一个<strong>空</strong>目录</li>
+</ul>
+<p>注意这个指令默认是删除一个空目录，加入<code>-p</code>选项连同上层“空的”目录也一起删除。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># rmdir test1/ &lt;==因为尚有内容，无法删除</span></span><br><span class="line">rmdir: 删除 <span class="string">"test1/"</span> 失败: 目录非空</span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># rmdir test1/test2/ -p</span></span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># ll |grep test</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想把目录下的东西都删除，这个时候可以使用<code>rm -rf</code>。</p>
+<h3 id="3-cp-rm-mv"><a href="#3-cp-rm-mv" class="headerlink" title="3.cp/rm/mv"></a>3.cp/rm/mv</h3><ul>
+<li><code>cp</code>:复制文件或目录</li>
+</ul>
+<p><code>cp</code>这个指令很重要的，不同身份者执行这个命令会有不同的结果产生。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cp [-adfilprsu] 源文件(<span class="built_in">source</span>) 目标文件(destination)</span><br><span class="line">cp [option] source1 source2 source3 …… directory</span><br><span class="line">选项与参数：</span><br><span class="line">-a	:	相当于-dr --preserve=all的意思（常用）</span><br><span class="line">-d	:	若源文件为链接文件的属性（link file），则复制链接文件属性而非文件本身；</span><br><span class="line">-i	:	若目标文件（destination）已经存在，在覆盖时会先询问操作的进行（常用）；</span><br><span class="line">-p	:	连同文件的属性（权限、用户、时间）一起复制过去，而非使用默认属性（备份常用）；</span><br><span class="line">-r	:	递归复制，用于目录的复制操作（常用）；</span><br><span class="line">最后需要注意的是，如果源文件有两个以上，则最后一个目标文件一定要是“目录”才行。</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><code>rm</code>:删除文件或目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rm [-fir] 文件或目录</span><br><span class="line">选项与参数：</span><br><span class="line">-f	:	就是force的意思，忽略不存在文件，不会出现警告信息；</span><br><span class="line">-I	:	交互模式，在删除前会询问使用者是否操作；</span><br><span class="line">-r	:	递归删除，最常用于目录的删除，这是非常危险的选项。</span><br></pre></td></tr></table></figure>
+
+<p>我们在网上经常看到删库跑路的梗<code>rm -rf /</code>，现在你应该知道这个命令的意思了吧~</p>
+<ul>
+<li><code>mv</code>:移动文件或目录，或重命名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mv [-fiu] source destination</span><br><span class="line">mv [option] source1 source2 source3 …… directory</span><br><span class="line">选项与参数：</span><br><span class="line">-f	:	就是force的意思，如果目标文件以及存在，不会询问而直接覆盖；</span><br><span class="line">-i	:	若目标文件（destination）已经存在，就会询问是否覆盖；</span><br><span class="line">-u	:	若目标文件已经存在，且source比较新，才会更新（update）。</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-cat-tac-nl-more-less-head-tail-od"><a href="#4-cat-tac-nl-more-less-head-tail-od" class="headerlink" title="4.cat/tac/nl/more/less/head/tail/od"></a>4.cat/tac/nl/more/less/head/tail/od</h3><ul>
+<li><code>cat</code>:从第一行开始显示文件内容。</li>
+<li><code>tac</code>:从最后一行开始显示，可以看出tac是cat的倒着写。</li>
+<li><code>nl</code>:显示的时候，同时输出行号。</li>
+<li><code>more</code>:一页一页地显示文件内容。</li>
+<li><code>less</code>:与more类似，但是比more更好的是，它可以往前翻页。</li>
+<li><code>head</code>:只看前面几行。</li>
+<li><code>tail</code>:只看后面几行。</li>
+<li><code>od</code>:以二进制的方式读取文件内容。</li>
+</ul>
+<h3 id="5-touch"><a href="#5-touch" class="headerlink" title="5.touch"></a>5.touch</h3><ul>
+<li><code>touch</code>:创建新文件或修改文件时间</li>
+</ul>
+<p><code>touch</code>可以创建新文件并不新鲜，但很多人可能不知道它可以修改文件时间，在说修改文件时间之前，我们看看Linux下的文件有哪些时间：</p>
+<ul>
+<li><p>修改时间（modification time, mtime）</p>
+<p>当该文件的<strong>内容数据</strong>变更时，就会更新这个时间，内容数据指的是文件的内容，而不是文件的属性或权限。</p>
+</li>
+<li><p>状态时间（status time, ctime）</p>
+<p>当该文件的<strong>状态（status）</strong>改变时，就会更新这个时间，举例来说，像是权限与属性被更改了都会更新这个时间。</p>
+</li>
+<li><p>读取时间（access time, atime）</p>
+<p>当<strong>该文件的内容被读取</strong>时，就会更新这个读取时间（access），举例来说，我们使用cat去读取file.txt，就会更新该文件的atime。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># date; ll /etc/man_db.conf; ll --time=ctime /etc/man_db.conf; ll --time=atime /etc/man_db.conf </span></span><br><span class="line">2020年 07月 24日 星期五 23:49:14 CST</span><br><span class="line">-rw-r--r--. 1 root root 5171 6月  10 2014 /etc/man_db.conf		&lt;== 这是mtime</span><br><span class="line">-rw-r--r--. 1 root root 5171 8月  18 2017 /etc/man_db.conf		&lt;== 这是ctime</span><br><span class="line">-rw-r--r--. 1 root root 5171 7月  23 03:48 /etc/man_db.conf	&lt;== 这是atime</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">touch [-acdmt] 文件</span><br><span class="line">参数：</span><br><span class="line">-a : 仅修改访问时间。</span><br><span class="line">-c : 仅修改文件的时间，若该文件不存在则不新建文件。</span><br><span class="line">-d : 后面可以接欲修改的日期而不使用目前的日期。</span><br><span class="line">-m : 仅修改 mtime。</span><br><span class="line">-t : 后面可以接欲修改的时间而不用目前的时间，格式为[YYMMDDhhmm]。</span><br></pre></td></tr></table></figure>
+
+<p>无论如何，<code>touch</code>这个命令最常被使用的情况是：</p>
+<ul>
+<li>建立一个空文件</li>
+<li>将某个文件日期自定义为目前（mtime和atime）</li>
+</ul>
+<h3 id="6-find"><a href="#6-find" class="headerlink" title="6.find"></a>6.find</h3><ul>
+<li><code>find</code>:查找某路径下指定文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find /root（路径） -name 文件名</span><br><span class="line">find /root（路径） -mtime 0 当前目录下查找今天之内有改动的文件  </span><br><span class="line">-mtime +n : 列出在n天之前（不含n天本身）被更改过的文件名；  </span><br><span class="line">-mtime -n : 列出在n天之内（含n天本身）被更改过的文件名；</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-grep-wc"><a href="#7-grep-wc" class="headerlink" title="7.grep/wc"></a>7.grep/wc</h3><ul>
+<li><code>grep</code>:文本搜索</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">语法：grep 参数 查找条件 文件名（注：是文件名，目录名下查找不行）</span><br><span class="line">主要参数：</span><br><span class="line">－i：不区分大小写(只适用于字母字符。）</span><br><span class="line">－l：查询多文件时只输出包含匹配字符的 文件名。</span><br><span class="line">－n：显示匹配行内容及行号。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>wc</code>:统计字数</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wc [-clw][--<span class="built_in">help</span>][--version][文件...]</span><br><span class="line">参数：</span><br><span class="line">-c或--bytes或--chars 只显示Bytes数。</span><br><span class="line">-l或--lines 只显示行数。</span><br><span class="line">-w或--words 只显示字数。</span><br><span class="line">--<span class="built_in">help</span> 在线帮助。</span><br><span class="line">--version 显示版本信息。</span><br></pre></td></tr></table></figure>
+
+<p>在默认的情况下，wc将计算指定文件的行数、字数，以及字节数。使用的命令为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(base) saladdays@MacBook-Pro _posts % wc learnCpp-static.md </span><br><span class="line">     222     516    9427 learnCpp-static.md</span><br></pre></td></tr></table></figure>
+
+
+
+<p>找出某个文件里关键字出现的次数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep 字符串 文件名 | wc -l</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="8-ps-top-kill"><a href="#8-ps-top-kill" class="headerlink" title="8.ps/top/kill"></a>8.ps/top/kill</h3><ul>
+<li><p><code>ps</code>:查看进程，显示系统中进程的信息。包括进程ID、控制进程终端、执行时间和命令。</p>
+</li>
+<li><p><code>top</code>:显示当前系统正在执行的进程的相关信息，包括进程ID、内存占用率、CPU占用率等。</p>
+<p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。</p>
+</li>
+<li><p><code>kill</code>:杀死进程。</p>
+</li>
+</ul>
+<h3 id="9-netstat-lsof"><a href="#9-netstat-lsof" class="headerlink" title="9.netstat/lsof"></a>9.netstat/lsof</h3><ul>
+<li><code>netstat</code>:常用于查看路由表，显示各种网络相关信息，如网络连接，路由表，接口状态(Interface Statistics),masquerade连接，多播成员。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">命令参数</span><br><span class="line"></span><br><span class="line">注：netstat命令默认是不显示LISTEN状态的网络连接和LISTEING状态的UNIX域连接，只有使用带-a或者-l参数的命令才能显示出来。</span><br><span class="line"></span><br><span class="line">    -a (all)显示所有状态的连接</span><br><span class="line">    -t (tcp)仅显示tcp相关连接</span><br><span class="line">    -u (udp)仅显示udp相关连接</span><br><span class="line">    -n 拒绝显示别名，能显示数字的全部转化成数字。</span><br><span class="line">    -l 仅列出有在监听状态的连接</span><br><span class="line"></span><br><span class="line">    -p 显示建立相关链接的程序名</span><br><span class="line">    -r 显示路由信息，路由表</span><br><span class="line">    -e 显示扩展信息，例如uid等</span><br><span class="line">    -s 按各个协议进行统计</span><br><span class="line">    -c 每隔一个固定时间，执行该netstat命令。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">常用命令参考</span><br><span class="line"></span><br><span class="line">a、列出所有连接（包括监听和未监听状态）</span><br><span class="line"></span><br><span class="line">    命令：netstat -a；列出所有状态下的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -at；列出所有状态下的tcp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -au；列出所有状态下的udp连接 </span><br><span class="line"></span><br><span class="line">    命令：netstat -ax；列出所有状态下的UNINX域连接</span><br><span class="line"></span><br><span class="line">b、列出处于LISTEN状态的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -l；列出所有处于LISTEN状态的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -lt；列出所有处于LISTEN状态的tcp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -lu；列出所有处于LISTEN状态的udp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat-lx；列出所有处于LISTENING状态的UNIX域连接</span><br><span class="line"></span><br><span class="line">c、统计通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -s；统计所有连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -st；统计基于tcp连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -su；统计基于udp连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">d、输出中显示进程ID和进程名信息（可搭配其他参数使用）</span><br><span class="line"></span><br><span class="line">    命令：netstat -p；列出除LISTEN和LISTENING状态下的连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">    命令：netstat -tp；列出除LISTEN和LISTENING状态下的tcp连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">    命令：netstat -up；列出除LISTEN和LISTENING状态下的udp连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">e、动态输出连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -c；每间隔一秒输出当前连接信息</span><br><span class="line"></span><br><span class="line">f、列出特定的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -ap|grep postgres</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>lsof</code>:查端口</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:443 <span class="comment">#显示所有打开443端口的进程</span></span><br><span class="line">netstat -an | grep tcp | grep 80</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-scp"><a href="#10-scp" class="headerlink" title="10.scp"></a>10.scp</h3><ul>
+<li><code>scp</code>:通过网络在两台主机之间拷贝文件，可以支持Windows。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scp local_file remote_username@remote_ip:remote_folder <span class="comment">#本地复制到远程，文件未重命名。</span></span><br><span class="line">scp local_file remote_username@remote_ip:remote_file <span class="comment">#本地复制到远程，文件重命名。</span></span><br><span class="line">scp local_file remote_ip:remote_folder <span class="comment">#未指定用户名，执行后需输入用户名和密码，未修改文件名进行移动文件。</span></span><br><span class="line">scp local_file remote_ip:remote_file <span class="comment">#未指定用户名，执行后需输入用户名和密码，修改文件名进行移动文件。</span></span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">-r 递归拷贝指定的整个文件夹。</span><br></pre></td></tr></table></figure>
+
+<p>从远程复制到本地，只需要将上述命令的后2个参数调换顺序就可以了。<br> 相比于CP命令，主要就是在source跟dest之前加上remote_username@remote_ip:，通过加的位置的不同区分出到底从远程到本地还是本地到远程。</p>
+<h3 id="11-tar-zip"><a href="#11-tar-zip" class="headerlink" title="11.tar/zip"></a>11.tar/zip</h3><ul>
+<li><code>tar</code>:打包/压缩文件</li>
+<li><code>zip</code>:打包/压缩文件</li>
+</ul>
+<p>详见：</p>
+<p><a href="https://www.cnblogs.com/centos2017/p/7896807.html" target="_blank" rel="noopener">打包 压缩 命令tar zip</a></p>
+<p><a href="https://blog.csdn.net/guo_qiangqiang/article/details/87934655" target="_blank" rel="noopener">Linux中常用的tar解压打包命令语法介绍</a></p>
+<h3 id="12-chmod"><a href="#12-chmod" class="headerlink" title="12.chmod"></a>12.chmod</h3><ul>
+<li><code>chmod</code>:改变文件的权限</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">语法：chmod [options] mode files </span><br><span class="line">options：-R 可递归遍历子目录，把修改应到目录下所有文件和子目录 </span><br><span class="line">who：u 用户 、 g 组 、o 其他 、a 所有用户 </span><br><span class="line">opcode：+ 增加权限 、 - 删除权限 、= 重新分配权限 </span><br><span class="line">permission： r 读 、w 写 、 x 执行</span><br></pre></td></tr></table></figure>
+
+<p>我们多数用三位八进制数字的形式来表示权限，第一位指定属主的权限，第二位指定组权限，第三位指定其他用户的权限，每位通过4(读)、2(写)、1(执行)三种数值的和来确定权限。如6(4+2)代表有读写权，7(4+2+1)有读、写和执行的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x file ：给file的属主增加执行权限</span><br><span class="line"></span><br><span class="line">chmod 751 file ：给file的属主分配读、写、执行(7)的权限，给file的所在组分配读、执行(5)的权限，给其他用户分配执行(1)的权限</span><br><span class="line"></span><br><span class="line">chmod u=rwx,g=rx,o=x file ：上例的另一种形式</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://blog.csdn.net/zlx312/article/details/79398557" target="_blank" rel="noopener">面试常见的Linux命令及问题整理</a></li>
+<li><a href="https://blog.csdn.net/gexiaoyizhimei/article/details/100122368" target="_blank" rel="noopener">Linux文件操作高频使用命令</a></li>
+<li><a href="https://blog.csdn.net/jjwyll/article/details/62091307" target="_blank" rel="noopener">linux命令——ps和netstat</a></li>
+<li><a href="https://blog.csdn.net/wojiaopanpan/article/details/7286430" target="_blank" rel="noopener">Linux如何查看进程、杀死进程、启动进程等常用命令</a></li>
+<li><a href="https://www.cnblogs.com/peida/archive/2012/12/24/2831353.html" target="_blank" rel="noopener">每天一个linux命令（44）：top命令</a></li>
+<li><a href="https://www.jianshu.com/p/552322d2c412" target="_blank" rel="noopener">linux中scp命令的使用</a></li>
+<li><a href="https://www.cnblogs.com/centos2017/p/7896807.html" target="_blank" rel="noopener">打包 压缩 命令tar zip</a></li>
+<li><a href="https://blog.csdn.net/guo_qiangqiang/article/details/87934655" target="_blank" rel="noopener">Linux中常用的tar解压打包命令语法介绍</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/Linux/">Linux</a>
+      
+        <a href="/tags/interview/">interview</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/07/21/Linux-command/">https://raoxuntian.github.io/2020/07/21/Linux-command/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2020/07/21/learnCpp-virtual-function/" id="art-right" class="art-right">
+        <span class="prev-title">
+          C++多态虚函数表详解(多重继承、多继承情况)<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#面试常见的Linux指令"><span class="toc-text">面试常见的Linux指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-pwd"><span class="toc-text">1.pwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-mkdir-rmdir"><span class="toc-text">2.mkdir&#x2F;rmdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-cp-rm-mv"><span class="toc-text">3.cp&#x2F;rm&#x2F;mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-cat-tac-nl-more-less-head-tail-od"><span class="toc-text">4.cat&#x2F;tac&#x2F;nl&#x2F;more&#x2F;less&#x2F;head&#x2F;tail&#x2F;od</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-touch"><span class="toc-text">5.touch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-find"><span class="toc-text">6.find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-grep-wc"><span class="toc-text">7.grep&#x2F;wc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-ps-top-kill"><span class="toc-text">8.ps&#x2F;top&#x2F;kill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-netstat-lsof"><span class="toc-text">9.netstat&#x2F;lsof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-scp"><span class="toc-text">10.scp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-tar-zip"><span class="toc-text">11.tar&#x2F;zip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-chmod"><span class="toc-text">12.chmod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>Linux</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>多态</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚函数</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>封装</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>继承</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>Linux</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/02/variable-storage-areas-in-cpp/">
+            <time class="tagcloud-posttime">2020 / 07 / 02</time>
+            <span>C/C++程序内存的各种变量存储区域和各个区域详解</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>多态</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚函数</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>封装</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>继承</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
