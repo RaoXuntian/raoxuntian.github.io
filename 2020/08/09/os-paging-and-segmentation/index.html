@@ -23,6 +23,8 @@
 
 
 
+  <meta name="keywords" content="OS, 虚拟内存, 分页, 分段, nlvi" />
+
 
 <link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
 <link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
@@ -85,12 +87,7 @@
 }
 </style>
 
-  <title>
-    Salad Days
-    
-      | Rao’s blog
-    
-  </title>
+  <title> 操作系统：内存管理之分页和分段 · Salad Days </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div class="container">
@@ -233,17 +230,244 @@
         <div class="main-wrapper">
           
     
-      <div class="about syuanpi fadeInRightShort">
-        <h2 class="title"> About </h2>
-        <div class="content">
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
           
-            <blockquote><p><em>花凋镜破，寄语若何；光阴有尽，爱惜更多。</em></p>
-<footer><strong>Wyman Wong </strong><cite>-- Deadline</cite></footer></blockquote>
+          <time>2020-08-09</time>
           
         </div>
       </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          操作系统：内存管理之分页和分段
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
       
+        <p>分页和分段是在面试过程中常被问到的两种内存管理技术。</p>
+<p>计算机结构比较复杂，那么说到“存储”，我们一般就想到内存和外存，比如我们买手机买电脑，都要看看这些终端的内存够不够打游戏，外存够不够装照片这些。内存外存只是比较通俗的叫法，在实际的计算机存储体系当中，我们划分了四块区域：寄存器（CPU registers）、高速缓存（CPU cache）、主存（内存）、外存（磁盘）。</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/1.png" class="" title="image">
+
+<p>这篇文章主要是将这座金字塔结构自顶向下第三层的主存结构，也就是我们俗称的内存。</p>
+<p>内存这东西不是一两篇文章就能看懂吃透的，无奈每次面试或多或少都被面试官问道这些东西，稍微捋一下这些概念性的东西。</p>
+<a id="more"></a>
+
+<h3 id="一、内存管理"><a href="#一、内存管理" class="headerlink" title="一、内存管理"></a>一、内存管理</h3><p>内存——内部存储器，在运行的时候存储信息，CPU可以直接寻址，区别于那些可以永久保存数据、CPU需要通过硬件控制器读取数据的“外部存储器”。<strong>这两者是从计算机架构的角度说的</strong>。在通常语境下，“内存”只有主板上插的内存条一种，<strong>内存就成了“主板上的RAM”的代称</strong>。</p>
+<p>RAM（Random Access Memory），随机访问控制器，断电就失效，可以直接通过电流刷新数据。􏴳􏴿由于1950年代和1960年代的计算机使用微小的可磁化铁氧体磁芯作为主存储器，因此旧时有时将其称为核心存储器。所以不能在高速缓存中得到满足的内存访问请求斗湖转往RAM当中。</p>
+<p>对应的ROM（Read-Only Memory），只读储存器，最开始的ROM真的是只读，不可写入，包括半导体ROM和CD-ROM，后来出现了紫外线擦除的EPROM，电擦除的EEPROM。</p>
+<p>我们可以更通俗点去理解内存，内存就是暂时存储程序以及数据的地方，当我们在使用WPS处理文稿时，当你在键盘上敲入字符时，它就被存入内存中，当你选择存盘时，内存中的数据才会被存入硬（磁）盘。</p>
+<p>我们在计算机上运行着许许多多的程序，比如QQ、QQ音乐、浏览器等等，每个程序虽然安装在磁盘上，但当用户在运行的时候，需要CPU对这些程序进行操作，显然CPU不可能直接对磁盘进行读取，所以这个时候，内存的作用就出来了。当一个程序，也就是一个进程需要运行的时候，这个进程会先加载到内存上，然后再由CPU对内存上的数据进行操作。</p>
+<p>那我们再想想实际的情况，内存一般并不大，现在的电脑一般也就4GB-16GB，而我们的设备一般都支持多进程，同一时刻你可以听着歌QQ在线接收消息顺便打个LOL，甚至有的进程比如MATLAB十几个G来启动，所有的进程数据都保存在内存当中的话，就需要大量的内存，如果内存不足，则无法完成。</p>
+<p>针对上面的内存不足的问题，有两种处理方式，第一种比较简单的方式就是<strong>交换（swapping）技术</strong>，也就是把一个进程完整得调入内存，在内存中运行一段时间之后，再把它放回磁盘。空闲的进程会存储在磁盘当中，所以这些进程在没有运行的时候不会占用太多的内存。这种交换技术我们在这里不多说，主要想聊的是第二种策略，<strong>虚拟内存（virtual memory）</strong>。</p>
+<h3 id="二、虚拟内存"><a href="#二、虚拟内存" class="headerlink" title="二、虚拟内存"></a>二、虚拟内存</h3><p>正如第一节所讲，虚拟内存的出现是为了解决内存不足的问题。通过虚拟内存可以让程序拥有超过系统物理内存大小的可用内存空间。另外，<strong>虚拟内存为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）</strong>。这样会更加有效地管理内存并减少出错。</p>
+<p>虚拟内存的目的就是为了让物理内存扩充成更大的逻辑内存，从而让程序获得更多的可用内存。</p>
+<p><strong>虚拟内存</strong>是计算机系统内存管理的一种技术，我们可以手动设置自己电脑的虚拟内存。不要单纯认为虚拟内存只是“使用硬盘空间来扩展内存“的技术。<strong>虚拟内存的重要意义是它定义了一个连续的虚拟地址空间</strong>，并且 <strong>把内存扩展到硬盘空间</strong>。推荐阅读：<a href="https://link.zhihu.com/?target=https%3A//www.itcat.co/go/%3Furl%3DaHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81OWY4NjkxYjUxODgyNTM0YWYyNTQzMTc%3D">《虚拟内存的那点事儿》</a></p>
+<p>维基百科中有几句话是这样介绍虚拟内存的。</p>
+<blockquote>
+<p><strong>虚拟内存</strong> 使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。与没有使用虚拟内存技术的系统相比，使用这种技术的系统使得大型程序的编写变得更容易，对真正的物理内存（例如RAM）的使用也更有效率。目前，大多数操作系统都使用了虚拟内存，如Windows家族的“虚拟内存”；Linux的“交换空间”等。</p>
+</blockquote>
+<p>我们后面讨论的内存空间的分配与回收都是基于非连续分配管理方式，也就是一个进程在实际物理内存中不一定是存在于一片连续的地址空间，而是被分割到不同的非连续的地址空间。</p>
+<h3 id="三、分页"><a href="#三、分页" class="headerlink" title="三、分页"></a>三、分页</h3><p>在谈论分页之前，我们需要弄清楚几个地址的概念。</p>
+<h4 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h4><p>物理地址：数据在主存的实际位置。</p>
+<h4 id="逻辑地址"><a href="#逻辑地址" class="headerlink" title="逻辑地址"></a>逻辑地址</h4><p>逻辑地址：与当前（进程）数据在内存中与物理分配地址无关的访问地址，在执行对内存的访问之前必须转化为物理地址。</p>
+<h4 id="相对地址"><a href="#相对地址" class="headerlink" title="相对地址"></a>相对地址</h4><p>相对地址：特殊的逻辑地址，相对于某些已知点的存储单元。</p>
+<h4 id="基本分页存储管理"><a href="#基本分页存储管理" class="headerlink" title="基本分页存储管理"></a>基本分页存储管理</h4><p>大部分使用虚拟内存的系统中会使用一种分页（paging）的技术。</p>
+<p>分页存储管理就是将内存空间分成一个个<strong>大小相等的分区</strong>（比如每个分区4KB），每个分区就是一个“页框”，或者“页帧”、“内存块”、“物理块”。每个页框有一个编号，即“页框号”，或者“页帧号”、“内存块号”、“物理块号”。页框号从0开始。</p>
+<p>将用户进程的地址空间也分成<strong>和页框大小相等</strong>的一个个区域，称为“页”或者“页面”。每个页面也有一个编号，即“页号”，也是从0开始。</p>
+<p>（注意：一个进程的最后一个页面可能没有一个页框那么大。因此页框不能太大，否则可能产生过大的内部碎片）</p>
+<p>操作系统<strong>以页框为单位为各个进程分配内存空间</strong>。进程的每个页面分别放入一个页框中。也就是说，进程的<strong>页面</strong>与内存的<strong>页框</strong>有一一对应的关系。</p>
+<p>各个页面不必连续存放，也不必按照先后顺序，可以放到不相邻的各个页框中。</p>
+<p>那么将进程地址空间分页后，操作系统该如何实现逻辑地址到物理地址的转换？</p>
+<h4 id="分页系统地址映射"><a href="#分页系统地址映射" class="headerlink" title="分页系统地址映射"></a>分页系统地址映射</h4><p>内存管理单元（MMU）管理者地址空间和物理内存的转换，其中的页表（Page table）存储着页（进程地址空间）和页框（物理内存空间）的映射表。</p>
+<p>一个虚拟地址分成两部分，一部分存储页面号，一部分存储偏移量。</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/2.png" class="" title="image">
+
+<p>逻辑地址到物理地址的映射过程</p>
+<ol>
+<li>算出逻辑地址对应的页号，即逻辑地址最左的n位；</li>
+<li>以这个页号为索引，查找该进程页表中相应的帧号y，<strong>也就是该页号对应的页面在内存中的起始位置</strong>；</li>
+<li>该帧的起始物理地址为y*(2^m)，被访问字节的物理地址是这个数加上偏移量。</li>
+</ol>
+<p>页号 = 逻辑地址 / 页面长度</p>
+<p>页内偏移量 = 逻辑地址 % 页面长度</p>
+<p>物理地址 = 页面始址 + 页内偏移量</p>
+<p>我们来看个例子：</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/3.png" class="" title="image">
+
+<p>根据上面的三个步骤可以很容易得到结果：物理地址 = 3 * 8 * 1024 + 9612 % 8192 = 25996</p>
+<h4 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h4><p>为了能知道进程的每个页面加内存中存放的位置，操作系统要<strong>为每个进程建立一张页表</strong>。</p>
+<ol>
+<li>一个进程对应一张页表</li>
+<li>进程的每一页对应一个页表项</li>
+<li>每个页表项由“页号”和“块号”组成</li>
+<li>页表记录进程页面和实际存放的内存块之间的对应关系</li>
+<li>每个页表项的长度是相同的，页号是”隐含“的</li>
+</ol>
+<h4 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h4><p>地址映射过程中，若在页面中发现所要访问的页面不在内存中，则产生缺页中断 。当发生缺页中断时，如果操作系统内存中没有空闲页面，则操作系统 必须在内存选择一个页面将其移出内存，以便为即将调入的页面让出空间。而用来选择淘汰哪一页的规则叫做页面置换算法。</p>
+<p>页面置换算法的作用是<strong>实现虚拟存储管理。</strong></p>
+<p>页面置换算法的主要目标是<strong>使页面置换频率最低</strong>（也可以说缺页率最低）。</p>
+<p><strong>最佳页面置换算法(Optimal Page Replacement Algorithm)</strong></p>
+<p>最饥饿页面置换算法是将未来最久不使用的页替换出去，这听起来很简单，但是无法实现。根据页面被访问前所需要的指令数作为标记，根据指令数的由多到少进行置换，这个方法对评价页面置换算法很有用，但它在实际系统中却不能使用，因为无法真正的实现。这种算法可以作为衡量其它算法的基准。</p>
+<p><strong>最近最久使用页面置换算法(Least Recently Used)</strong></p>
+<p>通常在前几条指令中使用频繁的页面很可能在后面几条指令中页频繁使用。LRU算法就是在缺页发生时首先置换最长时间未被使用的页面。优秀但是难以实现。</p>
+<p>Leetcode有一道题目是设计<a href="https://leetcode-cn.com/problems/lru-cache/" target="_blank" rel="noopener">LRU缓存机制</a></p>
+<p><strong>最近未使用页面置换算法(Not Recently Used Replacement Algorithm)</strong></p>
+<p>在最近的一个时钟周期内，淘汰一个没有被访问的已修改页面，近似 LRU 算法，NRU 只是更粗略些。</p>
+<p>这种算法给每个页一个标志位，R表示最近被访问过，M表示被修改过。定期对R进行清零。这个算法的思路是首先淘汰那些未被访问过R=0的页，其次是被访问过R=1,未被修改过M=0的页，最后是R=1,M=1的页。</p>
+<p><strong>先进先出的页面置换算法(First-In First-Out Page Replacement Algorithm)</strong></p>
+<p>这种算法的思想是淘汰在内存中最久的页，这种算法的性能接近于随机淘汰。可能抛弃重要的页面，并不好。</p>
+<p><strong>第二次机会页面置换算法(Second Chance Page Replacement Algorithm)</strong></p>
+<p>这种算法是在FIFO的基础上，为了避免置换出经常使用的页，增加一个标志位R，如果最近使用过将R置1，当页将会淘汰时，如果R为1，则不淘汰页，将R置0.而那些R=0的页将被淘汰时，直接淘汰。这种算法避免了经常被使用的页被淘汰。</p>
+<p><strong>时钟替换算法(Clock Page Replacement Algorithm)</strong></p>
+<p>虽然改进型FIFO算法避免置换出常用的页，但由于需要经常移动页，效率并不高。因此在改进型FIFO算法的基础上，将队列首位相连形成一个环路，当缺页中断产生时，从当前位置开始找R=0的页，而所经过的R=1的页被置0，并不需要移动页。</p>
+<p>下表是上面几种算法的简单比较:</p>
+<table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最佳置换算法</td>
+<td>无法实现，最为测试基准使用</td>
+</tr>
+<tr>
+<td>最近不常使用算法</td>
+<td>和LRU性能差不多</td>
+</tr>
+<tr>
+<td>先进先出算法</td>
+<td>有可能会置换出经常使用的页</td>
+</tr>
+<tr>
+<td>改进型先进先出算法</td>
+<td>和先进先出相比有很大提升</td>
+</tr>
+<tr>
+<td>最久未使用算法</td>
+<td>性能非常好，但实现起来比较困难</td>
+</tr>
+<tr>
+<td>时钟置换算法</td>
+<td>非常实用的算法</td>
+</tr>
+</tbody></table>
+<h3 id="四、分段"><a href="#四、分段" class="headerlink" title="四、分段"></a>四、分段</h3><h4 id="基本分段存储管理"><a href="#基本分段存储管理" class="headerlink" title="基本分段存储管理"></a>基本分段存储管理</h4><p>与“分页”最大的区别就是——离散分配时所分配的地址空间的基本单位不同。</p>
+<p>进程的地址空间：按照程序的<strong>自身的逻辑</strong>关系<strong>划分为若干段</strong>，每个段都有一个段名（在低级语言中，程序员使用段名来编程），从0开始编址。</p>
+<p>内存分配规则：以段为单位进行分配，每个段在内存中占据连续空间，但各段之间可以不相邻。</p>
+<p>由于按逻辑功能模块划分，用户编程更方便，程序的可读性更高。</p>
+<h4 id="段表"><a href="#段表" class="headerlink" title="段表"></a>段表</h4><p>程序分多个段，各段离散地装入内存，为了保证程序能正常的运行，就必须从物理内存中找到各个逻辑段的存放位置。为此需为每个进程建立一张映射表，简称“段表”。</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/4.png" class="" title="image">
+
+<ol>
+<li>每个段对应一个段表项，其中记录了该段在内存中的起始位置（又称“基址”）和段的长度</li>
+<li>各个段表项的长度是相同的。例如：某系统按字节寻址，采用分段存储管理，逻辑地址的结构为（段号16位，段内地址16位），因此用16位即可表示最大段长。物理内存大小为4GB（可用32位表示整个物理内存地址空间）。因此，可以让每个段表项占16+32=48位，即6B。由于段表项长度相同，因此段号是可以隐含的，不占存储空间。若段表存放的起始地址为M，则K号段对应的段表项存放的地址为M+K*6.</li>
+</ol>
+<h3 id="五、分页和分段的比较"><a href="#五、分页和分段的比较" class="headerlink" title="五、分页和分段的比较"></a>五、分页和分段的比较</h3><p>页是<strong>信息的物理单位</strong>。分页的目的主要是为了实现离散分配，提高内存利用率。分页仅仅是系统管理上的需要，完全是系统行为，<strong>对用户是不可见的</strong>。</p>
+<p>段是<strong>信息的逻辑单位</strong>。分段的目的主要是为了更好的满足用户需求。一个段通常包含着一组属于一个逻辑模块的信息。<strong>分段对用户是可见的</strong>，用户编程时需要显式地给出段名。</p>
+<p>页的大小固定且有系统决定。段的长度却不固定，决定于用户编写的程序。</p>
+<p>分页的用户进程地址空间是一维的，程序员只需给出一个记忆符即可表示一个地址。</p>
+<p>分段的用户进程地址空间是二维的，程序员在标识一个地址时，既要给出段名，也要给出段内地址。</p>
+<p>分段比分页更容易实现信息的共享和保护。</p>
+<p>不能修改的代码称为纯代码或可重入代码（不属于临界资源），这样的代码是可以共享的。可修改的代码是不可以共享的（比如有一个代码段中有很多变量，各进程并发地同时访问可能造成数据的不一致）</p>
+<h3 id="六、段页式"><a href="#六、段页式" class="headerlink" title="六、段页式"></a>六、段页式</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分页管理</td>
+<td>内存空间利用率高，不会产生外部碎片，只会有少量的页内碎片</td>
+<td>不方便按照逻辑模块实现信息的共享和保护</td>
+</tr>
+<tr>
+<td>分段管理</td>
+<td>很方便按照逻辑模块实现信息的共享和保护</td>
+<td>如果段长过大，为其分配很大的连续空间会很不方便。另外，段式管理会产生外部碎片</td>
+</tr>
+</tbody></table>
+<p>段页式系统的逻辑地址结构由段号、页号、页内地址（页内偏移量）组成</p>
+<p>段号的位数决定了每个进程最多可以分几段</p>
+<p>也好的位数决定了每个段最大有多少页</p>
+<p>页内偏移量决定了页面的大小、内存块的大小是多少</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/5.png" class="" title="image">
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://blog.csdn.net/chengtutu/article/details/81165720" target="_blank" rel="noopener">计算机存储体系介绍</a></li>
+<li><a href="https://blog.csdn.net/zouliping123/article/details/8869455" target="_blank" rel="noopener">内存管理：分页，分段，段页结合</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/82746153" target="_blank" rel="noopener">什么是虚拟内存(Virtual Memory)?</a></li>
+<li><a href="https://blog.csdn.net/zouliping123/article/details/8869455" target="_blank" rel="noopener">内存管理：分页，分段，段页结合</a></li>
+<li><a href="https://www.jianshu.com/p/2b11639905ec" target="_blank" rel="noopener">操作系统与内存管理</a></li>
+</ul>
+
       
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/OS/">OS</a>
+      
+        <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">虚拟内存</a>
+      
+        <a href="/tags/%E5%88%86%E9%A1%B5/">分页</a>
+      
+        <a href="/tags/%E5%88%86%E6%AE%B5/">分段</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/08/09/os-paging-and-segmentation/">https://raoxuntian.github.io/2020/08/09/os-paging-and-segmentation/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2020/08/03/mysql-engine/" id="art-right" class="art-right">
+        <span class="prev-title">
+          浅谈MySQL存储引擎<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
   <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
   <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
     
@@ -272,8 +496,23 @@
   </div>
 
 
+
+  
+  
     
   
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、内存管理"><span class="toc-text">一、内存管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、虚拟内存"><span class="toc-text">二、虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、分页"><span class="toc-text">三、分页</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#物理地址"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑地址"><span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相对地址"><span class="toc-text">相对地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本分页存储管理"><span class="toc-text">基本分页存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分页系统地址映射"><span class="toc-text">分页系统地址映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页表"><span class="toc-text">页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页面置换算法"><span class="toc-text">页面置换算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、分段"><span class="toc-text">四、分段</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本分段存储管理"><span class="toc-text">基本分段存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#段表"><span class="toc-text">段表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、分页和分段的比较"><span class="toc-text">五、分页和分段的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、段页式"><span class="toc-text">六、段页式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
         </div>
       </main>
       <footer class="footer syuanpi fadeIn" id="footer">
@@ -952,6 +1191,20 @@
 <script src="/script/bootstarp.js"></script>
 
 
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
 
 
 

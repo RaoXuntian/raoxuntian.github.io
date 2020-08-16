@@ -246,6 +246,66 @@
       <div class="post-time syuanpi fadeInRightShort back-1">
         <div class="post-time-wrapper">
           
+          <time>2020-08-09</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          <a href="/2020/08/09/os-paging-and-segmentation/">操作系统：内存管理之分页和分段</a>
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        
+          <p>分页和分段是在面试过程中常被问到的两种内存管理技术。</p>
+<p>计算机结构比较复杂，那么说到“存储”，我们一般就想到内存和外存，比如我们买手机买电脑，都要看看这些终端的内存够不够打游戏，外存够不够装照片这些。内存外存只是比较通俗的叫法，在实际的计算机存储体系当中，我们划分了四块区域：寄存器（CPU registers）、高速缓存（CPU cache）、主存（内存）、外存（磁盘）。</p>
+ <img src="/2020/08/09/os-paging-and-segmentation/1.png" class="" title="image">
+
+<p>这篇文章主要是将这座金字塔结构自顶向下第三层的主存结构，也就是我们俗称的内存。</p>
+<p>内存这东西不是一两篇文章就能看懂吃透的，无奈每次面试或多或少都被面试官问道这些东西，稍微捋一下这些概念性的东西。</p>
+        
+      
+    
+      <p class="content-link">
+        <a href="/2020/08/09/os-paging-and-segmentation/#more">
+          <span>Read More...</span>
+        </a>
+      </p>
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/OS/">OS</a>
+      
+        <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">虚拟内存</a>
+      
+        <a href="/tags/%E5%88%86%E9%A1%B5/">分页</a>
+      
+        <a href="/tags/%E5%88%86%E6%AE%B5/">分段</a>
+      
+      </div>
+    
+    
+  </article>
+  
+  
+    
+  
+
+  
+    
+  
+  <article class="
+  post
+  
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
           <time>2020-08-03</time>
           
         </div>
@@ -711,61 +771,6 @@
   
 
   
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-06-23</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/06/23/initializer-list/">initializer_list</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>我记得有次面试的时候面试官提过一句initializer_list，当时只是知道这个东西是C++11中的新类型，但并没有去深入了解它，今天突然想到了就看了一些文章，随便记录一下。</p>
-<p>C++11提供的新类型，定义在<initializer_list>头文件中。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span> <span class="title">T</span> &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">initializer_list</span>;</span></span><br></pre></td></tr></table></figure>
-
-<p>回忆一下我们初始化一个vector有哪些方法？</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/06/23/initializer-list/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/C/">C++</a>
-      
-        <a href="/tags/data-structure/">data structure</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
 </section>
 
   
@@ -888,19 +893,23 @@
     </div>
   
     <div class="tagcloud-tag">
+      <button>OS</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚拟内存</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分页</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分段</button>
+    </div>
+  
+    <div class="tagcloud-tag">
       <button>life</button>
-    </div>
-  
-    <div class="tagcloud-tag">
-      <button>排序</button>
-    </div>
-  
-    <div class="tagcloud-tag">
-      <button>算法</button>
-    </div>
-  
-    <div class="tagcloud-tag">
-      <button>trie tree</button>
     </div>
   
     <div class="tagcloud-tag">
@@ -921,6 +930,18 @@
   
     <div class="tagcloud-tag">
       <button>B+树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>排序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>算法</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
     </div>
   
   </div>
@@ -971,16 +992,16 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/03/learnCpp-const/">
-            <time class="tagcloud-posttime">2020 / 06 / 03</time>
-            <span>浅谈C++关键字之const</span>
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
           </a>
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/07/03/memory-alignment/">
-            <time class="tagcloud-posttime">2020 / 07 / 03</time>
-            <span>C/C++中的内存对齐</span>
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
           </a>
         </div>
       
@@ -1011,16 +1032,16 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/19/char-string/">
-            <time class="tagcloud-posttime">2020 / 06 / 19</time>
-            <span>浅谈C/C++中的char和string</span>
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
           </a>
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/17/c-carIMS/">
-            <time class="tagcloud-posttime">2020 / 06 / 17</time>
-            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
           </a>
         </div>
       
@@ -1239,48 +1260,60 @@
     </div>
   
     <div class="tagcloud-postlist ">
+      <h2>OS</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚拟内存</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分页</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分段</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
       <h2>life</h2>
       
         <div class="tagcloud-post">
           <a href="/2020/05/29/myFirstBlog/">
             <time class="tagcloud-posttime">2020 / 05 / 29</time>
             <span>我的第一篇博客</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>排序</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/08/01/sort/">
-            <time class="tagcloud-posttime">2020 / 08 / 01</time>
-            <span>排序算法小结</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>算法</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/08/01/sort/">
-            <time class="tagcloud-posttime">2020 / 08 / 01</time>
-            <span>排序算法小结</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>trie tree</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/18/trie-tree/">
-            <time class="tagcloud-posttime">2020 / 06 / 18</time>
-            <span>Trie Tree</span>
           </a>
         </div>
       
@@ -1341,6 +1374,42 @@
           <a href="/2020/08/03/mysql-engine/">
             <time class="tagcloud-posttime">2020 / 08 / 03</time>
             <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>排序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>算法</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
           </a>
         </div>
       
