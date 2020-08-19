@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="C++, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> C++中的文件和流 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-08-17</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          C++中的文件和流
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p>最近在牛客网刷题，和leetcode不一样，牛客网需要要自己控制从键盘输入变量。另外在实习的时候，碰巧页遇到几个C++读写文件的问题，之前都是直接网上搜索code，这几天抽空研究了这一块，发现无论是从键盘输入字符串还是从读取文件，都可以采用“流”的思想去理解。</p>
+<a id="more"></a>
+
+<h3 id="一、stream家族"><a href="#一、stream家族" class="headerlink" title="一、stream家族"></a>一、stream家族</h3><p>回忆一下我们敲打的第一个C/C++程序，打印“hello,world!”，无论是C还是C++，都不能像python和PHP这些脚步语言直接<code>pirnt(&quot;hello,world!&quot;);</code> ，而是要先<code>#include XXX</code>。C中是<code>#include &lt;stdio.h&gt;</code>，C++是<code>#include &lt;iostream&gt;</code>。熟悉C的小伙伴应该清楚，<code>stdio.h</code>是C当中的标准输入输出的头文件，只有在代码的开头加上<code>#include &lt;stdio.h&gt;</code>，你的代码才能使用<code>printf</code>和<code>scanf</code>这些输出和输入的函数，这里我们不展开讨论C的细节，我们来看看C++的<code>iostream</code>。</p>
+<h4 id="iostream"><a href="#iostream" class="headerlink" title="iostream"></a>iostream</h4><p>C++里的<code>#include</code>后面没有<code>.h</code>后缀，C++包含的不叫头文件，是<strong>库</strong>。导入了<code>iostream</code>库我们才可以使用<code>cin</code>和<code>cout</code>去输入和输出。<code>iostream</code>的意思是输入输出流，直接点说就是in（输入） out（输出） stream（流），取in、out的首字母与stream合成。</p>
+<p>iostream 库的基础是两种命名为 istream 和 ostream 的类型,分别表示输入流和输出流。流是指要从某种 IO 设备上读出或写入的字符序列。术语“流”试图说明字符是随着时间顺序生成或消耗的。</p>
+<p>标准库定义了 4 个 IO 对象。处理输入时使用命名为 cin(读作 see-in)的 istream 类型对象。这个对象也称为标准输入。处理输出时使用命名为 cout(读作 see-out)的 ostream 类型对象,这个对象也称为标准输出。标准库还定义了另外两个 ostream 对象,分别命名为 cerr 和 clog(分别读作“see-err”和“see-log”)。cerr 对象又叫作标准错误,通常用来输出警告和错误信息给程序的使用者。而 clog 对象用于产生程序执行的一般信息。</p>
+<h4 id="fstream"><a href="#fstream" class="headerlink" title="fstream"></a>fstream</h4><p>和<code>iostream</code>相似的还有<code>fstream</code>，文件流。而<code>ofstream</code> 和 <code>ifstream</code>是两个继承自<code>fstream</code>的两个类，他们能够重新定义文件输入输出流。他们的关系如下图所示：</p>
+ <img src="/2020/08/17/learnCpp-file-stream/1.gif" class="" title="image">
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line">ofstream         <span class="comment">//文件写操作 内存写入存储设备 </span></span><br><span class="line">ifstream         <span class="comment">//文件读操作，存储设备读区到内存中</span></span><br><span class="line">fstream          <span class="comment">//读写操作，对打开的文件可进行读写操作</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="二、键盘输入"><a href="#二、键盘输入" class="headerlink" title="二、键盘输入"></a>二、键盘输入</h3><h4 id="cin"><a href="#cin" class="headerlink" title="cin"></a>cin</h4><p>这个对象不用多说了，大家都会，只是需要注意</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line"><span class="comment">// 如果从键盘输入 "abc def"</span></span><br><span class="line">s = <span class="string">"abc"</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>cin</code>在遇到空格、‘\t’、回车这些符号会停止读取流。</p>
+<p>所以当我们如果需要读取一整行的时候可以考虑<code>getline</code>函数</p>
+<h4 id="getline"><a href="#getline" class="headerlink" title="getline"></a>getline</h4><p><code>getline()</code>函数是一个比较常见的函数。根据名字直接”望文-&gt;生义”，就知道这个函数是来完成读入一行数据。</p>
+<p>下面就对C++ – getline()函数的用法说明，以及<code>getline()</code>函数作为while条件的问题，总结一下：</p>
+<p>在C++中本质上有两种<code>getline</code>函数，（称为第一种）一种在库<code>&lt;istream&gt;</code>中，是<code>istream</code>类的成员函数。</p>
+<p>（称为第二种）一种在头文件<code>&lt;string&gt;</code>中，是普通函数。</p>
+<p>第一种： 在<code>&lt;istream&gt;</code>中的getline()函数有两种重载形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(<span class="keyword">char</span>* s, streamsize n )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(<span class="keyword">char</span>* s, streamsize n, <span class="keyword">char</span> delim )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>作用是： 从<code>istream</code>中读取至多n个字符(包含结束标记符)保存在s对应的数组中。即使还没读够n个字符，</p>
+<p>如果遇到<code>delim</code>或字数达到限制，则读取终止，<code>delim</code>都不会被保存进s对应的数组中。</p>
+<p>第二种： 在<code>&lt;string&gt;</code>中的<code>getline</code>函数有四种重载形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(istream&amp;  is, <span class="built_in">string</span>&amp; str, <span class="keyword">char</span> delim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(istream&amp;&amp; is, <span class="built_in">string</span>&amp; str, <span class="keyword">char</span> delim)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(istream&amp;  is, <span class="built_in">string</span>&amp; str)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">istream&amp; <span class="title">getline</span> <span class="params">(istream&amp;&amp; is, <span class="built_in">string</span>&amp; str)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用法和上第一种类似，但是读取的istream是作为参数is传进函数的。读取的字符串保存在string类型的str中。</p>
+<p>函数的变量：</p>
+<p><code>is</code>  ：表示一个输入流，例如cin。</p>
+<p><code>str</code>  ：string类型的引用，用来存储输入流中的流信息。</p>
+<p><code>delim</code> ：char类型的变量，所设置的截断字符；在不自定义设置的情况下，遇到’\n’，则终止输入。</p>
+<p>回忆一下<code>cin</code>的<code>getline</code>用法</p>
+<p>我们可以</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s;</span><br><span class="line"><span class="keyword">char</span> ch[<span class="number">256</span>];</span><br><span class="line"><span class="built_in">cin</span>.getline(ch, <span class="number">256</span>)</span><br><span class="line">getline(<span class="built_in">cin</span>, s, <span class="string">'\t'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>两种<code>getline</code>函数有一个地方需要注意，第一种函数的参数是字符数组(char*)，第二种函数的参数是字符串（string类）</p>
+<p>关于<code>string</code>和<code>char*</code>的转换有个函数是<code>c_str()</code>，可以参考<a href="https://www.cnblogs.com/devilmaycry812839668/p/6353807.html" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>还需要注意 getline需要的是输入流，<code>istream</code>类的对象，<code>cin</code>这些都可以，但如果是<code>fstream</code>就不行。</p>
+<p> 另外 <code>getline(file, buffer, &#39;\t&#39;);</code> 并不是执行完之后文件指针file会指向下一行，而是在’\t’的后面一位</p>
+<p><code>getline(file, buffer);</code> 是读完一整行。</p>
+<h4 id="ignore"><a href="#ignore" class="headerlink" title="ignore"></a>ignore</h4><p><code>cin.ignore(a,ch)</code>方法是从输入流（cin）中提取字符，提取的字符被忽略（ignore），不被使用。每抛弃一个字符，它都要计数和比较字符：如果计数值达到a或者被抛弃的字符是ch，则cin.ignore()函数执行终止；否则，它继续等待。它的一个常用功能就是用来清除以回车结束的输入缓冲区的内容，消除上一次输入对下一次输入的影响。比如可以这么用：<code>cin.ignore(1024,’\n’)</code>，通常把第一个参数设置得足够大，这样实际上总是只有第二个参数’\n’起作用，所以这一句就是把回车（包括回车）之前的所以字符从输入缓冲（流）中清除出去。</p>
+<h3 id="三、读取文件"><a href="#三、读取文件" class="headerlink" title="三、读取文件"></a>三、读取文件</h3><p>从文本读取文件分三个步骤，打开文件，读写文件，关闭文件。</p>
+<h4 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h4><p>在从文件读取信息或者向文件写入信息之前，必须先打开文件。<strong>ofstream</strong> 和 <strong>fstream</strong> 对象都可以用来打开文件进行写操作，如果只需要打开文件进行读操作，则使用 <strong>ifstream</strong> 对象。</p>
+<p>下面是 open() 函数的标准语法，open() 函数是 fstream、ifstream 和 ofstream 对象的一个成员。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void open(const char *filename, ios::openmode mode);</span><br></pre></td></tr></table></figure>
+
+<p>在这里，<strong>open()</strong> 成员函数的第一参数指定要打开的文件的名称和位置，第二个参数定义文件被打开的模式。</p>
+<table>
+<thead>
+<tr>
+<th align="left">模式标志</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ios::app</td>
+<td align="left">追加模式。所有写入都追加到文件末尾。</td>
+</tr>
+<tr>
+<td align="left">ios::ate</td>
+<td align="left">文件打开后定位到文件末尾。</td>
+</tr>
+<tr>
+<td align="left">ios::in</td>
+<td align="left">打开文件用于读取。</td>
+</tr>
+<tr>
+<td align="left">ios::out</td>
+<td align="left">打开文件用于写入。</td>
+</tr>
+<tr>
+<td align="left">ios::trunc</td>
+<td align="left">如果该文件已经存在，其内容将在打开文件之前被截断，即把文件长度设为 0。</td>
+</tr>
+</tbody></table>
+<p>您可以把以上两种或两种以上的模式结合使用。例如，如果您想要以写入模式打开文件，并希望截断文件，以防文件已存在，那么您可以使用下面的语法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ofstream outfile;</span><br><span class="line">outfile.open(<span class="string">"file.dat"</span>, ios::out | ios::trunc );</span><br></pre></td></tr></table></figure>
+
+<p>类似地，您如果想要打开一个文件用于读写，可以使用下面的语法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifstream  afile;</span><br><span class="line">afile.open(<span class="string">"file.dat"</span>, ios::out | ios::in );</span><br></pre></td></tr></table></figure>
+
+<h4 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h4><p>在 C++ 编程中，我们使用流插入运算符（ &lt;&lt; ）向文件写入信息，就像使用该运算符输出信息到屏幕上一样。唯一不同的是，在这里您使用的是 <strong>ofstream</strong> 或 <strong>fstream</strong> 对象，而不是 <strong>cout</strong> 对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// writing on a text file</span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fiostream.h&gt;</span></span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="function">ofstream <span class="title">out</span><span class="params">(<span class="string">"out.txt"</span>)</span></span>;</span><br><span class="line">       <span class="keyword">if</span> (out.is_open()) </span><br><span class="line">      &#123;</span><br><span class="line">           out &lt;&lt; <span class="string">"This is a line.\n"</span>;</span><br><span class="line">           out &lt;&lt; <span class="string">"This is another line.\n"</span>;</span><br><span class="line">           out.close();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="comment">//结果: 在out.txt中写入：</span></span><br><span class="line">  This is a line.</span><br><span class="line">  This is another line</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h4><p>在 C++ 编程中，我们使用流提取运算符（ &gt;&gt; ）从文件读取信息，就像使用该运算符从键盘输入信息一样。唯一不同的是，在这里您使用的是 <strong>ifstream</strong> 或 <strong>fstream</strong> 对象，而不是 <strong>cin</strong> 对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reading a text file</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span> buffer[<span class="number">256</span>];</span><br><span class="line">        <span class="function">ifstream <span class="title">in</span><span class="params">(<span class="string">"test.txt"</span>)</span></span>;</span><br><span class="line">        <span class="keyword">if</span> (! in.is_open())</span><br><span class="line">        &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Error opening file"</span>; <span class="built_in">exit</span> (<span class="number">1</span>); &#125;</span><br><span class="line">        <span class="keyword">while</span> (!in.eof() )</span><br><span class="line">        &#123;</span><br><span class="line">            in.getline (buffer,<span class="number">100</span>);</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; buffer &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//结果 在屏幕上输出</span></span><br><span class="line">     This is a line.</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子读入一个文本文件的内容，然后将它打印到屏幕上。注意我们使用了一个新的成员函数叫做eof ，它是ifstream 从类 ios 中继承过来的，当到达文件末尾时返回true 。</p>
+<h4 id="状态标志符的验证-Verification-of-state-flags"><a href="#状态标志符的验证-Verification-of-state-flags" class="headerlink" title="状态标志符的验证(Verification of state flags)"></a>状态标志符的验证(Verification of state flags)</h4><p>除了eof()以外，还有一些验证流的状态的成员函数（所有都返回bool型返回值）：</p>
+<ul>
+<li><p><strong>bad()</strong></p>
+<p>如果在读写过程中出错，返回 true 。例如：当我们要对一个不是打开为写状态的文件进行写入时，或者我们要写入的设备没有剩余空间的时候。</p>
+</li>
+<li><p><strong>fail()</strong></p>
+<p>除了与bad() 同样的情况下会返回 true 以外，加上格式错误时也返回true ，例如当想要读入一个整数，而获得了一个字母的时候。</p>
+</li>
+<li><p><strong>eof()</strong></p>
+<p>如果读文件到达文件末尾，返回true。</p>
+</li>
+<li><p><strong>good()</strong></p>
+<p>这是最通用的：如果调用以上任何一个函数返回true 的话，此函数返回 false 。</p>
+</li>
+</ul>
+<p>要想重置以上成员函数所检查的状态标志，你可以使用成员函数clear()，没有参数。</p>
+<h4 id="获得和设置流指针-get-and-put-stream-pointers"><a href="#获得和设置流指针-get-and-put-stream-pointers" class="headerlink" title="获得和设置流指针(get and put stream pointers)"></a>获得和设置流指针(get and put stream pointers)</h4><p>所有输入/输出流对象(i/o streams objects)都有至少一个流指针：</p>
+<ul>
+<li>ifstream， 类似istream, 有一个被称为get pointer的指针，指向下一个将被读取的元素。</li>
+<li>ofstream, 类似 ostream, 有一个指针 put pointer ，指向写入下一个元素的位置。</li>
+<li>fstream, 类似 iostream, 同时继承了get 和 put</li>
+</ul>
+<p>我们可以通过使用以下成员函数来读出或配置这些指向流中读写位置的流指针：</p>
+<ul>
+<li><p><strong>tellg() 和 tellp()</strong></p>
+<p>这两个成员函数不用传入参数，返回pos_type 类型的值(根据ANSI-C++ 标准) ，就是一个整数，代表当前get 流指针的位置 (用tellg) 或 put 流指针的位置(用tellp).</p>
+</li>
+<li><p><strong>seekg() 和seekp()</strong></p>
+<p>这对函数分别用来改变流指针get 和put的位置。两个函数都被重载为两种不同的原型：</p>
+<p>seekg ( pos_type position );<br>seekp ( pos_type position );</p>
+<p>使用这个原型，流指针被改变为指向从文件开始计算的一个绝对位置。要求传入的参数类型与函数 tellg 和tellp 的返回值类型相同。</p>
+<p>seekg ( off_type offset, seekdir direction );<br>seekp ( off_type offset, seekdir direction );</p>
+<p>使用这个原型可以指定由参数direction决定的一个具体的指针开始计算的一个位移(offset)。它可以是：</p>
+<table>
+<thead>
+<tr>
+<th>ios::beg</th>
+<th>从流开始位置计算的位移</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ios::cur</td>
+<td>从流指针当前位置开始计算的位移</td>
+</tr>
+<tr>
+<td>ios::end</td>
+<td>从流末尾处开始计算的位移</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h4><p>当 C++ 程序终止时，它会自动关闭刷新所有流，释放所有分配的内存，并关闭所有打开的文件。但程序员应该养成一个好习惯，在程序终止前关闭所有打开的文件。</p>
+<p>下面是 close() 函数的标准语法，close() 函数是 fstream、ifstream 和 ofstream 对象的一个成员。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">close</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://blog.csdn.net/kingstar158/article/details/6859379" target="_blank" rel="noopener">C++文件读写详解（ofstream,ifstream,fstream）</a></li>
+<li><a href="https://blog.csdn.net/MisterLing/article/details/51697098" target="_blank" rel="noopener">C++ getline()函数的用法</a></li>
+<li><a href="https://www.runoob.com/cplusplus/cpp-files-streams.html" target="_blank" rel="noopener">C++ 文件和流</a></li>
+<li><a href="http://c.biancheng.net/view/1541.html" target="_blank" rel="noopener">C++ seekp和seekg函数用法详解</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/C/">C++</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/08/17/learnCpp-file-stream/">https://raoxuntian.github.io/2020/08/17/learnCpp-file-stream/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+    
+      <a href="/2020/08/09/os-paging-and-segmentation/" id="art-right" class="art-right">
+        <span class="prev-title">
+          操作系统：内存管理之分页和分段<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、stream家族"><span class="toc-text">一、stream家族</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iostream"><span class="toc-text">iostream</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fstream"><span class="toc-text">fstream</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、键盘输入"><span class="toc-text">二、键盘输入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cin"><span class="toc-text">cin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#getline"><span class="toc-text">getline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ignore"><span class="toc-text">ignore</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、读取文件"><span class="toc-text">三、读取文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#打开文件"><span class="toc-text">打开文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#写入文件"><span class="toc-text">写入文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读取文件"><span class="toc-text">读取文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态标志符的验证-Verification-of-state-flags"><span class="toc-text">状态标志符的验证(Verification of state flags)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获得和设置流指针-get-and-put-stream-pointers"><span class="toc-text">获得和设置流指针(get and put stream pointers)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关闭文件"><span class="toc-text">关闭文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>Linux</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>多态</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚函数</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>封装</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>继承</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>mysql</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>datastruct</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>B树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>红黑树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>B+树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>OS</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚拟内存</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分页</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分段</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>排序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>算法</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>Linux</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/17/learnCpp-file-stream/">
+            <time class="tagcloud-posttime">2020 / 08 / 17</time>
+            <span>C++中的文件和流</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/02/variable-storage-areas-in-cpp/">
+            <time class="tagcloud-posttime">2020 / 07 / 02</time>
+            <span>C/C++程序内存的各种变量存储区域和各个区域详解</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>多态</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚函数</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>封装</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>继承</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>mysql</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>datastruct</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>B树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>红黑树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>B+树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>OS</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚拟内存</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分页</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分段</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>排序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>算法</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
