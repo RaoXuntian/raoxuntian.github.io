@@ -242,6 +242,25 @@
         <div class="archive-post">
           <div class="archive-post-content">
             
+              <p>智能指针作为C++11里的新特征，有可能在面试里被问到。本文主要介绍C++里的三个智能指针：<code>shared_ptr</code>、<code>unique_ptr</code>、<code>weak_ptr</code>。其实还有一种<code>auto_ptr</code>指针，但在C++11里已经被弃用了，故此我们不做讨论了。</p>
+            
+          </div>
+          <div class="archive-post-info">
+            <time class="archive-post-time">
+              2020-08-22
+            </time>
+            <a  class="archive-post-link" href="/2020/08/22/learnCpp-smart-pointers/">
+              浅谈C++的智能指针
+            </a>
+          </div>
+        </div>
+      
+        
+          </section>
+        
+        <div class="archive-post">
+          <div class="archive-post-content">
+            
               <p>很想写一篇文章来谈一下C/C++中的char和string，顺带也可以说一下python中的string，因为我学习语言的顺序是先学了C再学python然后学C++，一开始对这两个数据类型并没有很敏感，前几天在用C写代码的时候，发现在使用char *和char ch[]的时候有些模糊，而且在给它们初始化或者赋值的时候也会出错。在传统的C里面，我们可以初始化一个定长的char数组，但不能直接给一个定长的char数组赋值：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch[<span class="number">20</span>] = <span class="string">"Hello,world!"</span>;	<span class="comment">// valid</span></span><br><span class="line"><span class="keyword">char</span> sh[<span class="number">20</span>]；</span><br><span class="line">sh = <span class="string">"Hello,world!"</span>;	<span class="comment">// invalid</span></span><br></pre></td></tr></table></figure>
 
@@ -331,14 +350,6 @@
     </div>
   
     <div class="tagcloud-tag">
-      <button>Linux</button>
-    </div>
-  
-    <div class="tagcloud-tag">
-      <button>interview</button>
-    </div>
-  
-    <div class="tagcloud-tag">
       <button>字节序</button>
     </div>
   
@@ -352,6 +363,14 @@
   
     <div class="tagcloud-tag">
       <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>Linux</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
     </div>
   
     <div class="tagcloud-tag">
@@ -461,9 +480,9 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/07/20/learnCpp-Polymorphism/">
-            <time class="tagcloud-posttime">2020 / 07 / 20</time>
-            <span>浅谈C++的封装、继承、多态</span>
+          <a href="/2020/08/22/learnCpp-smart-pointers/">
+            <time class="tagcloud-posttime">2020 / 08 / 22</time>
+            <span>浅谈C++的智能指针</span>
           </a>
         </div>
       
@@ -471,6 +490,13 @@
           <a href="/2020/08/17/learnCpp-file-stream/">
             <time class="tagcloud-posttime">2020 / 08 / 17</time>
             <span>C++中的文件和流</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
           </a>
         </div>
       
@@ -489,16 +515,16 @@
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/06/03/learnCpp-const/">
-            <time class="tagcloud-posttime">2020 / 06 / 03</time>
-            <span>浅谈C++关键字之const</span>
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
           </a>
         </div>
       
         <div class="tagcloud-post">
-          <a href="/2020/07/03/memory-alignment/">
-            <time class="tagcloud-posttime">2020 / 07 / 03</time>
-            <span>C/C++中的内存对齐</span>
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
           </a>
         </div>
       
@@ -539,6 +565,61 @@
           <a href="/2020/06/19/char-string/">
             <time class="tagcloud-posttime">2020 / 06 / 19</time>
             <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/22/learnCpp-smart-pointers/">
+            <time class="tagcloud-posttime">2020 / 08 / 22</time>
+            <span>浅谈C++的智能指针</span>
           </a>
         </div>
       
@@ -598,54 +679,6 @@
           <a href="/2020/06/04/pointer-and-reference/">
             <time class="tagcloud-posttime">2020 / 06 / 04</time>
             <span>浅谈C++的指针与引用</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>字节序</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/29/byte-order/">
-            <time class="tagcloud-posttime">2020 / 06 / 29</time>
-            <span>浅谈字节序</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>char</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/19/char-string/">
-            <time class="tagcloud-posttime">2020 / 06 / 19</time>
-            <span>浅谈C/C++中的char和string</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>string</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/19/char-string/">
-            <time class="tagcloud-posttime">2020 / 06 / 19</time>
-            <span>浅谈C/C++中的char和string</span>
-          </a>
-        </div>
-      
-    </div>
-  
-    <div class="tagcloud-postlist ">
-      <h2>指针</h2>
-      
-        <div class="tagcloud-post">
-          <a href="/2020/06/19/char-string/">
-            <time class="tagcloud-posttime">2020 / 06 / 19</time>
-            <span>浅谈C/C++中的char和string</span>
           </a>
         </div>
       

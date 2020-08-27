@@ -23,6 +23,8 @@
 
 
 
+  <meta name="keywords" content="C++, 指针, nlvi" />
+
 
 <link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
 <link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
@@ -85,12 +87,7 @@
 }
 </style>
 
-  <title>
-  Salad Days
-  
-    | Rao’s blog
-  
-</title>
+  <title> 浅谈C++的智能指针 · Salad Days </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div class="container">
@@ -232,45 +229,82 @@
       <main class="main" id="main">
         <div class="main-wrapper">
           
-  
-
-<section class="posts">
-  
     
   
   <article class="
   post
-  
+   is_post 
   ">
     <header class="post-header">
       <div class="post-time syuanpi fadeInRightShort back-1">
         <div class="post-time-wrapper">
           
-          <time>2020-06-03</time>
+          <time>2020-08-22</time>
           
         </div>
       </div>
       <h2 class="post-title syuanpi fadeInRightShort back-2">
         
-          <a href="/2020/06/03/learnCpp-const/">浅谈C++关键字之const</a>
+          浅谈C++的智能指针
         
       </h2>
     </header>
     <div class="post-content syuanpi fadeInRightShort back-3">
       
-        
-          <p>C++关键字之const</p>
-<h3 id="1-const含义"><a href="#1-const含义" class="headerlink" title="1.const含义"></a>1.const含义</h3><p>const 是 constant 的缩写，本意是不变的，不易改变的意思。在 C++ 中是用来修饰内置类型变量，自定义对象，成员函数，返回值，函数参数。</p>
-<h3 id="2-const作用"><a href="#2-const作用" class="headerlink" title="2.const作用"></a>2.const作用</h3><h4 id="2-1定义const常量"><a href="#2-1定义const常量" class="headerlink" title="2.1定义const常量"></a>2.1定义const常量</h4><p><code>const int* bufSize = 64;</code></p>
-<h4 id="2-2便于进行类型检查"><a href="#2-2便于进行类型检查" class="headerlink" title="2.2便于进行类型检查"></a>2.2便于进行类型检查</h4><p>const*常量有数据类型，而宏常量没有数据类型。编译器可以对前者进行类型安全检查，而对后者只进行字符替换，没有类型安全检查，并且在字符替换时可能会产生意料不到的错误。</p>
-        
+        <p>智能指针作为C++11里的新特征，有可能在面试里被问到。本文主要介绍C++里的三个智能指针：<code>shared_ptr</code>、<code>unique_ptr</code>、<code>weak_ptr</code>。其实还有一种<code>auto_ptr</code>指针，但在C++11里已经被弃用了，故此我们不做讨论了。</p>
+<a id="more"></a>
+
+<h3 id="为什么要用智能指针"><a href="#为什么要用智能指针" class="headerlink" title="为什么要用智能指针"></a>为什么要用智能指针</h3><p>我们知道C++的内存分配主要有三个大区：</p>
+<p>一个是<strong>静态（static）存储区</strong>，用来保存局部的static对象、类static数据成员以及定义在任何函数之外的变量。</p>
+<p>一个是<strong>栈（stack）内存</strong>，用来保存定义在函数内的非static对象。</p>
+<p>分配在静态或栈内存中的对象由编译器自动创建和销毁。对于栈对象，仅在其定义的程序块运行时才存在；static对象在使用之前分配，在程序结束时销毁。</p>
+<h4 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h4><p>除了静态存储区和栈内存，每个程序还有一个内存池。这部分内存被称作<strong>自由空间（free store）</strong>或<strong>堆（heap）</strong>。程序用来存储<strong>动态分配</strong>的对象——即，那些程序在运行时分配的对象。动态分配的对象的生存期有程序来控制，也就是说动态对象不再使用的时候，我们的代码必须显式地销毁它们。</p>
+<p>C++中，我们使用一堆运算符来管理动态内存：<code>new</code>/<code>delete</code>。在C中是<code>malloc</code>/<code>free</code>，不要搞混了。</p>
+<p>每次我们new一个对象，会在动态内存中为对象分配空间然后返回一个指向该对象的指针，当不用这个对象的时候，我们delete这个动态对象的指针，销毁对象，并释放与之关联的内存。</p>
+<h4 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h4><p>使用new/delete容易出现问题，最常见的就是<strong>内存泄露</strong>。如何理解内存泄露？凡是new出来的对象没有及时合理的delete释放掉，都有可能造成内存泄漏的问题。</p>
+<p>随便举个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1037</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在程序块内定义了一个int指针p指向堆空间的一块int内存，并初始化为1037。如果我们在程序块内部没有<code>delete p</code>，那么离开程序块之后，栈上的指针p就会被销毁，而堆上的那个1037并不会随之释放，直到程序结束也没有办法释放，因为在程序块里就只有p指向1037，p销毁后，这块地址就“失踪”了，就找不到这块地址了，所以无法释放，导致内存泄露。</p>
+<p>还有，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> *p = <span class="keyword">new</span> <span class="built_in">string</span>(<span class="number">6</span>, <span class="string">'6'</span>);</span><br><span class="line"><span class="built_in">string</span> *q = p;</span><br><span class="line"><span class="keyword">delete</span> p;</span><br><span class="line">p = <span class="literal">nullptr</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们定义了一个字符串指针p指向“666666”，然后让另一个字符串指针q也指向p所指的区域，然后我们delete了p，随之释放了堆上的“666666”，那么q呢？指了个寂寞……此时q不一定是空指针（nullptr），而是无效指针（可能会指向奇怪的值）。在实际系统中，查找指向相同内存的所有指针是异常困难的。</p>
+<p>这里需要再解释一下指针p，在我们delete p之后，指针值就无效了。虽然指针值已经无效了，但在很多机器上指针仍然保存着（已经释放了的）动态内存的地址。在delete之后，指针就变成了人们所说的<strong>空悬指针（dangling pointer）</strong>，即，指向一块曾经保存数据对象但现在已经无效的内存的指针。如果我们在delete p之后还需要保留指针p的话，可以在delete之后将nullptr赋值给指针p，这样就清楚地指出指针p不指向任何对象。</p>
+<p>总之，如果频繁地使用new/delete，一旦代码业务逻辑复杂起来，我们或多或少会遇到内存泄露相关的问题，为了尽可能的避免此类问题，<strong>智能指针</strong>就出来了。智能指针是一个类，当超出了这个类的作用域时，类会自动调用析构函数，析构函数会自动释放资源。下面我们逐个介绍各种智能指针。</p>
+<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><p>从名字share就可以看出了资源可以被多个指针共享，它使用计数机制来表明资源被几个指针共享。可以通过成员函数use_count()来查看资源的所有者个数。出了可以通过new来构造，还可以通过传入auto_ptr, unique_ptr,weak_ptr来构造。当我们调用release()时，当前指针会释放资源所有权，计数减一。当计数等于0时，资源会被释放。</p>
+ <img src="/2020/08/22/learnCpp-smart-pointers/1.png" class="" title="image">
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> val_;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A():val_(<span class="number">0</span>)&#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;&#125;;</span><br><span class="line">	A(<span class="keyword">int</span> val):val_(val)&#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">"A("</span> &lt;&lt; val_ &lt;&lt; <span class="string">")"</span> &lt;&lt; <span class="built_in">endl</span>;&#125;;</span><br><span class="line">	~A()&#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">"~A("</span> &lt;&lt; val_ &lt;&lt; <span class="string">")"</span> &lt;&lt; <span class="built_in">endl</span>;&#125;;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;<span class="built_in">cout</span> &lt;&lt; <span class="string">"This is a test~ "</span> &lt;&lt; val_ &lt;&lt; <span class="built_in">endl</span>;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">42</span>))</span></span>;</span><br><span class="line">	<span class="comment">//auto p2=std::make_shared&lt;vector&lt;int&gt; &gt; ();</span></span><br><span class="line">	<span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">p2</span><span class="params">(<span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> p4 = <span class="keyword">new</span> A(<span class="number">13</span>);</span><br><span class="line">	<span class="function"><span class="built_in">shared_ptr</span>&lt;A&gt; <span class="title">p3</span><span class="params">(p4)</span></span>;</span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;A&gt; p5=make_shared&lt;A&gt;(<span class="number">24</span>);</span><br><span class="line">	<span class="function"><span class="keyword">auto</span> <span class="title">p6</span><span class="params">(p3)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; p3.use_count() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	p5.reset(); <span class="comment">// 主动销毁p5</span></span><br><span class="line">	p3.reset(<span class="keyword">new</span> A); <span class="comment">// reset里参数必须是原始指针 p3指向新的地址 原地址销毁</span></span><br><span class="line">	<span class="comment">// std::shared_ptr::reset() function required a raw pointer as parameter.</span></span><br><span class="line">	<span class="comment">//p5=p4;</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; *p1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; p2-&gt;at(<span class="number">0</span>) &lt;&lt; <span class="string">" "</span> &lt;&lt; p2-&gt;at(<span class="number">1</span>) &lt;&lt; <span class="string">" "</span> &lt;&lt; p2-&gt;at(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	p3-&gt;print();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">output:</span></span><br><span class="line"><span class="comment">A(13)</span></span><br><span class="line"><span class="comment">A(24)</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">~A(24)</span></span><br><span class="line"><span class="comment">A()</span></span><br><span class="line"><span class="comment">42</span></span><br><span class="line"><span class="comment">1 2 3</span></span><br><span class="line"><span class="comment">This is a test~ 0</span></span><br><span class="line"><span class="comment">~A(13)</span></span><br><span class="line"><span class="comment">~A(0)</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+ <img src="/2020/08/22/learnCpp-smart-pointers/2.png" class="" title="image">
+
+ <img src="/2020/08/22/learnCpp-smart-pointers/3.png" class="" title="image">
+
+<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><p>unique_ptr,<strong>是用于取代c++98的auto_ptr的产物</strong>,在c++98的时候还没有移动语义(move semantics)的支持,因此对于auto_ptr的控制权转移的实现没有核心元素的支持,但是还是实现了auto_ptr的移动语义,这样带来的一些问题是拷贝构造函数和复制操作重载函数不够完美,具体体现就是把auto_ptr作为函数参数,传进去的时候控制权转移,转移到函数参数,当函数返回的时候并没有一个控制权移交的过程,所以过了函数调用则原先的auto_ptr已经失效了.在c++11当中有了移动语义,使用move()把unique_ptr传入函数,这样你就知道原先的unique_ptr已经失效了.移动语义本身就说明了这样的问题,比较坑爹的是标准描述是说对于move之后使用原来的内容是未定义行为,并非抛出异常,所以还是要靠人肉遵守游戏规则.再一个,auto_ptr不支持传入deleter,所以只能支持单对象(delete object),而unique_ptr对数组类型有偏特化重载,并且还做了相应的优化,比如用[]访问相应元素等。</p>
+<p>unique_ptr 是一个独享所有权的智能指针，它提供了严格意义上的所有权，包括：</p>
+<p>1、拥有它指向的对象</p>
+<p>2、无法进行复制构造，无法进行复制赋值操作。即无法使两个unique_ptr指向同一个对象。但是可以进行移动构造和移动赋值操作</p>
+<p>3、保存指向某个对象的指针，当它本身被删除释放的时候，会使用给定的删除器释放它指向的对象</p>
+<p>unique_ptr 可以实现如下功能：</p>
+<p>1、为动态申请的内存提供异常安全</p>
+<p>2、讲动态申请的内存所有权传递给某函数</p>
+<p>3、从某个函数返回动态申请内存的所有权</p>
+<p>4、在容器中保存指针</p>
+<p>5、auto_ptr 应该具有的功能</p>
+ <img src="/2020/08/22/learnCpp-smart-pointers/4.png" class="" title="image">
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p6</span><span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"hahahaha!!!"</span>))</span></span>;</span><br><span class="line"><span class="comment">// unique_ptr&lt;string&gt; p6_error(p6); // ERROR: unique_ptr不支持拷贝</span></span><br><span class="line"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; p6_error;</span><br><span class="line"><span class="comment">// p6_error=p6; // ERROR: unique_ptr不支持赋值</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p6 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p7</span><span class="params">(p6.release())</span></span>;	<span class="comment">// release将p6置空</span></span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p8</span><span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"XXXDDD"</span>))</span></span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"*p7 == "</span> &lt;&lt; *p7</span><br><span class="line">&lt;&lt; <span class="string">"\t*p8 == "</span> &lt;&lt; *p8 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">// 将所有权从p8转移给p7</span></span><br><span class="line">p7.reset(p8.release());	<span class="comment">// reset释放了p7原来的指向的内存</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"*p7 == "</span> &lt;&lt; *p7 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">hahahaha!!!</span></span><br><span class="line"><span class="comment">*p7 == hahahaha!!!	*p8 == XXXDDD</span></span><br><span class="line"><span class="comment">*p7 == XXXDDD</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p>weak_ptr是用来解决shared_ptr相互引用时的死锁问题,如果说两个shared_ptr相互引用,那么这两个指针的引用计数永远不可能下降为0,资源永远不会释放。它是对对象的一种弱引用，不会增加对象的引用计数，和shared_ptr之间可以相互转化，shared_ptr可以直接赋值给它，它可以通过调用lock函数来获得shared_ptr。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li>C++ Primer 5th</li>
+<li><a href="https://www.cnblogs.com/TenosDoIt/p/3456704.html" target="_blank" rel="noopener">c++ 智能指针用法详解</a></li>
+</ul>
+
       
-    
-      <p class="content-link">
-        <a href="/2020/06/03/learnCpp-const/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
     
     </div>
     
@@ -278,131 +312,94 @@
       
         <a href="/tags/C/">C++</a>
       
-        <a href="/tags/interview/">interview</a>
+        <a href="/tags/%E6%8C%87%E9%92%88/">指针</a>
       
       </div>
     
     
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-06-02</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/06/02/git/">git常用指令小结</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
       
-        
-          <!--
-<font face="黑体" size=6>Git常用指令小结</font>
--->
 
-<p>废话不多说，直接总结，方便自己以后查~</p>
-<h2 id="1-获得项目的git仓库"><a href="#1-获得项目的git仓库" class="headerlink" title="1.获得项目的git仓库"></a>1.获得项目的git仓库</h2><h3 id="1-1通过git-init初始化本地的新仓库"><a href="#1-1通过git-init初始化本地的新仓库" class="headerlink" title="1.1通过git init初始化本地的新仓库"></a>1.1通过git init初始化本地的新仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir git</span><br><span class="line"><span class="built_in">cd</span> git</span><br><span class="line">git init <span class="comment"># 初始化git仓库</span></span><br></pre></td></tr></table></figure>
-        
       
-    
-      <p class="content-link">
-        <a href="/2020/06/02/git/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
     </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/git/">git</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-05-29</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/05/29/myFirstBlog/">我的第一篇博客</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <h2 id="preface"><a href="#preface" class="headerlink" title="preface"></a>preface</h2><p>现在是凌晨四点钟，我依旧失眠。</p>
-<p>花了一天半的时间，终于搭建好了第一个个人博客。</p>
-<p>其实本来只想花一天的时间来搭建，但因为一些不能拒绝的琐事而耽误了；</p>
-<p>我虽然不是完美主义者，但也希望这个博客能以最完美的功能和版本online，原本准备在六一正式上线这个博客，但现在必须得提前了，尽管她并不完美……</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/05/29/myFirstBlog/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/08/22/learnCpp-smart-pointers/">https://raoxuntian.github.io/2020/08/22/learnCpp-smart-pointers/</a>
     </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
       
-        <a href="/tags/life/">life</a>
-      
-      </div>
-    
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
     
   </article>
   
-  
     
-  
-
-  
-</section>
-
-  
-  <nav class="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-doubleleft"></i>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  <nav class="article-page">
+    
+    
+      <a href="/2020/08/17/learnCpp-file-stream/" id="art-right" class="art-right">
+        <span class="prev-title">
+          C++中的文件和流<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
   </nav>
 
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用智能指针"><span class="toc-text">为什么要用智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态内存"><span class="toc-text">动态内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shared-ptr"><span class="toc-text">shared_ptr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unique-ptr"><span class="toc-text">unique_ptr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weak-ptr"><span class="toc-text">weak_ptr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
 
 
         </div>
@@ -1111,6 +1108,20 @@
 <script src="/script/bootstarp.js"></script>
 
 
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
 
 
 
