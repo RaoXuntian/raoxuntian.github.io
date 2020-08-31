@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salad Days">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+
+  <link rel="apple-touch-icon"  sizes="72x72"  href="/web-icon.jpg">
+  <link rel="apple-touch-icon-precomposed"  sizes="72x72"  href="/web-icon.jpg">
+
+
+  <meta name="subtitle" content="Rao’s blog">
+
+
+  <meta name="description" content="花凋镜破，寄语若何；光阴有尽，爱惜更多。">
+
+
+
+  <meta name="keywords" content="数据结构, hash, 布隆过滤器, nlvi" />
+
+
+<link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(orientation: landscape)" href="assets/apple-touch-startup-image-2048x1496.png">
+
+<link rel="stylesheet" href="/style/style.css">
+
+<script>
+  var nlviconfig = {
+    title: "Salad Days",
+    author: "Xuntian Rao",
+    baseUrl: "/",
+    theme: {
+      scheme: "banderole",
+      lightbox: true,
+      animate: true,
+      search: true,
+      friends: false,
+      reward: false,
+      pjax: false,
+      lazy: false,
+      toc: true
+    }
+  }
+</script>
+
+
+
+
+    
+<link rel="stylesheet" href="/script/lib/lightbox/css/lightbox.min.css">
+
+
+
+
+
+    
+<link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+    <link rel="icon" href="/web-icon.jpg">
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+@font-face {
+  font-family: "Allura";
+  src: url('/font/allura/allura.ttf');
+}
+</style>
+
+  <title> 浅谈哈希表和布隆过滤器 · Salad Days </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <div class="container">
+    <header class="header" id="header">
+  <div class="header-wrapper">
+    <div class="logo">
+  <div class="logo-inner syuanpi tvIn" style="display:none;">
+    <h1><a href="/">Salad Days</a></h1>
+    
+      <span id="subtitle">Rao’s blog</span>
+    
+  </div>
+</div>
+
+    <nav class="main-nav">
+  
+  <ul class="main-nav-list syuanpi tvIn">
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="search-btn" aria-label="Search">
+        <i class="iconfont icon-search"></i>
+      </a>
+    </li>
+  
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/" id="article">
+        <span class="base-name">
+          
+            Articles
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/archives" id="archives">
+        <span class="base-name">
+          
+            Archives
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="javascript:;" id="tags">
+        <span class="base-name">
+          
+            Tags
+          
+        </span>
+      </a>
+    </li>
+  
+  
+    
+  
+    <li class="menu-item">
+      <a href="/about" id="about">
+        <span class="base-name">
+          
+            About
+          
+        </span>
+      </a>
+    </li>
+  
+  
+  </ul>
+  
+</nav>
+
+  </div>
+</header>
+<div class="mobile-header" id="mobile-header">
+  <div class="mobile-header-nav">
+    <div class="mobile-header-item" id="mobile-left">
+      <div class="header-menu-item">
+        <div class="header-menu-line"></div>
+      </div>
+    </div>
+    <h1 class="mobile-header-title">
+      <a href="/">Salad Days</a>
+    </h1>
+    <div class="mobile-header-item"></div>
+  </div>
+  <div class="mobile-header-body">
+    <ul class="mobile-header-list">
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-0">
+          <a href="/" >
+            
+              Articles
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-1">
+          <a href="/archives" >
+            
+              Archives
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-2">
+          <a href="javascript:;" id="mobile-tags">
+            
+              Tags
+            
+          </a>
+        </li>
+      
+        <li class="mobile-nav-item syuanpi fadeInRightShort back-3">
+          <a href="/about" >
+            
+              About
+            
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="container-inner" style="display:none;">
+      <main class="main" id="main">
+        <div class="main-wrapper">
+          
+    
+  
+  <article class="
+  post
+   is_post 
+  ">
+    <header class="post-header">
+      <div class="post-time syuanpi fadeInRightShort back-1">
+        <div class="post-time-wrapper">
+          
+          <time>2020-08-28</time>
+          
+        </div>
+      </div>
+      <h2 class="post-title syuanpi fadeInRightShort back-2">
+        
+          浅谈哈希表和布隆过滤器
+        
+      </h2>
+    </header>
+    <div class="post-content syuanpi fadeInRightShort back-3">
+      
+        <p><strong>散列表</strong>（<strong>Hash table</strong>，也叫<strong>哈希表</strong>），是根据<a href="https://zh.wikipedia.org/wiki/鍵" target="_blank" rel="noopener">键</a>（Key）而直接访问在内存储存位置的<a href="https://zh.wikipedia.org/wiki/数据结构" target="_blank" rel="noopener">数据结构</a>。也就是说，它通过计算一个关于键值的函数，将所需查询的数据<a href="https://zh.wikipedia.org/wiki/映射" target="_blank" rel="noopener">映射</a>到表中一个位置来访问记录，这加快了查找速度。这个映射函数称做<a href="https://zh.wikipedia.org/wiki/散列函数" target="_blank" rel="noopener">散列函数</a>，存放记录的数组称做<strong>散列表</strong>。</p>
+<p>在面试中，我们经常会被问到如何处理哈希冲突的问题。</p>
+<a id="more"></a>
+
+<h3 id="哈希冲突"><a href="#哈希冲突" class="headerlink" title="哈希冲突"></a>哈希冲突</h3><h4 id="开放地址法"><a href="#开放地址法" class="headerlink" title="开放地址法"></a>开放地址法</h4><h5 id="1-线性探测法-ThreadLocalMap"><a href="#1-线性探测法-ThreadLocalMap" class="headerlink" title="1.线性探测法:ThreadLocalMap"></a>1.线性探测法:ThreadLocalMap</h5><p>​    线性再散列法是形式最简单的处理冲突的方法。插入元素时，如果发生冲突，算法会简单的从该槽位置向后循环遍历hash表，直到找到表中的下一个空槽，并将该元素放入该槽中（会导致相同hash值的元素挨在一起和其他hash值对应的槽被占用）。查找元素时，首先散列值所指向的槽，如果没有找到匹配，则继续从该槽遍历hash表，直到：（1）找到相应的元素；（2）找到一个空槽，指示查找的元素不存在，（所以不能随便删除元素）；（3）整个hash表遍历完毕（指示该元素不存在并且hash表是满的）</p>
+<p>用线性探测法处理冲突，思路清晰，算法简单，但存在下列缺点：</p>
+<p>① 处理溢出需另编程序。一般可另外设立一个溢出表，专门用来存放上述哈希表中放不下的记录。此溢出表最简单的结构是顺序表，查找方法可用顺序查找。</p>
+<p>② 按上述算法建立起来的哈希表，删除工作非常困难。如果将此元素删除，查找的时会发现空槽，则会认为要找的元素不存在。只能标上已被删除的标记，否则，将会影响以后的查找。</p>
+<p>③ 线性探测法很容易产生堆聚现象。所谓堆聚现象，就是存入哈希表的记录在表中连成一片。按照线性探测法处理冲突，如果生成哈希地址的连续序列愈长 ( 即不同关键字值的哈希地址相邻在一起愈长 ) ，则当新的记录加入该表时，与这个序列发生冲突的可能性愈大。因此，哈希地址的较长连续序列比较短连续序列生长得快，这就意味着，一旦出现堆聚 ( 伴随着冲突 ) ，就将引起进一步的堆聚。</p>
+<h5 id="2-线性补偿探测法"><a href="#2-线性补偿探测法" class="headerlink" title="2.线性补偿探测法"></a>2.线性补偿探测法</h5><p>线性补偿探测法的基本思想是：将线性探测的步长从 1 改为 Q ，即将上述算法中的</p>
+<p>hash ＝ (hash ＋ 1) % m 改为：hash ＝ (hash ＋ Q) % m = hash % m + Q % m，而且要求 Q 与 m 是互质的，以便能探测到哈希表中的所有单元。</p>
+<p>【例】 PDP-11 小型计算机中的汇编程序所用的符合表，就采用此方法来解决冲突，所用表长 m ＝ 1321 ，选用 Q ＝ 25 。</p>
+<h5 id="3-伪随机探测"><a href="#3-伪随机探测" class="headerlink" title="3.伪随机探测"></a>3.伪随机探测</h5><p>随机探测的基本思想是：将线性探测的步长从常数改为随机数，即令： hash ＝ (hash ＋ RN) % m ，其中 RN 是一个随机数。在实际程序中应预先用随机数发生器产生一个随机序列，将此序列作为依次探测的步长。这样就能使不同的关键字具有不同的探测次序，从而可以避 免或减少堆聚。基于与线性探测法相同的理由，在线性补偿探测法和随机探测法中，删除一个记录后也要打上删除标记。</p>
+<h4 id="拉链法"><a href="#拉链法" class="headerlink" title="拉链法"></a>拉链法</h4><h5 id="拉链法-hashmap"><a href="#拉链法-hashmap" class="headerlink" title="拉链法 : hashmap"></a>拉链法 : hashmap</h5><p>拉链法的优点</p>
+<p>与开放定址法相比，拉链法有如下几个优点：</p>
+<p>①拉链法处理冲突简单，且无堆积现象，即非同义词决不会发生冲突，因此平均查找长度较短；</p>
+<p>②由于拉链法中各链表上的结点空间是动态申请的，故它更适合于造表前无法确定表长的情况；</p>
+<p>③开放定址法为减少冲突，要求装填因子α较小，故当结点规模较大时会浪费很多空间。而拉链法中可取α≥1，且结点较大时，拉链法中增加的指针域可忽略不计，因此节省空间；</p>
+<p>④在用拉链法构造的散列表中，删除结点的操作易于实现。只要简单地删去链表上相应的结点即可。</p>
+<p>拉链法的缺点</p>
+<p>  　拉链法的缺点是：指针需要额外的空间，故当结点规模较小时，开放定址法较为节省空间，而若将节省的指针空间用来扩大散列表的规模，可使装填因子变小，这又减少了开放定址法中的冲突，从而提高平均查找速度。</p>
+<h4 id="再散列（双重散列，多重散列）"><a href="#再散列（双重散列，多重散列）" class="headerlink" title="再散列（双重散列，多重散列）"></a>再散列（双重散列，多重散列）</h4><p>当发生冲突时，使用第二个、第三个、哈希函数计算地址，直到无冲突时。缺点：计算时间增加。</p>
+<h4 id="建立一个公共溢出区"><a href="#建立一个公共溢出区" class="headerlink" title="建立一个公共溢出区"></a>建立一个公共溢出区</h4><p>假设哈希函数的值域为[0,m-1],则设向量HashTable[0..m-1]为基本表，另外设立存储空间向量OverTable[0..v]用以存储发生冲突的记录。</p>
+<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h3><h4 id="什么是布隆过滤器"><a href="#什么是布隆过滤器" class="headerlink" title="什么是布隆过滤器"></a><strong>什么是布隆过滤器</strong></h4><p>本质上布隆过滤器是一种数据结构，比较巧妙的概率型数据结构（probabilistic data structure），特点是高效地插入和查询，可以用来告诉你 <strong>“某样东西一定不存在或者可能存在”</strong>。</p>
+<p>相比于传统的 List、Set、Map 等数据结构，它更高效、占用空间更少，但是缺点是其返回的结果是概率性的，而不是确切的。</p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a><strong>实现原理</strong></h4><p><strong>HashMap 的问题</strong></p>
+<p>讲述布隆过滤器的原理之前，我们先思考一下，通常你判断某个元素是否存在用的是什么？应该蛮多人回答 HashMap 吧，确实可以将值映射到 HashMap 的 Key，然后可以在 O(1) 的时间复杂度内返回结果，效率奇高。但是 HashMap 的实现也有缺点，例如存储容量占比高，考虑到负载因子的存在，通常空间是不能被用满的，而一旦你的值很多例如上亿的时候，那 HashMap 占据的内存大小就变得很可观了。</p>
+<p>还比如说你的数据集存储在远程服务器上，本地服务接受输入，而数据集非常大不可能一次性读进内存构建 HashMap 的时候，也会存在问题。</p>
+<h4 id="布隆过滤器数据结构"><a href="#布隆过滤器数据结构" class="headerlink" title="布隆过滤器数据结构"></a><strong>布隆过滤器数据结构</strong></h4><p>布隆过滤器是一个 bit 向量或者说 bit 数组，长这样：</p>
+ <img src="/2020/08/28/hash-and-bloom-filter/1.jpg" class="" title="image">
+
+<p>如果我们要映射一个值到布隆过滤器中，我们需要使用<strong>多个不同的哈希函数</strong>生成<strong>多个哈希值，</strong>并对每个生成的哈希值指向的 bit 位置 1，例如针对值 “baidu” 和三个不同的哈希函数分别生成了哈希值 1、4、7，则上图转变为：</p>
+<img src="/2020/08/28/hash-and-bloom-filter/2.jpg" class="" title="image">
+
+<p>Ok，我们现在再存一个值 “tencent”，如果哈希函数返回 3、4、8 的话，图继续变为：</p>
+<img src="/2020/08/28/hash-and-bloom-filter/3.jpg" class="" title="image">
+
+<p>值得注意的是，4 这个 bit 位由于两个值的哈希函数都返回了这个 bit 位，因此它被覆盖了。现在我们如果想查询 “dianping” 这个值是否存在，哈希函数返回了 1、5、8三个值，结果我们发现 5 这个 bit 位上的值为 0，<strong>说明没有任何一个值映射到这个 bit 位上</strong>，因此我们可以很确定地说 “dianping” 这个值不存在。而当我们需要查询 “baidu” 这个值是否存在的话，那么哈希函数必然会返回 1、4、7，然后我们检查发现这三个 bit 位上的值均为 1，那么我们可以说 “baidu” <strong>存在了么？答案是不可以，只能是 “baidu” 这个值可能存在。</strong></p>
+<p>这是为什么呢？答案跟简单，因为随着增加的值越来越多，被置为 1 的 bit 位也会越来越多，这样某个值 “taobao” 即使没有被存储过，但是万一哈希函数返回的三个 bit 位都被其他值置位了 1 ，那么程序还是会判断 “taobao” 这个值存在。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%93%88%E5%B8%8C%E8%A1%A8" target="_blank" rel="noopener">散列表</a></li>
+<li><a href="https://blog.csdn.net/u012104435/article/details/47951357" target="_blank" rel="noopener">解决Hash冲突的几种方法</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/43263751" target="_blank" rel="noopener">详解布隆过滤器的原理，使用场景和注意事项</a></li>
+</ul>
+
+      
+    
+    </div>
+    
+      <div class="post-tags syuanpi fadeInRightShort back-3">
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+      
+        <a href="/tags/hash/">hash</a>
+      
+        <a href="/tags/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">布隆过滤器</a>
+      
+      </div>
+    
+    
+      
+
+      
+  <hr class="copy-line">
+  <div class="post-copyright">
+    <div class="copy-author">
+      <span>Author :</span>
+      <span>Xuntian Rao</span>
+    </div>
+    <div class="copy-url">
+      <span>Url :</span>
+      <a href="https://raoxuntian.github.io/2020/08/28/hash-and-bloom-filter/">https://raoxuntian.github.io/2020/08/28/hash-and-bloom-filter/</a>
+    </div>
+    <div class="copy-origin">
+      <span>Origin :</span>
+      <a href="https://raoxuntian.github.io">https://raoxuntian.github.io</a>
+    </div>
+    <div class="copy-license">
+      
+      著作权归作者所有，转载请联系作者获得授权。
+    </div>
+  </div>
+
+    
+  </article>
+  
+    
+  <nav class="article-page">
+    
+      <a href="/2020/08/31/quicksort/" id="art-left" class="art-left">
+        <span class="next-title">
+          <i class="iconfont icon-left"></i>快速排序
+        </span>
+      </a>
+    
+    
+      <a href="/2020/08/22/learnCpp-smart-pointers/" id="art-right" class="art-right">
+        <span class="prev-title">
+          浅谈C++的智能指针<i class="iconfont icon-right"></i>
+        </span>
+      </a>
+    
+  </nav>
+
+
+    
+  <i id="com-switch" class="iconfont icon-down jumping-in long infinite" style="font-size:24px;display:block;text-align:center;transform:rotate(180deg);"></i>
+  <div class="post-comments" id="post-comments" style="display: block;margin: auto 16px;">
+    
+
+    
+    
+<!-- Disqus Comments -->
+<div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+<script type="text/javascript">
+    var disqus_shortname = 'https-raoxuntian-github-io';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    
+
+  </div>
+
+
+
+  
+  
+    
+  
+  <aside class="post-toc">
+    <div class="title"><span>Index</span></div>
+    <div class="toc-inner">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#哈希冲突"><span class="toc-text">哈希冲突</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#开放地址法"><span class="toc-text">开放地址法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-线性探测法-ThreadLocalMap"><span class="toc-text">1.线性探测法:ThreadLocalMap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-线性补偿探测法"><span class="toc-text">2.线性补偿探测法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-伪随机探测"><span class="toc-text">3.伪随机探测</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拉链法"><span class="toc-text">拉链法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#拉链法-hashmap"><span class="toc-text">拉链法 : hashmap</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#再散列（双重散列，多重散列）"><span class="toc-text">再散列（双重散列，多重散列）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建立一个公共溢出区"><span class="toc-text">建立一个公共溢出区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#布隆过滤器"><span class="toc-text">布隆过滤器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是布隆过滤器"><span class="toc-text">什么是布隆过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现原理"><span class="toc-text">实现原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#布隆过滤器数据结构"><span class="toc-text">布隆过滤器数据结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+    </div>
+  </aside>
+
+
+
+  
+
+
+        </div>
+      </main>
+      <footer class="footer syuanpi fadeIn" id="footer">
+  <hr>
+  <div class="footer-wrapper">
+    <div class="left">
+      <div class="contact-icon">
+  
+  
+    <a href="https://www.facebook.com/100011342107187" target="_blank" rel="noopener" class="iconfont icon-facebook" title="facebook"></a>
+  
+    <a href="https://twitter.com/thatBossRao" target="_blank" rel="noopener" class="iconfont icon-twitter" title="twitter"></a>
+  
+    <a href="https://www.instagram.com/thatbossrao" target="_blank" rel="noopener" class="iconfont icon-instagram" title="instagram"></a>
+  
+    <a href="https://weibo.com/5284952322" target="_blank" rel="noopener" class="iconfont icon-weibo" title="weibo"></a>
+  
+    <a href="https://www.zhihu.com/people/rao-xun-tian-34" target="_blank" rel="noopener" class="iconfont icon-zhihu" title="zhihu"></a>
+  
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+    </div>
+    <div class="right">
+      <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2020 ~ 2020</span>
+        <span>❤</span>
+        <span>Xuntian Rao</span>
+    </div>
+    <div class="theme">
+        <span>
+            Powered by
+            <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo </a>
+        </span>
+        <span>
+            Theme
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi" target="_blank" rel="noopener"> Nlvi </a>
+        </span>
+    </div>
+    
+</div>
+
+    </div>
+  </div>
+</footer>
+    </div>
+    <div class="tagcloud" id="tagcloud">
+  <div class="tagcloud-taglist">
+  
+    <div class="tagcloud-tag">
+      <button>C++</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>C</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>字节序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>Linux</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>interview</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>char</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>string</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>指针</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>计算机网络</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>git</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>data structure</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>多态</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚函数</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>封装</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>继承</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>数据结构</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>hash</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>布隆过滤器</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>life</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>mysql</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>datastruct</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>B树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>红黑树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>B+树</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>排序</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>OS</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>虚拟内存</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分页</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>分段</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>trie tree</button>
+    </div>
+  
+    <div class="tagcloud-tag">
+      <button>算法</button>
+    </div>
+  
+  </div>
+  
+    <div class="tagcloud-postlist active">
+      <h2>C++</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/17/learnCpp-file-stream/">
+            <time class="tagcloud-posttime">2020 / 08 / 17</time>
+            <span>C++中的文件和流</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/22/learnCpp-smart-pointers/">
+            <time class="tagcloud-posttime">2020 / 08 / 22</time>
+            <span>浅谈C++的智能指针</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/03/memory-alignment/">
+            <time class="tagcloud-posttime">2020 / 07 / 03</time>
+            <span>C/C++中的内存对齐</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/02/variable-storage-areas-in-cpp/">
+            <time class="tagcloud-posttime">2020 / 07 / 02</time>
+            <span>C/C++程序内存的各种变量存储区域和各个区域详解</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>C</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/28/INT-MAX-INT-MIN/">
+            <time class="tagcloud-posttime">2020 / 06 / 28</time>
+            <span>浅谈C/C++整型上下限INT_MAX和INT_MIN及其运算</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/17/c-carIMS/">
+            <time class="tagcloud-posttime">2020 / 06 / 17</time>
+            <span>A Car Information Management System (车辆信息管理系统) with C</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>字节序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/29/byte-order/">
+            <time class="tagcloud-posttime">2020 / 06 / 29</time>
+            <span>浅谈字节序</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>Linux</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>interview</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/Linux-command/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>Linux常用命令</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/05/learnCpp-static/">
+            <time class="tagcloud-posttime">2020 / 06 / 05</time>
+            <span>浅谈C++关键字之static</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/03/learnCpp-const/">
+            <time class="tagcloud-posttime">2020 / 06 / 03</time>
+            <span>浅谈C++关键字之const</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/04/pointer-and-reference/">
+            <time class="tagcloud-posttime">2020 / 06 / 04</time>
+            <span>浅谈C++的指针与引用</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>char</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>string</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>指针</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/19/char-string/">
+            <time class="tagcloud-posttime">2020 / 06 / 19</time>
+            <span>浅谈C/C++中的char和string</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/22/learnCpp-smart-pointers/">
+            <time class="tagcloud-posttime">2020 / 08 / 22</time>
+            <span>浅谈C++的智能指针</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>计算机网络</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/computer-networking/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>计网面试题目梳理</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>git</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/02/git/">
+            <time class="tagcloud-posttime">2020 / 06 / 02</time>
+            <span>git常用指令小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>data structure</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/23/initializer-list/">
+            <time class="tagcloud-posttime">2020 / 06 / 23</time>
+            <span>initializer_list</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>多态</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚函数</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/21/learnCpp-virtual-function/">
+            <time class="tagcloud-posttime">2020 / 07 / 21</time>
+            <span>C++多态虚函数表详解(多重继承、多继承情况)</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>封装</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>继承</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/07/20/learnCpp-Polymorphism/">
+            <time class="tagcloud-posttime">2020 / 07 / 20</time>
+            <span>浅谈C++的封装、继承、多态</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>数据结构</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/28/hash-and-bloom-filter/">
+            <time class="tagcloud-posttime">2020 / 08 / 28</time>
+            <span>浅谈哈希表和布隆过滤器</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>hash</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/28/hash-and-bloom-filter/">
+            <time class="tagcloud-posttime">2020 / 08 / 28</time>
+            <span>浅谈哈希表和布隆过滤器</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>布隆过滤器</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/28/hash-and-bloom-filter/">
+            <time class="tagcloud-posttime">2020 / 08 / 28</time>
+            <span>浅谈哈希表和布隆过滤器</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>life</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/05/29/myFirstBlog/">
+            <time class="tagcloud-posttime">2020 / 05 / 29</time>
+            <span>我的第一篇博客</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>mysql</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>datastruct</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>B树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>红黑树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>B+树</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/03/mysql-engine/">
+            <time class="tagcloud-posttime">2020 / 08 / 03</time>
+            <span>浅谈MySQL存储引擎</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>排序</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/31/quicksort/">
+            <time class="tagcloud-posttime">2020 / 08 / 31</time>
+            <span>快速排序</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>OS</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/17/processes-and-threads/">
+            <time class="tagcloud-posttime">2020 / 08 / 17</time>
+            <span>进程和线程</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>虚拟内存</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分页</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>分段</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/09/os-paging-and-segmentation/">
+            <time class="tagcloud-posttime">2020 / 08 / 09</time>
+            <span>操作系统：内存管理之分页和分段</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>trie tree</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/06/18/trie-tree/">
+            <time class="tagcloud-posttime">2020 / 06 / 18</time>
+            <span>Trie Tree</span>
+          </a>
+        </div>
+      
+    </div>
+  
+    <div class="tagcloud-postlist ">
+      <h2>算法</h2>
+      
+        <div class="tagcloud-post">
+          <a href="/2020/08/01/sort/">
+            <time class="tagcloud-posttime">2020 / 08 / 01</time>
+            <span>排序算法小结</span>
+          </a>
+        </div>
+      
+    </div>
+  
+</div>
+
+  </div>
+  <div class="backtop syuanpi melt toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+
+  <div class="search" id="search">
+    <div class="input">
+      <input type="text" id="search-input" placeholder="搜索一下？" autofocus>
+    </div>
+    <div id="search-result"></div>
+  </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+
+  <script></script>
+  <script src="/script/lib/lightbox/js/lightbox.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/script/scheme/banderole.js"></script>
+
+
+
+
+<script src="/script/bootstarp.js"></script>
+
+
+
+<script>
+if (nlviconfig.theme.toc) {
+  setTimeout(function() {
+    if (nlviconfig.theme.scheme === 'balance') {
+      $("#header").addClass("show_toc");
+    } else if (nlviconfig.theme.scheme === 'banderole') {
+      $(".container-inner").addClass("has_toc");
+      $(".post-toc .title").addClass("show");
+      $(".toc-inner").addClass("show");
+    }
+  }, 1000);
+}
+</script>
+
+
+
+</body>
+</html>
