@@ -86,9 +86,8 @@
 </style>
 
   <title>
-  Salad Days
   
-    | Rao’s blog
+    Archives · Salad Days
   
 </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -232,549 +231,51 @@
       <main class="main" id="main">
         <div class="main-wrapper">
           
-  
-
-<section class="posts">
-  
     
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-09-03</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/09/03/priority-queue/">priority_queue</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
+  <div class="archive syuanpi fadeInRightShort" id="archive">
+    
+      <aside class="archive-title">Total</aside>
+      <span class="archive-num">26 Posts In Total</span>
+    
+      
       
         
-          <p>优先队列虽然名字叫队列，但它的内部其实是由一个<strong>堆</strong>来维护其排序的。</p>
+          
+          
+            
+            
+            <div class="archive-group">
+            <time class="archive-year"> 2020 </time>
+            <div class="archive-list">
+          
+          
+        <div class="archive-post">
+          <div class="archive-post-content">
+            
+              <p>优先队列虽然名字叫队列，但它的内部其实是由一个<strong>堆</strong>来维护其排序的。</p>
 <p>既然名字叫做队列，那么使用它就要先包含头文件<code>#include&lt;queue&gt;</code>，优先队列和普通队列的不同就在于我们可以自定义优先队列内部数据的优先级，让优先级高的排在前面，优先出队。</p>
 <p>优先队列具有队列的所有特性，包括基本操作，只是在这基础上添加了内部的一个排序，它本质是一个堆实现的。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/09/03/priority-queue/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/datastruct/">datastruct</a>
-      
-        <a href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">优先队列</a>
-      
-        <a href="/tags/%E5%A0%86/">堆</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-31</time>
-          
+            
+          </div>
+          <div class="archive-post-info">
+            <time class="archive-post-time">
+              2020-09-03
+            </time>
+            <a  class="archive-post-link" href="/2020/09/03/priority-queue/">
+              priority_queue
+            </a>
+          </div>
         </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/31/quicksort/">快速排序</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
       
-        
-          <p>快排这个东西真的不想说什么，刷面经常常看到会有面试官考察快排的代码，我一直觉得这种事情不会发生在我身上，没想到上周滴滴面试还是发生了。而且，我之前写过好几次快排的代码，然而面试时脑子一篇空白，没有按时写出来……并且像面试官问了一个巨他妈愚蠢的问题：现在的语言都有sort这种已经非常完善的排序算法，为什么还要造轮子手撕快排。面试官说：<strong>其实让你们写快排的代码并不是要你们造轮子取代那些排序算法，而是通过快排这个我们都知道原理的过程来看看你的code基本功，能不能把这个我们都知道的思路复现出来。</strong></p>
-<p>简单点说，写不出来就是菜鸡了。看完这篇文章，拒绝做菜鸡！</p>
-        
       
-    
-      <p class="content-link">
-        <a href="/2020/08/31/quicksort/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
+        </section></section>
       
-        <a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-28</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/28/hash-and-bloom-filter/">浅谈哈希表和布隆过滤器</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p><strong>散列表</strong>（<strong>Hash table</strong>，也叫<strong>哈希表</strong>），是根据<a href="https://zh.wikipedia.org/wiki/鍵" target="_blank" rel="noopener">键</a>（Key）而直接访问在内存储存位置的<a href="https://zh.wikipedia.org/wiki/数据结构" target="_blank" rel="noopener">数据结构</a>。也就是说，它通过计算一个关于键值的函数，将所需查询的数据<a href="https://zh.wikipedia.org/wiki/映射" target="_blank" rel="noopener">映射</a>到表中一个位置来访问记录，这加快了查找速度。这个映射函数称做<a href="https://zh.wikipedia.org/wiki/散列函数" target="_blank" rel="noopener">散列函数</a>，存放记录的数组称做<strong>散列表</strong>。</p>
-<p>在面试中，我们经常会被问到如何处理哈希冲突的问题。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/28/hash-and-bloom-filter/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
-      
-        <a href="/tags/hash/">hash</a>
-      
-        <a href="/tags/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">布隆过滤器</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-22</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/22/learnCpp-smart-pointers/">浅谈C++的智能指针</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>智能指针作为C++11里的新特征，有可能在面试里被问到。本文主要介绍C++里的三个智能指针：<code>shared_ptr</code>、<code>unique_ptr</code>、<code>weak_ptr</code>。其实还有一种<code>auto_ptr</code>指针，但在C++11里已经被弃用了，故此我们不做讨论了。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/22/learnCpp-smart-pointers/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/C/">C++</a>
-      
-        <a href="/tags/%E6%8C%87%E9%92%88/">指针</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-17</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/17/learnCpp-file-stream/">C++中的文件和流</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>最近在牛客网刷题，和leetcode不一样，牛客网需要要自己控制从键盘输入变量。另外在实习的时候，碰巧页遇到几个C++读写文件的问题，之前都是直接网上搜索code，这几天抽空研究了这一块，发现无论是从键盘输入字符串还是从读取文件，都可以采用“流”的思想去理解。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/17/learnCpp-file-stream/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/C/">C++</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-17</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/17/processes-and-threads/">进程和线程</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>操作系统实在是硬伤，每次面试几乎都被问到进程和线程的区别，那就总结一下吧。</p>
-<h3 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h3><p>根本区别：进程是操作系统<strong>资源分配</strong>的基本单位，而线程是<strong>任务调度和执行</strong>的基本单位。</p>
-<p><strong>一个进程中可以有多个线程，他们共享进程的资源。</strong></p>
-<p>在开销方面：每个进程都有<strong>独立的代码和数据空间</strong>（程序上下文），程序之间的切换会有<strong>较大</strong>的开销；线程可以看做轻量级的进程，同一类线程<strong>共享代码和数据空间</strong>，每个线程都有自己独立的运行栈和程序计数器（PC），线程之间切换的<strong>开销小</strong>。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/17/processes-and-threads/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/OS/">OS</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-09</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/09/os-paging-and-segmentation/">操作系统：内存管理之分页和分段</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>分页和分段是在面试过程中常被问到的两种内存管理技术。</p>
-<p>计算机结构比较复杂，那么说到“存储”，我们一般就想到内存和外存，比如我们买手机买电脑，都要看看这些终端的内存够不够打游戏，外存够不够装照片这些。内存外存只是比较通俗的叫法，在实际的计算机存储体系当中，我们划分了四块区域：寄存器（CPU registers）、高速缓存（CPU cache）、主存（内存）、外存（磁盘）。</p>
- <img src="/2020/08/09/os-paging-and-segmentation/1.png" class="" title="image">
-
-<p>这篇文章主要是将这座金字塔结构自顶向下第三层的主存结构，也就是我们俗称的内存。</p>
-<p>内存这东西不是一两篇文章就能看懂吃透的，无奈每次面试或多或少都被面试官问道这些东西，稍微捋一下这些概念性的东西。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/09/os-paging-and-segmentation/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/OS/">OS</a>
-      
-        <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">虚拟内存</a>
-      
-        <a href="/tags/%E5%88%86%E9%A1%B5/">分页</a>
-      
-        <a href="/tags/%E5%88%86%E6%AE%B5/">分段</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-03</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/03/mysql-engine/">浅谈MySQL存储引擎</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>数据库存储引擎是数据库底层软件组织,数据库管理系统(DBMS)使用数据引擎进行创建 查询 更新和删除数据 不同的存储引擎提供不同的存储机制 索引技巧 锁定水平等功能,使用不同的存储引擎,还可以 获得特定的功能 现在许多不同的数据库管理系统都支持多种不同的数据引擎 MySql的核心就是插件式存储引擎。</p>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/03/mysql-engine/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/mysql/">mysql</a>
-      
-        <a href="/tags/datastruct/">datastruct</a>
-      
-        <a href="/tags/B%E6%A0%91/">B树</a>
-      
-        <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a>
-      
-        <a href="/tags/B-%E6%A0%91/">B+树</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-08-01</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/08/01/sort/">排序算法小结</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>排序算法，面试中最经常被问到的问题，我们需要熟悉并了解各种算法的时间和空间复杂度、时间复杂度平均、最坏、最好的情况和是否为稳定排序。</p>
- <img src="/2020/08/01/sort/0.png" class="" title="image">
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/08/01/sort/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a>
-      
-        <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-    
-  
-  <article class="
-  post
-  
-  ">
-    <header class="post-header">
-      <div class="post-time syuanpi fadeInRightShort back-1">
-        <div class="post-time-wrapper">
-          
-          <time>2020-07-21</time>
-          
-        </div>
-      </div>
-      <h2 class="post-title syuanpi fadeInRightShort back-2">
-        
-          <a href="/2020/07/21/Linux-command/">Linux常用命令</a>
-        
-      </h2>
-    </header>
-    <div class="post-content syuanpi fadeInRightShort back-3">
-      
-        
-          <p>在实际工作中，许多服务器是Linux操作系统，作为程序员无法避免和Linux打交道，所以在应届生面试的时候，Linux常用指令也是面试官经常考察的一个点。</p>
-<p>除了我们常用的<code>cd</code>、<code>ls</code>，我们应该掌握一些常用的指令</p>
-<h4 id="面试常见的Linux指令"><a href="#面试常见的Linux指令" class="headerlink" title="面试常见的Linux指令"></a>面试常见的Linux指令</h4>
-        
-      
-    
-      <p class="content-link">
-        <a href="/2020/07/21/Linux-command/#more">
-          <span>Read More...</span>
-        </a>
-      </p>
-    
-    </div>
-    
-      <div class="post-tags syuanpi fadeInRightShort back-3">
-      
-        <a href="/tags/Linux/">Linux</a>
-      
-        <a href="/tags/interview/">interview</a>
-      
-      </div>
-    
-    
-  </article>
-  
-  
-    
-  
-
-  
-</section>
-
+  </div>
   
   <nav class="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<i class="iconfont icon-doubleright"></i></a>
+      <span class="page-number current">1</span>
   </nav>
+
 
 
 
