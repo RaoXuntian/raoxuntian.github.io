@@ -4,7 +4,7 @@ date: 2020-08-03 23:35:56
 updated:
 tags:
 - mysql
-- datastruct
+- 数据结构
 - B树
 - 红黑树
 - B+树
