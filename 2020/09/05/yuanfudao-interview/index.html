@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="Linux, interview, nlvi" />
+  <meta name="keywords" content="interview, 计算机网络, mysql, nlvi" />
 
 
 <link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
@@ -87,7 +87,7 @@
 }
 </style>
 
-  <title> Linux常用命令 · Salad Days </title>
+  <title> 猿辅导二面面经 · Salad Days </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div class="container">
@@ -239,177 +239,117 @@
       <div class="post-time syuanpi fadeInRightShort back-1">
         <div class="post-time-wrapper">
           
-          <time>2020-07-21</time>
+          <time>2020-09-05</time>
           
         </div>
       </div>
       <h2 class="post-title syuanpi fadeInRightShort back-2">
         
-          Linux常用命令
+          猿辅导二面面经
         
       </h2>
     </header>
     <div class="post-content syuanpi fadeInRightShort back-3">
       
-        <p>在实际工作中，许多服务器是Linux操作系统，作为程序员无法避免和Linux打交道，所以在应届生面试的时候，Linux常用指令也是面试官经常考察的一个点。</p>
-<p>除了我们常用的<code>cd</code>、<code>ls</code>，我们应该掌握一些常用的指令</p>
-<h4 id="面试常见的Linux指令"><a href="#面试常见的Linux指令" class="headerlink" title="面试常见的Linux指令"></a>面试常见的Linux指令</h4><a id="more"></a>
+        <p>2020.9.5早上九点猿辅导二面，问的问题不多，但感觉问的挺好，还让我手撕一道链表的题目，没有找到最优解，十分钟的时间用暴力的方法写出代码，自己觉得不是很满意。事后诸葛亮，最优解总在面试完突然想到，把自己蠢哭了，一顿捶胸顿足之后决定记一下这道题目。</p>
+<p>顺便再记一些面试官问的网络和数据库的问题，用倒叙的手法整理成一篇面经吧。</p>
+<a id="more"></a>
 
-<h3 id="1-pwd"><a href="#1-pwd" class="headerlink" title="1.pwd"></a>1.pwd</h3><ul>
-<li><code>pwd</code>:显示当前目录</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez bin]<span class="comment"># pwd</span></span><br><span class="line">/root/miniconda3/bin</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-mkdir-rmdir"><a href="#2-mkdir-rmdir" class="headerlink" title="2.mkdir/rmdir"></a>2.mkdir/rmdir</h3><ul>
-<li><code>mkdir</code>:建立一个新目录</li>
-</ul>
-<p>这个指令在默认的情况下是要一层一层地建立你所需要的目录。默认的时候你要建立的目录的上级目录必须也要存在，如果想一次建立多层目录，可以<code>-p</code>选项。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># mkdir test1/test2</span></span><br><span class="line">mkdir: 无法创建目录<span class="string">"test1/test2"</span>: 没有那个文件或目录</span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># mkdir test1/test2 -p</span></span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># ll |grep test</span></span><br><span class="line">drwxr-xr-x  3 root root      4096 7月  22 15:45 test1</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>rmdir</code>:删除一个<strong>空</strong>目录</li>
-</ul>
-<p>注意这个指令默认是删除一个空目录，加入<code>-p</code>选项连同上层“空的”目录也一起删除。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># rmdir test1/ &lt;==因为尚有内容，无法删除</span></span><br><span class="line">rmdir: 删除 <span class="string">"test1/"</span> 失败: 目录非空</span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># rmdir test1/test2/ -p</span></span><br><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># ll |grep test</span></span><br></pre></td></tr></table></figure>
-
-<p>如果想把目录下的东西都删除，这个时候可以使用<code>rm -rf</code>。</p>
-<h3 id="3-cp-rm-mv"><a href="#3-cp-rm-mv" class="headerlink" title="3.cp/rm/mv"></a>3.cp/rm/mv</h3><ul>
-<li><code>cp</code>:复制文件或目录</li>
-</ul>
-<p><code>cp</code>这个指令很重要的，不同身份者执行这个命令会有不同的结果产生。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cp [-adfilprsu] 源文件(<span class="built_in">source</span>) 目标文件(destination)</span><br><span class="line">cp [option] source1 source2 source3 …… directory</span><br><span class="line">选项与参数：</span><br><span class="line">-a	:	相当于-dr --preserve=all的意思（常用）</span><br><span class="line">-d	:	若源文件为链接文件的属性（link file），则复制链接文件属性而非文件本身；</span><br><span class="line">-i	:	若目标文件（destination）已经存在，在覆盖时会先询问操作的进行（常用）；</span><br><span class="line">-p	:	连同文件的属性（权限、用户、时间）一起复制过去，而非使用默认属性（备份常用）；</span><br><span class="line">-r	:	递归复制，用于目录的复制操作（常用）；</span><br><span class="line">最后需要注意的是，如果源文件有两个以上，则最后一个目标文件一定要是“目录”才行。</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li><code>rm</code>:删除文件或目录</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rm [-fir] 文件或目录</span><br><span class="line">选项与参数：</span><br><span class="line">-f	:	就是force的意思，忽略不存在文件，不会出现警告信息；</span><br><span class="line">-I	:	交互模式，在删除前会询问使用者是否操作；</span><br><span class="line">-r	:	递归删除，最常用于目录的删除，这是非常危险的选项。</span><br></pre></td></tr></table></figure>
-
-<p>我们在网上经常看到删库跑路的梗<code>rm -rf /</code>，现在你应该知道这个命令的意思了吧~</p>
-<ul>
-<li><code>mv</code>:移动文件或目录，或重命名</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mv [-fiu] source destination</span><br><span class="line">mv [option] source1 source2 source3 …… directory</span><br><span class="line">选项与参数：</span><br><span class="line">-f	:	就是force的意思，如果目标文件以及存在，不会询问而直接覆盖；</span><br><span class="line">-i	:	若目标文件（destination）已经存在，就会询问是否覆盖；</span><br><span class="line">-u	:	若目标文件已经存在，且source比较新，才会更新（update）。</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="4-cat-tac-nl-more-less-head-tail-od"><a href="#4-cat-tac-nl-more-less-head-tail-od" class="headerlink" title="4.cat/tac/nl/more/less/head/tail/od"></a>4.cat/tac/nl/more/less/head/tail/od</h3><ul>
-<li><code>cat</code>:从第一行开始显示文件内容。</li>
-<li><code>tac</code>:从最后一行开始显示，可以看出tac是cat的倒着写。</li>
-<li><code>nl</code>:显示的时候，同时输出行号。</li>
-<li><code>more</code>:一页一页地显示文件内容。</li>
-<li><code>less</code>:与more类似，但是比more更好的是，它可以往前翻页。</li>
-<li><code>head</code>:只看前面几行。</li>
-<li><code>tail</code>:只看后面几行。</li>
-<li><code>od</code>:以二进制的方式读取文件内容。</li>
-</ul>
-<h3 id="5-touch"><a href="#5-touch" class="headerlink" title="5.touch"></a>5.touch</h3><ul>
-<li><code>touch</code>:创建新文件或修改文件时间</li>
-</ul>
-<p><code>touch</code>可以创建新文件并不新鲜，但很多人可能不知道它可以修改文件时间，在说修改文件时间之前，我们看看Linux下的文件有哪些时间：</p>
-<ul>
-<li><p>修改时间（modification time, mtime）</p>
-<p>当该文件的<strong>内容数据</strong>变更时，就会更新这个时间，内容数据指的是文件的内容，而不是文件的属性或权限。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>题目：</p>
+<p>给出一条单链表：1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</p>
+<p>交叉首尾交叉变成：1-&gt;5-&gt;2-&gt;4-&gt;3-&gt;NULL</p>
+<p><strong>要求空间复杂度O(1).</strong></p>
+<p>当时比较紧张，想到递归的方法，时间复杂度O(n*n)。面试官让我想想能不能优化一下时间复杂度，达到O(NlogN)甚至O(N)。当时时间不够，我说O(N)应该可以，又不是遍历一遍，遍历2遍3遍也是O(N)，但时间不允许我继续思考。面试结束后点完外卖再看一眼草稿纸，突然就想明白了 = =</p>
+<ol>
+<li><p>我们可以第一遍遍历链表，得到链表的长度n</p>
 </li>
-<li><p>状态时间（status time, ctime）</p>
-<p>当该文件的<strong>状态（status）</strong>改变时，就会更新这个时间，举例来说，像是权限与属性被更改了都会更新这个时间。</p>
+<li><p>第二遍遍历将链表从中间（(n+1)/2）的地方断开</p>
+<p>1-&gt;2-&gt;3-&gt;NULL  4-&gt;5-&gt;NULL</p>
 </li>
-<li><p>读取时间（access time, atime）</p>
-<p>当<strong>该文件的内容被读取</strong>时，就会更新这个读取时间（access），举例来说，我们使用cat去读取file.txt，就会更新该文件的atime。</p>
+<li><p>将后半段的链表翻转</p>
+<p>1-&gt;2-&gt;3-&gt;NULL  5-&gt;4-&gt;NULL</p>
 </li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@izbp1783u2o2usauzn9srez ~]<span class="comment"># date; ll /etc/man_db.conf; ll --time=ctime /etc/man_db.conf; ll --time=atime /etc/man_db.conf </span></span><br><span class="line">2020年 07月 24日 星期五 23:49:14 CST</span><br><span class="line">-rw-r--r--. 1 root root 5171 6月  10 2014 /etc/man_db.conf		&lt;== 这是mtime</span><br><span class="line">-rw-r--r--. 1 root root 5171 8月  18 2017 /etc/man_db.conf		&lt;== 这是ctime</span><br><span class="line">-rw-r--r--. 1 root root 5171 7月  23 03:48 /etc/man_db.conf	&lt;== 这是atime</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">touch [-acdmt] 文件</span><br><span class="line">参数：</span><br><span class="line">-a : 仅修改访问时间。</span><br><span class="line">-c : 仅修改文件的时间，若该文件不存在则不新建文件。</span><br><span class="line">-d : 后面可以接欲修改的日期而不使用目前的日期。</span><br><span class="line">-m : 仅修改 mtime。</span><br><span class="line">-t : 后面可以接欲修改的时间而不用目前的时间，格式为[YYMMDDhhmm]。</span><br></pre></td></tr></table></figure>
-
-<p>无论如何，<code>touch</code>这个命令最常被使用的情况是：</p>
-<ul>
-<li>建立一个空文件</li>
-<li>将某个文件日期自定义为目前（mtime和atime）</li>
-</ul>
-<h3 id="6-find"><a href="#6-find" class="headerlink" title="6.find"></a>6.find</h3><ul>
-<li><code>find</code>:查找某路径下指定文件。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find /root（路径） -name 文件名</span><br><span class="line">find /root（路径） -mtime 0 当前目录下查找今天之内有改动的文件  </span><br><span class="line">-mtime +n : 列出在n天之前（不含n天本身）被更改过的文件名；  </span><br><span class="line">-mtime -n : 列出在n天之内（含n天本身）被更改过的文件名；</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="7-grep-wc"><a href="#7-grep-wc" class="headerlink" title="7.grep/wc"></a>7.grep/wc</h3><ul>
-<li><code>grep</code>:文本搜索</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">语法：grep 参数 查找条件 文件名（注：是文件名，目录名下查找不行）</span><br><span class="line">主要参数：</span><br><span class="line">－i：不区分大小写(只适用于字母字符。）</span><br><span class="line">－l：查询多文件时只输出包含匹配字符的 文件名。</span><br><span class="line">－n：显示匹配行内容及行号。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>wc</code>:统计字数</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wc [-clw][--<span class="built_in">help</span>][--version][文件...]</span><br><span class="line">参数：</span><br><span class="line">-c或--bytes或--chars 只显示Bytes数。</span><br><span class="line">-l或--lines 只显示行数。</span><br><span class="line">-w或--words 只显示字数。</span><br><span class="line">--<span class="built_in">help</span> 在线帮助。</span><br><span class="line">--version 显示版本信息。</span><br></pre></td></tr></table></figure>
-
-<p>在默认的情况下，wc将计算指定文件的行数、字数，以及字节数。使用的命令为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(base) saladdays@MacBook-Pro _posts % wc learnCpp-static.md </span><br><span class="line">     222     516    9427 learnCpp-static.md</span><br></pre></td></tr></table></figure>
-
-
-
-<p>找出某个文件里关键字出现的次数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep 字符串 文件名 | wc -l</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="8-ps-top-kill"><a href="#8-ps-top-kill" class="headerlink" title="8.ps/top/kill"></a>8.ps/top/kill</h3><ul>
-<li><p><code>ps</code>:查看进程，显示系统中进程的信息。包括进程ID、控制进程终端、执行时间和命令。</p>
+<li><p>将两段链表原地合并</p>
 </li>
-<li><p><code>top</code>:显示当前系统正在执行的进程的相关信息，包括进程ID、内存占用率、CPU占用率等。</p>
-<p>top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。</p>
+<li><p>再考虑一下边界条件</p>
 </li>
-<li><p><code>kill</code>:杀死进程。</p>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	ListNode* next;</span><br><span class="line">	ListNode(<span class="keyword">int</span> x): val(x), next(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">reverse</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (head==<span class="literal">nullptr</span> || head-&gt;next==<span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">	ListNode* nex = head-&gt;next;</span><br><span class="line">	ListNode* ans = reverse(nex);</span><br><span class="line">	nex-&gt;next = head;</span><br><span class="line">	head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">solve</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">	ListNode* p = head;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		++cnt;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (cnt&lt;<span class="number">3</span>) <span class="keyword">return</span> head;</span><br><span class="line">	p = head;</span><br><span class="line">	<span class="keyword">int</span> stop=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (stop++&lt;(cnt+<span class="number">1</span>)/<span class="number">2</span>) &#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	ListNode* last = reverse(p-&gt;next);</span><br><span class="line">	p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">	p = head;</span><br><span class="line"></span><br><span class="line">	ListNode* q = last;</span><br><span class="line">	<span class="keyword">while</span> (q!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		ListNode* tmp = p-&gt;next;</span><br><span class="line">		p-&gt;next = q;</span><br><span class="line">		q = q-&gt;next;</span><br><span class="line">		p-&gt;next-&gt;next = tmp;</span><br><span class="line">		p = tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ListNode* head = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</span><br><span class="line">	head-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</span><br><span class="line">	head-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">5</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">6</span>);</span><br><span class="line">	ListNode* p = solve(head);</span><br><span class="line">	ListNode* cur = p;</span><br><span class="line">	<span class="keyword">while</span> (cur!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cur-&gt;val &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		cur = cur-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后面试官问我这个程序如果要做测试需要考虑什么情况，我说什么奇数偶数个节点的情况，空节点单节点非常多（内存塞不下）节点的情况，面试官提示我有一种链表独有的需要考虑的情况，我立马想到了，是<strong>循环链表</strong>。这个程序没有考虑对循环链表的检测，所以有兴趣的同学可以自行考虑一下输入循环链表会发生什么。</p>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>面试的时候，面试官问我数据库掌握到什么程度，要如实的说。我就说，在项目中用过MySQL和MongoDB，但数据量不大不足以使用索引，对索引不熟悉。数据库的书也看了，八股文面经那些也背了，你问吧……</p>
+<p>面试官：那好，那我就问一个你应该从来没遇见过的、面经上也没有的问题吧</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`table_a`</span> (</span><br><span class="line"> <span class="string">`name`</span> <span class="built_in">VARCHAR</span>/<span class="built_in">INTEGER</span> ,</span><br><span class="line"> <span class="keyword">INDEX</span> index_name (<span class="string">`name`</span>),</span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FORM</span> table_a</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="number">1</span>;</span><br><span class="line">WHERE name = '1';</span><br></pre></td></tr></table></figure>
+
+<p>面试官洋洋洒洒地在屏幕上打了几行SQL的语法，说到：我现在有个表格，里面有索引name，name如果是VARCHAR类型索引的时候，我查找数据，<code>WHERE name = 1;</code> 查找索引条件给name的是个INT，那你说一下这次查询能成功吗？反过来，如果name是个INT索引，我查询的索引条件是<code>WHERE name = &#39;1&#39;;</code>给它一个VARCHAR类型索引查询，会发生什么呢？</p>
+<p>通过查阅资料，我总结了一下，直接说结论吧：</p>
+<p>前者，字段name是VARCHAR类型索引，但在查询的时候，name传入的类型是INT，会导致<strong>索引失效</strong>，执行的是<strong>全表查询</strong>。</p>
+<p>后者，字段name是INT类型索引，查询时name传入的类型是VARCHAR不会导致索引失效，依然可以根据索引进行查询。</p>
+<p>好的，我们做个实验吧，用explain来进行分析。</p>
+<p>（1）新建测试表、索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> index_test_1 (</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">str_test <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">num_test <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">other_test  <span class="built_in">VARCHAR</span>(<span class="number">200</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>),</span><br><span class="line"><span class="keyword">KEY</span> idx_str (str_test),</span><br><span class="line"><span class="keyword">KEY</span> idx_num (num_test)</span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+
+<p>（2）插入测试数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"111"</span>, <span class="number">111</span>, <span class="string">"测试数据1"</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"111"</span>, <span class="number">111</span>, <span class="string">"测试数据2"</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"222"</span>, <span class="number">222</span>, <span class="string">"测试数据3"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>（3）int类型输入，分别使用idx_num和idx_str两种索引查看执行计划</p>
+<p>idx_num对应的num_test字段类型是int；执行计划如下图：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where num_test = 111;</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_num       | idx_num | 4       | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>idx_str对应的str_test字段类型是varchar；执行计划如下图：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where str_test = 111;</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ALL  | idx_str       | NULL | NULL    | NULL |    3 |    33.33 | Using where |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">3</span> <span class="keyword">warnings</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>从两个执行计划很明显的发现，idx_str索引的执行计划中key=null，ref=null，rows=3；没有使用到索引</p>
+<p>（4）varchar类型输入，分别使用idx_num和idx_str两种索引查看执行计划</p>
+<p>idx_num对应的num_test字段类型是int；执行计划如下图：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where num_test = '111';</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_num       | idx_num | 4       | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>idx_str对应的str_test字段类型是varchar；执行计划如下图：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where str_test = '111';</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_str       | idx_str | 302     | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>从两个执行计划看出，varchar类型输入，不管索引字段是int还是varchar都可以使用索引。</p>
+<p><strong>说明：</strong></p>
+<p>为什么varchar类型输入，索引是int类型或者是varchar类型的字段，都能生效呢？</p>
+<p>原因是mysql在执行的时候，会将数值<strong>隐式转换</strong>，但是这个操作会有无法命中索引的风险。隐式转换还有其他的风险，比如sql注入、多查数据、多删数据等，所以大家在写sql时一定要细心。</p>
+<h4 id="隐式转换的规则"><a href="#隐式转换的规则" class="headerlink" title="隐式转换的规则"></a>隐式转换的规则</h4><ul>
+<li>如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&lt;=&gt;相等比较运算符。对于NULL &lt;=&gt; NULL，结果为true。不需要转换</li>
+<li>如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。</li>
+<li>如果两个参数都是整数，则将它们作为整数进行比较。</li>
+<li>如果不与数字进行比较，则将十六进制值视为二进制字符串</li>
+<li>如果其中一个参数是十进制值，则比较取决于另一个参数。 如果另一个参数是十进制或整数值，则将参数与十进制值进行比较，如果另一个参数是浮点值，则将参数与浮点值进行比较</li>
+<li>如果其中一个参数是TIMESTAMP或DATETIME列，另一个参数是常量，则在执行比较之前将常量转换为时间戳。</li>
+<li><strong>在所有其他情况下，参数都是作为浮点数（实数）比较的。</strong></li>
+</ul>
+<p>所以我们继续刚刚的实验，如果我继续添加几行来看看MySQL是如何在VARCHAR和INT之间发生隐式转换的。</p>
+ <img src="/2020/09/05/yuanfudao-interview/1.png" class="" title="image">
+
+<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><p>网络这一块，面试官貌似是抓住了我在HTTP的GET和POST方面不熟悉的弱点，一个劲地死怼，连问三道关于GET和POST的问题。</p>
+<ol start="0">
+<li><p>TCP三次握手，服务器端可以像客户端发起连接吗？</p>
+<p>不能，服务器端找不到客户端的IP地址。</p>
 </li>
-</ul>
-<h3 id="9-netstat-lsof"><a href="#9-netstat-lsof" class="headerlink" title="9.netstat/lsof"></a>9.netstat/lsof</h3><ul>
-<li><code>netstat</code>:常用于查看路由表，显示各种网络相关信息，如网络连接，路由表，接口状态(Interface Statistics),masquerade连接，多播成员。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">命令参数</span><br><span class="line"></span><br><span class="line">注：netstat命令默认是不显示LISTEN状态的网络连接和LISTEING状态的UNIX域连接，只有使用带-a或者-l参数的命令才能显示出来。</span><br><span class="line"></span><br><span class="line">    -a (all)显示所有状态的连接</span><br><span class="line">    -t (tcp)仅显示tcp相关连接</span><br><span class="line">    -u (udp)仅显示udp相关连接</span><br><span class="line">    -n 拒绝显示别名，能显示数字的全部转化成数字。</span><br><span class="line">    -l 仅列出有在监听状态的连接</span><br><span class="line"></span><br><span class="line">    -p 显示建立相关链接的程序名</span><br><span class="line">    -r 显示路由信息，路由表</span><br><span class="line">    -e 显示扩展信息，例如uid等</span><br><span class="line">    -s 按各个协议进行统计</span><br><span class="line">    -c 每隔一个固定时间，执行该netstat命令。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">常用命令参考</span><br><span class="line"></span><br><span class="line">a、列出所有连接（包括监听和未监听状态）</span><br><span class="line"></span><br><span class="line">    命令：netstat -a；列出所有状态下的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -at；列出所有状态下的tcp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -au；列出所有状态下的udp连接 </span><br><span class="line"></span><br><span class="line">    命令：netstat -ax；列出所有状态下的UNINX域连接</span><br><span class="line"></span><br><span class="line">b、列出处于LISTEN状态的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -l；列出所有处于LISTEN状态的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -lt；列出所有处于LISTEN状态的tcp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -lu；列出所有处于LISTEN状态的udp连接</span><br><span class="line"></span><br><span class="line">    命令：netstat-lx；列出所有处于LISTENING状态的UNIX域连接</span><br><span class="line"></span><br><span class="line">c、统计通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -s；统计所有连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -st；统计基于tcp连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -su；统计基于udp连接的通信协议连接信息</span><br><span class="line"></span><br><span class="line">d、输出中显示进程ID和进程名信息（可搭配其他参数使用）</span><br><span class="line"></span><br><span class="line">    命令：netstat -p；列出除LISTEN和LISTENING状态下的连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">    命令：netstat -tp；列出除LISTEN和LISTENING状态下的tcp连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">    命令：netstat -up；列出除LISTEN和LISTENING状态下的udp连接，包含连接所属进程的进程ID和进程名</span><br><span class="line"></span><br><span class="line">e、动态输出连接信息</span><br><span class="line"></span><br><span class="line">    命令：netstat -c；每间隔一秒输出当前连接信息</span><br><span class="line"></span><br><span class="line">f、列出特定的连接</span><br><span class="line"></span><br><span class="line">    命令：netstat -ap|grep postgres</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>lsof</code>:查端口</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:443 <span class="comment">#显示所有打开443端口的进程</span></span><br><span class="line">netstat -an | grep tcp | grep 80</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="10-scp"><a href="#10-scp" class="headerlink" title="10.scp"></a>10.scp</h3><ul>
-<li><code>scp</code>:通过网络在两台主机之间拷贝文件，可以支持Windows。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scp local_file remote_username@remote_ip:remote_folder <span class="comment">#本地复制到远程，文件未重命名。</span></span><br><span class="line">scp local_file remote_username@remote_ip:remote_file <span class="comment">#本地复制到远程，文件重命名。</span></span><br><span class="line">scp local_file remote_ip:remote_folder <span class="comment">#未指定用户名，执行后需输入用户名和密码，未修改文件名进行移动文件。</span></span><br><span class="line">scp local_file remote_ip:remote_file <span class="comment">#未指定用户名，执行后需输入用户名和密码，修改文件名进行移动文件。</span></span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">-r 递归拷贝指定的整个文件夹。</span><br></pre></td></tr></table></figure>
-
-<p>从远程复制到本地，只需要将上述命令的后2个参数调换顺序就可以了。<br> 相比于CP命令，主要就是在source跟dest之前加上remote_username@remote_ip:，通过加的位置的不同区分出到底从远程到本地还是本地到远程。</p>
-<h3 id="11-tar-zip"><a href="#11-tar-zip" class="headerlink" title="11.tar/zip"></a>11.tar/zip</h3><ul>
-<li><code>tar</code>:打包/压缩文件</li>
-<li><code>zip</code>:打包/压缩文件</li>
-</ul>
-<p>详见：</p>
-<p><a href="https://www.cnblogs.com/centos2017/p/7896807.html" target="_blank" rel="noopener">打包 压缩 命令tar zip</a></p>
-<p><a href="https://blog.csdn.net/guo_qiangqiang/article/details/87934655" target="_blank" rel="noopener">Linux中常用的tar解压打包命令语法介绍</a></p>
-<h3 id="12-chmod"><a href="#12-chmod" class="headerlink" title="12.chmod"></a>12.chmod</h3><ul>
-<li><code>chmod</code>:改变文件的权限</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">语法：chmod [options] mode files </span><br><span class="line">options：-R 可递归遍历子目录，把修改应到目录下所有文件和子目录 </span><br><span class="line">who：u 用户 、 g 组 、o 其他 、a 所有用户 </span><br><span class="line">opcode：+ 增加权限 、 - 删除权限 、= 重新分配权限 </span><br><span class="line">permission： r 读 、w 写 、 x 执行</span><br></pre></td></tr></table></figure>
-
-<p>我们多数用三位八进制数字的形式来表示权限，第一位指定属主的权限，第二位指定组权限，第三位指定其他用户的权限，每位通过4(读)、2(写)、1(执行)三种数值的和来确定权限。如6(4+2)代表有读写权，7(4+2+1)有读、写和执行的权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x file ：给file的属主增加执行权限</span><br><span class="line"></span><br><span class="line">chmod 751 file ：给file的属主分配读、写、执行(7)的权限，给file的所在组分配读、执行(5)的权限，给其他用户分配执行(1)的权限</span><br><span class="line"></span><br><span class="line">chmod u=rwx,g=rx,o=x file ：上例的另一种形式</span><br></pre></td></tr></table></figure>
-
-
-
+<li><p>GET和POST有什么区别？</p>
+<p>答：GET 用于HTTP的包头（URL）获取资源，而 POST 用于HTTP的正文传输实体主体。</p>
+<p>GET明文传输，POST可明可密（这个回答是错的）。。然后面试官热情地跟我普及不考虑HTTPS两者都是明文。虽说一个信息在头部，一个信息在主体，一旦被黑客拦截了，还是赤裸裸的明文暴露在外面。</p>
+</li>
+<li><p>可以用POST去模仿/替代（有点忘了，大概就这么个意思）GET请求吗？</p>
+<p>这个就要扯到POST和GET的底层本质了。</p>
+<p>GET 和 POST 是什么？HTTP 协议中的两种发送请求的方法。</p>
+<p>HTTP 是什么？HTTP 是基于 TCP/IP 的关于数据如何在万维网中如何通信的协议。</p>
+<p>HTTP 的底层是 TCP/IP。所以 GET 和 POST 的底层也是 TCP/IP，也就是说，GET/POST 都是 TCP 链接。GET 和 POST 能做的事情是一样一样的。你要给 GET 加上 request body，给 POST 带上 url 参数，技术上是完全行的通的。</p>
+</li>
+<li><p>GET请求的长度大小有限制吗？</p>
+<p>业界不成文的规定是，（大多数）浏览器通常都会限制 url 长度在 2K 个字节，而（大多数）服务器最多处理 64K 大小的 url。</p>
+</li>
+</ol>
 <h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
-<li><a href="https://blog.csdn.net/zlx312/article/details/79398557" target="_blank" rel="noopener">面试常见的Linux命令及问题整理</a></li>
-<li><a href="https://blog.csdn.net/gexiaoyizhimei/article/details/100122368" target="_blank" rel="noopener">Linux文件操作高频使用命令</a></li>
-<li><a href="https://blog.csdn.net/jjwyll/article/details/62091307" target="_blank" rel="noopener">linux命令——ps和netstat</a></li>
-<li><a href="https://blog.csdn.net/wojiaopanpan/article/details/7286430" target="_blank" rel="noopener">Linux如何查看进程、杀死进程、启动进程等常用命令</a></li>
-<li><a href="https://www.cnblogs.com/peida/archive/2012/12/24/2831353.html" target="_blank" rel="noopener">每天一个linux命令（44）：top命令</a></li>
-<li><a href="https://www.jianshu.com/p/552322d2c412" target="_blank" rel="noopener">linux中scp命令的使用</a></li>
-<li><a href="https://www.cnblogs.com/centos2017/p/7896807.html" target="_blank" rel="noopener">打包 压缩 命令tar zip</a></li>
-<li><a href="https://blog.csdn.net/guo_qiangqiang/article/details/87934655" target="_blank" rel="noopener">Linux中常用的tar解压打包命令语法介绍</a></li>
+<li><a href="https://blog.csdn.net/qq_18977307/article/details/101069053" target="_blank" rel="noopener">mysql索引字段类型int和varchar的不同使用</a></li>
+<li><a href="https://segmentfault.com/a/1190000008131735" target="_blank" rel="noopener">MySQL 性能优化神器 Explain 使用分析</a></li>
+<li><a href="https://blog.csdn.net/hehexiaoxia/article/details/54312130?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param" target="_blank" rel="noopener">Mysql引起索引失效的原因总结</a></li>
+<li><a href="https://www.cnblogs.com/yuyue2014/p/4014330.html" target="_blank" rel="noopener">MySQL SQL优化之字符串索引隐式转换</a></li>
+<li><a href="https://segmentfault.com/a/1190000012500447" target="_blank" rel="noopener">Mysql 数据类型隐式转换规则</a></li>
+<li><a href="https://learnku.com/articles/25881" target="_blank" rel="noopener">99%的人都理解错了 HTTP 中 GET 与 POST 的区别</a></li>
+<li><a href="https://blog.csdn.net/kris_lh123/article/details/101062026" target="_blank" rel="noopener">http请求的url或body或header有长度或大小的限制吗？</a></li>
 </ul>
 
       
@@ -418,9 +358,11 @@
     
       <div class="post-tags syuanpi fadeInRightShort back-3">
       
-        <a href="/tags/Linux/">Linux</a>
-      
         <a href="/tags/interview/">interview</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+      
+        <a href="/tags/mysql/">mysql</a>
       
       </div>
     
@@ -436,7 +378,7 @@
     </div>
     <div class="copy-url">
       <span>Url :</span>
-      <a href="https://raoxuntian.github.io/2020/07/21/Linux-command/">https://raoxuntian.github.io/2020/07/21/Linux-command/</a>
+      <a href="https://raoxuntian.github.io/2020/09/05/yuanfudao-interview/">https://raoxuntian.github.io/2020/09/05/yuanfudao-interview/</a>
     </div>
     <div class="copy-origin">
       <span>Origin :</span>
@@ -454,16 +396,10 @@
     
   <nav class="article-page">
     
-      <a href="/2020/08/01/sort/" id="art-left" class="art-left">
-        <span class="next-title">
-          <i class="iconfont icon-left"></i>排序算法小结
-        </span>
-      </a>
     
-    
-      <a href="/2020/07/21/learnCpp-virtual-function/" id="art-right" class="art-right">
+      <a href="/2020/09/03/priority-queue/" id="art-right" class="art-right">
         <span class="prev-title">
-          C++多态虚函数表详解(多重继承、多继承情况)<i class="iconfont icon-right"></i>
+          priority_queue<i class="iconfont icon-right"></i>
         </span>
       </a>
     
@@ -507,7 +443,7 @@
   <aside class="post-toc">
     <div class="title"><span>Index</span></div>
     <div class="toc-inner">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#面试常见的Linux指令"><span class="toc-text">面试常见的Linux指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-pwd"><span class="toc-text">1.pwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-mkdir-rmdir"><span class="toc-text">2.mkdir&#x2F;rmdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-cp-rm-mv"><span class="toc-text">3.cp&#x2F;rm&#x2F;mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-cat-tac-nl-more-less-head-tail-od"><span class="toc-text">4.cat&#x2F;tac&#x2F;nl&#x2F;more&#x2F;less&#x2F;head&#x2F;tail&#x2F;od</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-touch"><span class="toc-text">5.touch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-find"><span class="toc-text">6.find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-grep-wc"><span class="toc-text">7.grep&#x2F;wc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-ps-top-kill"><span class="toc-text">8.ps&#x2F;top&#x2F;kill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-netstat-lsof"><span class="toc-text">9.netstat&#x2F;lsof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-scp"><span class="toc-text">10.scp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-tar-zip"><span class="toc-text">11.tar&#x2F;zip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-chmod"><span class="toc-text">12.chmod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#隐式转换的规则"><span class="toc-text">隐式转换的规则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
     </div>
   </aside>
 
