@@ -80,3 +80,4 @@ a = 10
 
 - [谈谈 C/C++ 中的 volatile](https://liam.page/2018/01/18/volatile-in-C-and-Cpp/)
 - [C++ volatile用法](https://blog.csdn.net/lxiao428/article/details/83830983)
+- https://light-city.club/sc/basic_content/volatile/
