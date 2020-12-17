@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>远程访问服务器上的jupyter notebook</title>
+      <link href="/2020/12/17/ssh-remote-jupyter/"/>
+      <url>/2020/12/17/ssh-remote-jupyter/</url>
+      
+        <content type="html"><![CDATA[<p>从北京回到武汉了，开始水我的毕业论文了。毕业论文需要用到神经网络训练模型，这个不用说，自己的机子肯定带不动，要连接实验室的服务器。运行深度学习的代码，习惯使用jupyter notebook，因此需要远程访问服务器上的jupyter notebook。在网上搜了几种远程访问的方法，有的成功了，有的估计因为实验室内网IP等原因没有成功……</p><a id="more"></a><h3 id="一-ssh远程使用jupyter-notebook"><a href="#一-ssh远程使用jupyter-notebook" class="headerlink" title="一.ssh远程使用jupyter notebook"></a>一.ssh远程使用jupyter notebook</h3><ol><li><p>在远程服务器上，启动jupyter notebooks服务：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --no-browser --port&#x3D;8889</span><br></pre></td></tr></table></figure></li><li><p>在本地终端中启动SSH：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L localhost:8888:localhost:8889 username@serverIP</span><br></pre></td></tr></table></figure><p>其中： -N 告诉SSH没有命令要被远程执行； -f 告诉SSH在后台执行； -L 是指定port forwarding的配置，远端端口是8889，本地的端口号的8888。</p></li><li><p>最后打开浏览器，访问：<a href="http://localhost:8888/" target="_blank" rel="noopener">http://localhost:8888/</a></p></li></ol><h3 id="二-利用jupyter-notebook自带的远程访问功能"><a href="#二-利用jupyter-notebook自带的远程访问功能" class="headerlink" title="二. 利用jupyter notebook自带的远程访问功能"></a>二. 利用jupyter notebook自带的远程访问功能</h3><p>官方指南在此：<a href="http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#notebook-server-security" target="_blank" rel="noopener">官方指南</a></p><ol><li><p>生成默认配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure></li><li><p>生成访问密码(token)<br>终端输入<code>ipython</code>，设置你自己的jupyter访问密码，注意复制输出的<code>sha1:xxxxxxxx</code>密码串</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: <span class="keyword">from</span> notebook.auth <span class="keyword">import</span> passwd</span><br><span class="line">In [<span class="number">2</span>]: passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[<span class="number">2</span>]: <span class="string">'sha1:xxxxxxxxxxxxxxxxx'</span></span><br></pre></td></tr></table></figure></li><li><p>修改<code>./jupyter/jupyter_notebook_config.py</code>中对应行如下</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.ip='*'</span><br><span class="line">c.NotebookApp.password = u'sha:ce...刚才复制的那个密文'</span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.port =8888 #可自行指定一个端口, 访问时使用该端口</span><br><span class="line">c.NotebookApp.allow_remote_access = True</span><br></pre></td></tr></table></figure></li><li><p>在服务器上启动<code>jupyter notebook</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure></li><li><p>最后打开浏览器，访问：<a href="http://ip:8888/" target="_blank" rel="noopener">http://ip:8888/</a></p></li></ol><p>这个方法在第3步的时候做过很多尝试，似乎还是无法从本地访问服务器的8888端口，一开始以为是防火墙的问题，后面关闭防火墙了还是不太行，所以这个方法我一直没试成功……</p><h3 id="三-ssh添加隧道"><a href="#三-ssh添加隧道" class="headerlink" title="三.ssh添加隧道"></a>三.ssh添加隧道</h3><p>关于ssh隧道，原理参考：<a href="https://juejin.cn/post/6844903946096476173#heading-4" target="_blank" rel="noopener">SecureCRT高效操作——反空闲、按钮栏、端口转发跳板</a></p><p>Windows上有很多远程连接的软件是支持添加隧道的，但在Mac上并不多，一开始是在用FinalShell。</p><p>如下就是我自己配置的隧道：</p><img src="/2020/12/17/ssh-remote-jupyter/1.png" class="" title="image"><p>通过有隧道连接的ssh服务器之后，在服务器端运行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --no-browser --port=8889</span><br></pre></td></tr></table></figure><p>然后打开浏览器，登陆对应的IP地址，即可访问远程jupyter notebook。</p><h3 id="参考文章"><a href="#参考文章" class="headerlink" title="#参考文章"></a>#参考文章</h3><ul><li><a href="https://www.jianshu.com/p/8fc3cd032d3c" target="_blank" rel="noopener">远程访问服务器Jupyter Notebook的两种方法</a></li><li><a href="https://juejin.cn/post/6844903946096476173#heading-4" target="_blank" rel="noopener">SecureCRT高效操作——反空闲、按钮栏、端口转发跳板</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ssh </tag>
+            
+            <tag> jupyter </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>item2自动连接远程服务器</title>
       <link href="/2020/11/30/item2-ssh/"/>
       <url>/2020/11/30/item2-ssh/</url>
@@ -52,9 +73,9 @@
       
         <tags>
             
-            <tag> interview </tag>
-            
             <tag> 计算机网络 </tag>
+            
+            <tag> interview </tag>
             
             <tag> mysql </tag>
             
@@ -272,9 +293,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> interview </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -444,9 +465,9 @@
       
         <tags>
             
-            <tag> interview </tag>
-            
             <tag> 计算机网络 </tag>
+            
+            <tag> interview </tag>
             
         </tags>
       
