@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>jupyter学习笔记</title>
+      <link href="/2020/12/21/learn-jupyter/"/>
+      <url>/2020/12/21/learn-jupyter/</url>
+      
+        <content type="html"><![CDATA[<p><strong>Jupyter</strong>（<a href="https://upload.wikimedia.org/wikipedia/commons/c/c5/En-us-Jupiter.ogg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Speakerlink-new.svg/11px-Speakerlink-new.svg.png" alt="聆听"></a><strong><a href="https://zh.wikipedia.org/wiki/File:En-us-Jupiter.ogg" target="_blank" rel="noopener">i</a></strong><a href="https://zh.wikipedia.org/wiki/Help:英語國際音標" target="_blank" rel="noopener">/ˈdʒuːpɪtər/</a>）是一个<a href="https://zh.wikipedia.org/wiki/非营利组织" target="_blank" rel="noopener">非营利组织</a>，旨在“为数十种编程语言的<a href="https://zh.wikipedia.org/w/index.php?title=交互式计算&action=edit&redlink=1" target="_blank" rel="noopener">交互式计算</a>开发<a href="https://zh.wikipedia.org/wiki/开源软件" target="_blank" rel="noopener">开源软件</a>，开放标准和服务”。2014年由Fernando Pérez从<a href="https://zh.wikipedia.org/wiki/IPython" target="_blank" rel="noopener">IPython</a>中衍生出来，Jupyter支持几十种语言的执行环境。Jupyter Project的名称是对Jupyter支持的三种核心编程语言的引用，这三种语言是<a href="https://zh.wikipedia.org/wiki/Julia_(编程语言)" target="_blank" rel="noopener">Julia</a>、<a href="https://zh.wikipedia.org/wiki/Python" target="_blank" rel="noopener">Python</a>和<a href="https://zh.wikipedia.org/wiki/R语言" target="_blank" rel="noopener">R</a>，也是对<a href="https://zh.wikipedia.org/wiki/伽利略" target="_blank" rel="noopener">伽利略</a>记录发现<a href="https://zh.wikipedia.org/wiki/木星的卫星" target="_blank" rel="noopener">木星的卫星</a>的笔记本的致敬。Jupyter项目开发并支持交互式计算产品Jupyter Notebook、JupyterHub和JupyterLab，这是Jupyter Notebook的下一代版本。</p><a id="more"></a><h3 id="一-Jupyter中打印所有结果的解决办法"><a href="#一-Jupyter中打印所有结果的解决办法" class="headerlink" title="一.Jupyter中打印所有结果的解决办法"></a>一.Jupyter中打印所有结果的解决办法</h3><p>我们都知道，在Jupyter中，除非加上print，每个cell只会显示最后一个输出结果，这里，我们通过加上如下代码，使之打印所有的交互式输出，而不仅仅是最后一个：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.core.interactiveshell <span class="keyword">import</span> InteractiveShell</span><br><span class="line">InteractiveShell.ast_node_interactivity = <span class="string">"all"</span></span><br></pre></td></tr></table></figure><h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul><li><a href="https://blog.csdn.net/m0_37422217/article/details/107032565" target="_blank" rel="noopener">Jupyter中打印所有结果的解决办法</a></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> jupyter </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>远程访问服务器上的jupyter notebook</title>
       <link href="/2020/12/17/ssh-remote-jupyter/"/>
       <url>/2020/12/17/ssh-remote-jupyter/</url>
@@ -14,9 +33,9 @@
       
         <tags>
             
-            <tag> ssh </tag>
-            
             <tag> jupyter </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
       
@@ -73,9 +92,9 @@
       
         <tags>
             
-            <tag> 计算机网络 </tag>
-            
             <tag> interview </tag>
+            
+            <tag> 计算机网络 </tag>
             
             <tag> mysql </tag>
             
@@ -293,9 +312,9 @@
       
         <tags>
             
-            <tag> interview </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> interview </tag>
             
         </tags>
       
@@ -465,9 +484,9 @@
       
         <tags>
             
-            <tag> 计算机网络 </tag>
-            
             <tag> interview </tag>
+            
+            <tag> 计算机网络 </tag>
             
         </tags>
       

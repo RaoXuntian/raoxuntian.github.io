@@ -23,7 +23,7 @@
 
 
 
-  <meta name="keywords" content="interview, 计算机网络, mysql, nlvi" />
+  <meta name="keywords" content="jupyter, nlvi" />
 
 
 <link rel="apple-touch-startup-image" media="(device-width: 375px)" href="assets/apple-launch-1125x2436.png">
@@ -87,7 +87,7 @@
 }
 </style>
 
-  <title> 猿辅导二面面经 · Salad Days </title>
+  <title> jupyter学习笔记 · Salad Days </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
 <body>
   <div class="container">
@@ -239,117 +239,30 @@
       <div class="post-time syuanpi fadeInRightShort back-1">
         <div class="post-time-wrapper">
           
-          <time>2020-09-05</time>
+          <time>2020-12-21</time>
           
         </div>
       </div>
       <h2 class="post-title syuanpi fadeInRightShort back-2">
         
-          猿辅导二面面经
+          jupyter学习笔记
         
       </h2>
     </header>
     <div class="post-content syuanpi fadeInRightShort back-3">
       
-        <p>2020.9.5早上九点猿辅导二面，问的问题不多，但感觉问的挺好，还让我手撕一道链表的题目，没有找到最优解，十分钟的时间用暴力的方法写出代码，自己觉得不是很满意。事后诸葛亮，最优解总在面试完突然想到，把自己蠢哭了，一顿捶胸顿足之后决定记一下这道题目。</p>
-<p>顺便再记一些面试官问的网络和数据库的问题，用倒叙的手法整理成一篇面经吧。</p>
+        <p><strong>Jupyter</strong>（<a href="https://upload.wikimedia.org/wikipedia/commons/c/c5/En-us-Jupiter.ogg" target="_blank" rel="noopener"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Speakerlink-new.svg/11px-Speakerlink-new.svg.png" alt="聆听"></a><strong><a href="https://zh.wikipedia.org/wiki/File:En-us-Jupiter.ogg" target="_blank" rel="noopener">i</a></strong><a href="https://zh.wikipedia.org/wiki/Help:英語國際音標" target="_blank" rel="noopener">/ˈdʒuːpɪtər/</a>）是一个<a href="https://zh.wikipedia.org/wiki/非营利组织" target="_blank" rel="noopener">非营利组织</a>，旨在“为数十种编程语言的<a href="https://zh.wikipedia.org/w/index.php?title=交互式计算&action=edit&redlink=1" target="_blank" rel="noopener">交互式计算</a>开发<a href="https://zh.wikipedia.org/wiki/开源软件" target="_blank" rel="noopener">开源软件</a>，开放标准和服务”。2014年由Fernando Pérez从<a href="https://zh.wikipedia.org/wiki/IPython" target="_blank" rel="noopener">IPython</a>中衍生出来，Jupyter支持几十种语言的执行环境。Jupyter Project的名称是对Jupyter支持的三种核心编程语言的引用，这三种语言是<a href="https://zh.wikipedia.org/wiki/Julia_(编程语言)" target="_blank" rel="noopener">Julia</a>、<a href="https://zh.wikipedia.org/wiki/Python" target="_blank" rel="noopener">Python</a>和<a href="https://zh.wikipedia.org/wiki/R语言" target="_blank" rel="noopener">R</a>，也是对<a href="https://zh.wikipedia.org/wiki/伽利略" target="_blank" rel="noopener">伽利略</a>记录发现<a href="https://zh.wikipedia.org/wiki/木星的卫星" target="_blank" rel="noopener">木星的卫星</a>的笔记本的致敬。Jupyter项目开发并支持交互式计算产品Jupyter Notebook、JupyterHub和JupyterLab，这是Jupyter Notebook的下一代版本。</p>
 <a id="more"></a>
 
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>题目：</p>
-<p>给出一条单链表：1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</p>
-<p>交叉首尾交叉变成：1-&gt;5-&gt;2-&gt;4-&gt;3-&gt;NULL</p>
-<p><strong>要求空间复杂度O(1).</strong></p>
-<p>当时比较紧张，想到递归的方法，时间复杂度O(n*n)。面试官让我想想能不能优化一下时间复杂度，达到O(NlogN)甚至O(N)。当时时间不够，我说O(N)应该可以，又不是遍历一遍，遍历2遍3遍也是O(N)，但时间不允许我继续思考。面试结束后点完外卖再看一眼草稿纸，突然就想明白了 = =</p>
-<ol>
-<li><p>我们可以第一遍遍历链表，得到链表的长度n</p>
-</li>
-<li><p>第二遍遍历将链表从中间（(n+1)/2）的地方断开</p>
-<p>1-&gt;2-&gt;3-&gt;NULL  4-&gt;5-&gt;NULL</p>
-</li>
-<li><p>将后半段的链表翻转</p>
-<p>1-&gt;2-&gt;3-&gt;NULL  5-&gt;4-&gt;NULL</p>
-</li>
-<li><p>将两段链表原地合并</p>
-</li>
-<li><p>再考虑一下边界条件</p>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">	ListNode* next;</span><br><span class="line">	ListNode(<span class="keyword">int</span> x): val(x), next(<span class="literal">nullptr</span>) &#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">reverse</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (head==<span class="literal">nullptr</span> || head-&gt;next==<span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">	ListNode* nex = head-&gt;next;</span><br><span class="line">	ListNode* ans = reverse(nex);</span><br><span class="line">	nex-&gt;next = head;</span><br><span class="line">	head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">solve</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">	ListNode* p = head;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		++cnt;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (cnt&lt;<span class="number">3</span>) <span class="keyword">return</span> head;</span><br><span class="line">	p = head;</span><br><span class="line">	<span class="keyword">int</span> stop=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (stop++&lt;(cnt+<span class="number">1</span>)/<span class="number">2</span>) &#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	ListNode* last = reverse(p-&gt;next);</span><br><span class="line">	p-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">	p = head;</span><br><span class="line"></span><br><span class="line">	ListNode* q = last;</span><br><span class="line">	<span class="keyword">while</span> (q!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		ListNode* tmp = p-&gt;next;</span><br><span class="line">		p-&gt;next = q;</span><br><span class="line">		q = q-&gt;next;</span><br><span class="line">		p-&gt;next-&gt;next = tmp;</span><br><span class="line">		p = tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ListNode* head = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</span><br><span class="line">	head-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</span><br><span class="line">	head-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">4</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">5</span>);</span><br><span class="line">	head-&gt;next-&gt;next-&gt;next-&gt;next-&gt;next = <span class="keyword">new</span> ListNode(<span class="number">6</span>);</span><br><span class="line">	ListNode* p = solve(head);</span><br><span class="line">	ListNode* cur = p;</span><br><span class="line">	<span class="keyword">while</span> (cur!=<span class="literal">nullptr</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cur-&gt;val &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		cur = cur-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>最后面试官问我这个程序如果要做测试需要考虑什么情况，我说什么奇数偶数个节点的情况，空节点单节点非常多（内存塞不下）节点的情况，面试官提示我有一种链表独有的需要考虑的情况，我立马想到了，是<strong>循环链表</strong>。这个程序没有考虑对循环链表的检测，所以有兴趣的同学可以自行考虑一下输入循环链表会发生什么。</p>
-<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>面试的时候，面试官问我数据库掌握到什么程度，要如实的说。我就说，在项目中用过MySQL和MongoDB，但数据量不大不足以使用索引，对索引不熟悉。数据库的书也看了，八股文面经那些也背了，你问吧……</p>
-<p>面试官：那好，那我就问一个你应该从来没遇见过的、面经上也没有的问题吧</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`table_a`</span> (</span><br><span class="line"> <span class="string">`name`</span> <span class="built_in">VARCHAR</span>/<span class="built_in">INTEGER</span> ,</span><br><span class="line"> <span class="keyword">INDEX</span> index_name (<span class="string">`name`</span>),</span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FORM</span> table_a</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="number">1</span>;</span><br><span class="line">WHERE name = '1';</span><br></pre></td></tr></table></figure>
 
-<p>面试官洋洋洒洒地在屏幕上打了几行SQL的语法，说到：我现在有个表格，里面有索引name，name如果是VARCHAR类型索引的时候，我查找数据，<code>WHERE name = 1;</code> 查找索引条件给name的是个INT，那你说一下这次查询能成功吗？反过来，如果name是个INT索引，我查询的索引条件是<code>WHERE name = &#39;1&#39;;</code>给它一个VARCHAR类型索引查询，会发生什么呢？</p>
-<p>通过查阅资料，我总结了一下，直接说结论吧：</p>
-<p>前者，字段name是VARCHAR类型索引，但在查询的时候，name传入的类型是INT，会导致<strong>索引失效</strong>，执行的是<strong>全表查询</strong>。</p>
-<p>后者，字段name是INT类型索引，查询时name传入的类型是VARCHAR不会导致索引失效，依然可以根据索引进行查询。</p>
-<p>好的，我们做个实验吧，用explain来进行分析。</p>
-<p>（1）新建测试表、索引</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> index_test_1 (</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">str_test <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">num_test <span class="built_in">INT</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">other_test  <span class="built_in">VARCHAR</span>(<span class="number">200</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>),</span><br><span class="line"><span class="keyword">KEY</span> idx_str (str_test),</span><br><span class="line"><span class="keyword">KEY</span> idx_num (num_test)</span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
+<h3 id="一-Jupyter中打印所有结果的解决办法"><a href="#一-Jupyter中打印所有结果的解决办法" class="headerlink" title="一.Jupyter中打印所有结果的解决办法"></a>一.Jupyter中打印所有结果的解决办法</h3><p>我们都知道，在Jupyter中，除非加上print，每个cell只会显示最后一个输出结果，这里，我们通过加上如下代码，使之打印所有的交互式输出，而不仅仅是最后一个：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.core.interactiveshell <span class="keyword">import</span> InteractiveShell</span><br><span class="line">InteractiveShell.ast_node_interactivity = <span class="string">"all"</span></span><br></pre></td></tr></table></figure>
 
-<p>（2）插入测试数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"111"</span>, <span class="number">111</span>, <span class="string">"测试数据1"</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"111"</span>, <span class="number">111</span>, <span class="string">"测试数据2"</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> index_test_1(str_test,num_test,other_test) <span class="keyword">VALUE</span>(<span class="string">"222"</span>, <span class="number">222</span>, <span class="string">"测试数据3"</span>);</span><br></pre></td></tr></table></figure>
 
-<p>（3）int类型输入，分别使用idx_num和idx_str两种索引查看执行计划</p>
-<p>idx_num对应的num_test字段类型是int；执行计划如下图：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where num_test = 111;</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_num       | idx_num | 4       | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
 
-<p>idx_str对应的str_test字段类型是varchar；执行计划如下图：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where str_test = 111;</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ALL  | idx_str       | NULL | NULL    | NULL |    3 |    33.33 | Using where |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+------+---------+------+------+----------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">3</span> <span class="keyword">warnings</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
-
-<p>从两个执行计划很明显的发现，idx_str索引的执行计划中key=null，ref=null，rows=3；没有使用到索引</p>
-<p>（4）varchar类型输入，分别使用idx_num和idx_str两种索引查看执行计划</p>
-<p>idx_num对应的num_test字段类型是int；执行计划如下图：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where num_test = '111';</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_num       | idx_num | 4       | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
-
-<p>idx_str对应的str_test字段类型是varchar；执行计划如下图：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from index_test_1</span><br><span class="line">    -&gt; where str_test = '111';</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table        | partitions | type | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | index_test_1 | NULL       | ref  | idx_str       | idx_str | 302     | const |    2 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+--------------+------------+------+---------------+---------+---------+-------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
-
-<p>从两个执行计划看出，varchar类型输入，不管索引字段是int还是varchar都可以使用索引。</p>
-<p><strong>说明：</strong></p>
-<p>为什么varchar类型输入，索引是int类型或者是varchar类型的字段，都能生效呢？</p>
-<p>原因是mysql在执行的时候，会将数值<strong>隐式转换</strong>，但是这个操作会有无法命中索引的风险。隐式转换还有其他的风险，比如sql注入、多查数据、多删数据等，所以大家在写sql时一定要细心。</p>
-<h4 id="隐式转换的规则"><a href="#隐式转换的规则" class="headerlink" title="隐式转换的规则"></a>隐式转换的规则</h4><ul>
-<li>如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&lt;=&gt;相等比较运算符。对于NULL &lt;=&gt; NULL，结果为true。不需要转换</li>
-<li>如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。</li>
-<li>如果两个参数都是整数，则将它们作为整数进行比较。</li>
-<li>如果不与数字进行比较，则将十六进制值视为二进制字符串</li>
-<li>如果其中一个参数是十进制值，则比较取决于另一个参数。 如果另一个参数是十进制或整数值，则将参数与十进制值进行比较，如果另一个参数是浮点值，则将参数与浮点值进行比较</li>
-<li>如果其中一个参数是TIMESTAMP或DATETIME列，另一个参数是常量，则在执行比较之前将常量转换为时间戳。</li>
-<li><strong>在所有其他情况下，参数都是作为浮点数（实数）比较的。</strong></li>
-</ul>
-<p>所以我们继续刚刚的实验，如果我继续添加几行来看看MySQL是如何在VARCHAR和INT之间发生隐式转换的。</p>
- <img src="/2020/09/05/yuanfudao-interview/1.png" class="" title="image">
-
-<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><p>网络这一块，面试官貌似是抓住了我在HTTP的GET和POST方面不熟悉的弱点，一个劲地死怼，连问三道关于GET和POST的问题。</p>
-<ol start="0">
-<li><p>TCP三次握手，服务器端可以像客户端发起连接吗？</p>
-<p>不能，服务器端找不到客户端的IP地址。</p>
-</li>
-<li><p>GET和POST有什么区别？</p>
-<p>答：GET 用于HTTP的包头（URL）获取资源，而 POST 用于HTTP的正文传输实体主体。</p>
-<p>GET明文传输，POST可明可密（这个回答是错的）。。然后面试官热情地跟我普及不考虑HTTPS两者都是明文。虽说一个信息在头部，一个信息在主体，一旦被黑客拦截了，还是赤裸裸的明文暴露在外面。</p>
-</li>
-<li><p>可以用POST去模仿/替代（有点忘了，大概就这么个意思）GET请求吗？</p>
-<p>这个就要扯到POST和GET的底层本质了。</p>
-<p>GET 和 POST 是什么？HTTP 协议中的两种发送请求的方法。</p>
-<p>HTTP 是什么？HTTP 是基于 TCP/IP 的关于数据如何在万维网中如何通信的协议。</p>
-<p>HTTP 的底层是 TCP/IP。所以 GET 和 POST 的底层也是 TCP/IP，也就是说，GET/POST 都是 TCP 链接。GET 和 POST 能做的事情是一样一样的。你要给 GET 加上 request body，给 POST 带上 url 参数，技术上是完全行的通的。</p>
-</li>
-<li><p>GET请求的长度大小有限制吗？</p>
-<p>业界不成文的规定是，（大多数）浏览器通常都会限制 url 长度在 2K 个字节，而（大多数）服务器最多处理 64K 大小的 url。</p>
-</li>
-</ol>
 <h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
-<li><a href="https://blog.csdn.net/qq_18977307/article/details/101069053" target="_blank" rel="noopener">mysql索引字段类型int和varchar的不同使用</a></li>
-<li><a href="https://segmentfault.com/a/1190000008131735" target="_blank" rel="noopener">MySQL 性能优化神器 Explain 使用分析</a></li>
-<li><a href="https://blog.csdn.net/hehexiaoxia/article/details/54312130?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param" target="_blank" rel="noopener">Mysql引起索引失效的原因总结</a></li>
-<li><a href="https://www.cnblogs.com/yuyue2014/p/4014330.html" target="_blank" rel="noopener">MySQL SQL优化之字符串索引隐式转换</a></li>
-<li><a href="https://segmentfault.com/a/1190000012500447" target="_blank" rel="noopener">Mysql 数据类型隐式转换规则</a></li>
-<li><a href="https://learnku.com/articles/25881" target="_blank" rel="noopener">99%的人都理解错了 HTTP 中 GET 与 POST 的区别</a></li>
-<li><a href="https://blog.csdn.net/kris_lh123/article/details/101062026" target="_blank" rel="noopener">http请求的url或body或header有长度或大小的限制吗？</a></li>
+<li><a href="https://blog.csdn.net/m0_37422217/article/details/107032565" target="_blank" rel="noopener">Jupyter中打印所有结果的解决办法</a></li>
 </ul>
 
       
@@ -358,11 +271,7 @@
     
       <div class="post-tags syuanpi fadeInRightShort back-3">
       
-        <a href="/tags/interview/">interview</a>
-      
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
-      
-        <a href="/tags/mysql/">mysql</a>
+        <a href="/tags/jupyter/">jupyter</a>
       
       </div>
     
@@ -378,7 +287,7 @@
     </div>
     <div class="copy-url">
       <span>Url :</span>
-      <a href="https://raoxuntian.github.io/2020/09/05/yuanfudao-interview/">https://raoxuntian.github.io/2020/09/05/yuanfudao-interview/</a>
+      <a href="https://raoxuntian.github.io/2020/12/21/learn-jupyter/">https://raoxuntian.github.io/2020/12/21/learn-jupyter/</a>
     </div>
     <div class="copy-origin">
       <span>Origin :</span>
@@ -396,16 +305,10 @@
     
   <nav class="article-page">
     
-      <a href="/2020/09/25/learnCpp-volatile/" id="art-left" class="art-left">
-        <span class="next-title">
-          <i class="iconfont icon-left"></i>浅谈C++关键字之volatile
-        </span>
-      </a>
     
-    
-      <a href="/2020/09/03/priority-queue/" id="art-right" class="art-right">
+      <a href="/2020/12/17/ssh-remote-jupyter/" id="art-right" class="art-right">
         <span class="prev-title">
-          priority_queue<i class="iconfont icon-right"></i>
+          远程访问服务器上的jupyter notebook<i class="iconfont icon-right"></i>
         </span>
       </a>
     
@@ -449,7 +352,7 @@
   <aside class="post-toc">
     <div class="title"><span>Index</span></div>
     <div class="toc-inner">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#隐式转换的规则"><span class="toc-text">隐式转换的规则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-Jupyter中打印所有结果的解决办法"><span class="toc-text">一.Jupyter中打印所有结果的解决办法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
     </div>
   </aside>
 
