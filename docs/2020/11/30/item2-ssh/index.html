@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="饶巡天的个人主页、技术博客与摄影记录。">
+  <title>item2自动连接远程服务器 | Xuntian Rao</title>
+  
+    <link rel="icon" href="/web-icon.jpg">
+  
+  <script>
+    (function(){try{var l=localStorage.getItem('site-language');if(l==='en'||l==='zh'){document.documentElement.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='zh'?'zh-CN':'en');}}catch(e){}})();
+  </script>
+  
+<link rel="stylesheet" href="/css/site.css">
+
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+  <a class="brand" href="/" aria-label="Xuntian Rao home">
+    <span class="brand-mark">XR</span>
+    <span class="brand-copy">
+      <strong>Xuntian Rao</strong>
+      <em data-i18n="brand.tagline">engineer / photographer</em>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="/" data-i18n="nav.home">首页</a>
+    <a href="/archives" data-i18n="nav.writing">文章</a>
+    <a href="/photography" data-i18n="nav.photography">摄影</a>
+    <a href="/resume" data-i18n="nav.resume">简历</a>
+  </nav>
+
+  <div class="header-actions" aria-label="Site controls">
+    <a class="icon-link" href="https://github.com/Raoxuntian" target="_blank" rel="noopener" aria-label="GitHub">
+      <span>GH</span>
+    </a>
+    <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch language">
+      <span data-lang-option="zh">中文</span>
+      <span data-lang-option="en">EN</span>
+    </button>
+  </div>
+</header>
+
+    <main class="site-main">
+      <article class="article-page reveal">
+  <header class="article-header">
+    <p class="eyebrow">2020.11.30</p>
+    <h1>item2自动连接远程服务器</h1>
+    
+      <div class="tag-line">
+        
+          <a href="/tags/item2/">#item2</a>
+        
+      </div>
+    
+  </header>
+  <div class="article-body">
+    <p>用了5年的MacBook，一直用的是系统自带的terminal 终端。对于item2也略有耳闻，但没有去研究它。实习期间一直在用SecureCRT，实习结束之后，面对原生自带的终端，感觉到十分不友好，遂决定改用item2……</p>
+<h3 id="一-新增item2配置文件"><a href="#一-新增item2配置文件" class="headerlink" title="一.新增item2配置文件"></a>一.新增item2配置文件</h3><img src="/2020/11/30/item2-ssh/1.png" class="" title="image">
+
+<a id="more"></a>
+
+<p>在第三步那里，我们需要在对应的目录<code>~/.ssh/</code>下面新建(touch)文件xxx来记录远程服务器的相关配置。</p>
+<h3 id="二-配置远程服务器相关文件"><a href="#二-配置远程服务器相关文件" class="headerlink" title="二.配置远程服务器相关文件"></a>二.配置远程服务器相关文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/expect -f</span></span><br><span class="line"><span class="built_in">set</span> host 192.168.100.119(服务器ip地址)</span><br><span class="line"><span class="built_in">set</span> user root(登录服务器的用户名)</span><br><span class="line"><span class="built_in">set</span> password admin(登录服务器的密码)</span><br><span class="line"><span class="comment">#set timeout -1</span></span><br><span class="line"></span><br><span class="line">spawn ssh <span class="variable">$user</span>@<span class="variable">$host</span></span><br><span class="line">expect <span class="string">"*assword:*"</span></span><br><span class="line">send <span class="string">"<span class="variable">$password</span>\r"</span></span><br><span class="line">interact</span><br><span class="line">expect eof</span><br></pre></td></tr></table></figure>
+
+<h3 id="三-配置完成直接连接"><a href="#三-配置完成直接连接" class="headerlink" title="三.配置完成直接连接"></a>三.配置完成直接连接</h3><img src="/2020/11/30/item2-ssh/2.png" class="" title="image">
+
+
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://www.jianshu.com/p/d75dc43be7a7" target="_blank" rel="noopener">mac下面iterm2自动连接远程服务器</a></li>
+</ul>
+
+  </div>
+</article>
+
+    </main>
+    <footer class="site-footer">
+  <div>
+    <span>花凋镜破，寄语若何；光阴有尽，爱惜更多。</span>
+    <span class="footer-dot">/</span>
+    <span>&copy; 2026 Xuntian Rao</span>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:377844918@qq.com">Email</a>
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+  </div>
+  
+<script src="/js/site.js"></script>
+
+</body>
+</html>

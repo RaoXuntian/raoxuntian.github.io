@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="饶巡天的个人主页、技术博客与摄影记录。">
+  <title>Trie Tree | Xuntian Rao</title>
+  
+    <link rel="icon" href="/web-icon.jpg">
+  
+  <script>
+    (function(){try{var l=localStorage.getItem('site-language');if(l==='en'||l==='zh'){document.documentElement.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='zh'?'zh-CN':'en');}}catch(e){}})();
+  </script>
+  
+<link rel="stylesheet" href="/css/site.css">
+
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+  <a class="brand" href="/" aria-label="Xuntian Rao home">
+    <span class="brand-mark">XR</span>
+    <span class="brand-copy">
+      <strong>Xuntian Rao</strong>
+      <em data-i18n="brand.tagline">engineer / photographer</em>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="/" data-i18n="nav.home">首页</a>
+    <a href="/archives" data-i18n="nav.writing">文章</a>
+    <a href="/photography" data-i18n="nav.photography">摄影</a>
+    <a href="/resume" data-i18n="nav.resume">简历</a>
+  </nav>
+
+  <div class="header-actions" aria-label="Site controls">
+    <a class="icon-link" href="https://github.com/Raoxuntian" target="_blank" rel="noopener" aria-label="GitHub">
+      <span>GH</span>
+    </a>
+    <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch language">
+      <span data-lang-option="zh">中文</span>
+      <span data-lang-option="en">EN</span>
+    </button>
+  </div>
+</header>
+
+    <main class="site-main">
+      <article class="article-page reveal">
+  <header class="article-header">
+    <p class="eyebrow">2020.06.18</p>
+    <h1>Trie Tree</h1>
+    
+      <div class="tag-line">
+        
+          <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
+        
+          <a href="/tags/trie-tree/">#trie tree</a>
+        
+      </div>
+    
+  </header>
+  <div class="article-body">
+    <h3 id="一-什么是Trie树"><a href="#一-什么是Trie树" class="headerlink" title="一.什么是Trie树"></a>一.什么是Trie树</h3><p><strong>Trie树</strong>，又叫<strong>字典树</strong>、<strong>前缀树（Prefix Tree）</strong>、<strong>单词查找树</strong> 或 <strong>键树</strong>，是一种多叉树结构。如下图：</p>
+<img src="/2020/06/18/trie-tree/1.png" class="" title="TrieTree">
+
+<a id="more"></a>
+
+<p>上图是一棵Trie树，表示了关键字集合{“a”, “to”, “tea”, “ted”, “ten”, “i”, “in”, “inn”} 。从上图可以归纳出Trie树的基本性质：</p>
+<p>根节点不包含字符，除根节点外的每一个子节点都包含一个字符。<br>从根节点到某一个节点，路径上经过的字符连接起来，为该节点对应的字符串。<br>每个节点的所有子节点包含的字符互不相同。<br>通常在实现的时候，会在节点结构中设置一个标志，用来标记该结点处是否构成一个单词（关键字）。</p>
+<p>可以看出，Trie树的关键字一般都是字符串，而且Trie树把每个关键字保存在一条路径上，而不是一个结点中。另外，两个有公共前缀的关键字，在Trie树中前缀部分的路径相同，所以Trie树又叫做前缀树（Prefix Tree）。</p>
+<h3 id="二-Trie树的优缺点"><a href="#二-Trie树的优缺点" class="headerlink" title="二.Trie树的优缺点"></a>二.Trie树的优缺点</h3><p>Trie树的核心思想是空间换时间，利用字符串的公共前缀来减少无谓的字符串比较以达到提高查询效率的目的。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li><p>插入和查询的效率很高，都为O(m)，其中 m 是待插入/查询的字符串的长度。</p>
+<p>关于查询，会有人说 hash 表时间复杂度是O(1)不是更快？但是，哈希搜索的效率通常取决于 hash 函数的好坏，若一个坏的 hash 函数导致很多的冲突，效率并不一定比Trie树高。<br>Trie树中不同的关键字不会产生冲突。</p>
+</li>
+<li><p>Trie树只有在允许一个关键字关联多个值的情况下才有类似hash碰撞发生。</p>
+</li>
+<li><p>Trie树不用求 hash 值，对短字符串有更快的速度。通常，求hash值也是需要遍历字符串的。</p>
+</li>
+<li><p>Trie树可以对关键字按<strong>字典序</strong>排序。</p>
+</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>当 hash 函数很好时，Trie树的查找效率会低于哈希搜索。</li>
+<li>空间消耗比较大。</li>
+</ol>
+<h3 id="三-Trie树的实现"><a href="#三-Trie树的实现" class="headerlink" title="三.Trie树的实现"></a>三.Trie树的实现</h3><p><a href="https://leetcode-cn.com/problems/implement-trie-prefix-tree/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/implement-trie-prefix-tree/</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    Trie *child[<span class="number">26</span>];</span><br><span class="line">    <span class="keyword">bool</span> isWord;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    Trie() &#123;</span><br><span class="line">        isWord=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">26</span>; ++i)</span><br><span class="line">            child[i]=<span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> <span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:<span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                t-&gt;child[c-<span class="string">'a'</span>]=<span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        t-&gt;isWord=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">string</span> <span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:<span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> t-&gt;isWord;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="built_in">string</span> prefix)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:prefix) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your Trie object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * Trie* obj = new Trie();</span></span><br><span class="line"><span class="comment"> * obj-&gt;insert(word);</span></span><br><span class="line"><span class="comment"> * bool param_2 = obj-&gt;search(word);</span></span><br><span class="line"><span class="comment"> * bool param_3 = obj-&gt;startsWith(prefix);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四-Trie树的应用"><a href="#四-Trie树的应用" class="headerlink" title="四.Trie树的应用"></a>四.Trie树的应用</h3><p><a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-common-prefix/</a></p>
+<p>这是一道easy级别的题目，编写一个函数来查找字符串数组中的最长公共前缀。</p>
+<p>如果不存在公共前缀，返回空字符串 <code>&quot;&quot;</code>。</p>
+<p>示例 1:</p>
+<p><code>输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</code><br><code>输出: &quot;fl&quot;</code></p>
+<p>示例 2:</p>
+<p><code>输入: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</code><br><code>输出: &quot;&quot;</code><br>解释: 输入不存在公共前缀。<br>说明:</p>
+<p>所有输入只包含小写字母 a-z 。</p>
+<p>常规方法，也就是暴力法，假设最短字符串长度为m，字符串数组长度为n，那么时间复杂度就是O(m*n)：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestCommonPrefix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=strs.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (n==<span class="number">1</span>) <span class="keyword">return</span> strs[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (n==<span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        <span class="built_in">string</span> res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; ; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> str: strs) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i&gt;=str.<span class="built_in">size</span>() || str[i]!=strs[<span class="number">0</span>][i]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> str.substr(<span class="number">0</span>,i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果我们引用Trie树这一数据结构来解决这道题目：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line">    Trie *child[<span class="number">26</span>];</span><br><span class="line">    <span class="keyword">bool</span> isWord;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** Initialize your data structure here. */</span></span><br><span class="line">    Trie() &#123;</span><br><span class="line">        isWord=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">26</span>; ++i)</span><br><span class="line">            child[i]=<span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Inserts a word into the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> <span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:<span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                t-&gt;child[c-<span class="string">'a'</span>]=<span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        t-&gt;isWord=<span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if the word is in the trie. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">string</span> <span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:<span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> t-&gt;isWord;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="built_in">string</span> prefix)</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c:prefix) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!t-&gt;child[c-<span class="string">'a'</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*  判断当前这个节点是否是整个树的前缀，也就是孩子只有一个字母 */</span></span><br><span class="line">    <span class="function"><span class="keyword">char</span> <span class="title">isPrefixNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span> c=<span class="string">'\0'</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">26</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (t-&gt;child[i] != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                c=(<span class="keyword">char</span>) (<span class="string">'a'</span>+i);</span><br><span class="line">                ++cnt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (cnt&gt;<span class="number">1</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt==<span class="number">1</span>?c:<span class="string">'\0'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">searchMaxPrefix</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> res=<span class="string">""</span>;</span><br><span class="line">        Trie *t=<span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">char</span> c = t-&gt;isPrefixNode();</span><br><span class="line">        <span class="keyword">while</span> (!t-&gt;isWord &amp;&amp; c!=<span class="string">'\0'</span>) &#123;</span><br><span class="line">            res+=c;</span><br><span class="line">            t=t-&gt;child[c-<span class="string">'a'</span>];</span><br><span class="line">            c=t-&gt;isPrefixNode();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestCommonPrefix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs)</span> </span>&#123;</span><br><span class="line">        Trie *root = <span class="keyword">new</span> Trie();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> str:strs) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str==<span class="string">""</span>) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">            root-&gt;insert(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root-&gt;searchMaxPrefix();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>算上构建Trie树的时间，可能还不如暴力法快，但在实际情况中，面向更海量的数据，如果将不用vector<string>来存储这些字符串，而是用一棵Trie树来存储这些字符串，那么无论是空间复杂度还是寻找最长前缀的时间复杂度，都将更优。</p>
+<p>Trie树还有的一些应用：</p>
+<h4 id="1、字符串检索"><a href="#1、字符串检索" class="headerlink" title="1、字符串检索"></a>1、字符串检索</h4><p>检索/查询功能是Trie树最原始的功能。思路就是从根节点开始一个一个字符进行比较：</p>
+<ul>
+<li>如果沿路比较，发现不同的字符，则表示该字符串在集合中不存在。</li>
+<li>如果所有的字符全部比较完并且全部相同，还需判断最后一个节点的标志位（标记该节点是否代表一个关键字）。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trie_node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">bool</span> isKey;   <span class="comment">// 标记该节点是否代表一个关键字</span></span><br><span class="line">    trie_node *children[<span class="number">26</span>]; <span class="comment">// 各个子节点 </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、词频统计"><a href="#2、词频统计" class="headerlink" title="2、词频统计"></a>2、词频统计</h4><p>Trie树常被搜索引擎系统用于文本词频统计 。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trie_node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> count;   <span class="comment">// 记录该节点代表的单词的个数</span></span><br><span class="line">    trie_node *children[<span class="number">26</span>]; <span class="comment">// 各个子节点 </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<p>思路：为了实现词频统计，我们修改了节点结构，用一个整型变量count来计数。对每一个关键字执行插入操作，若已存在，计数加1，若不存在，插入后count置1。</p>
+<p>注意：第一、第二种应用也都可以用 hash table 来做。</p>
+<h4 id="3、字符串排序"><a href="#3、字符串排序" class="headerlink" title="3、字符串排序"></a>3、字符串排序</h4><p>Trie树可以对大量字符串按字典序进行排序，思路也很简单：遍历一次所有关键字，将它们全部插入trie树，树的每个结点的所有儿子很显然地按照字母表排序，然后先序遍历输出Trie树中所有关键字即可。</p>
+<h4 id="4、前缀匹配"><a href="#4、前缀匹配" class="headerlink" title="4、前缀匹配"></a>4、前缀匹配</h4><p>例如：找出一个字符串集合中所有以ab开头的字符串。我们只需要用所有字符串构造一个trie树，然后输出以a-&gt;b-&gt;开头的路径上的关键字即可。</p>
+<p>trie树前缀匹配常用于搜索提示。如当输入一个网址，可以自动搜索出可能的选择。当没有完全匹配的搜索结果，可以返回前缀最相似的可能。</p>
+<h4 id="5、作为其他数据结构和算法的辅助结构"><a href="#5、作为其他数据结构和算法的辅助结构" class="headerlink" title="5、作为其他数据结构和算法的辅助结构"></a>5、作为其他数据结构和算法的辅助结构</h4><p>如后缀树，AC自动机等。</p>
+<h3 id="五-相关文章"><a href="#五-相关文章" class="headerlink" title="五.相关文章"></a>五.相关文章</h3><ul>
+<li><a href="https://blog.csdn.net/lisonglisonglisong/article/details/45584721" target="_blank" rel="noopener">https://blog.csdn.net/lisonglisonglisong/article/details/45584721</a></li>
+</ul>
+
+  </div>
+</article>
+
+    </main>
+    <footer class="site-footer">
+  <div>
+    <span>花凋镜破，寄语若何；光阴有尽，爱惜更多。</span>
+    <span class="footer-dot">/</span>
+    <span>&copy; 2026 Xuntian Rao</span>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:377844918@qq.com">Email</a>
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+  </div>
+  
+<script src="/js/site.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="<%= config.description || 'Xuntian Rao portfolio, writing, resume and photography.' %>">
+  <title><% if (page.title){ %><%= page.title %> | <% } %><%= config.title %></title>
+  <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- url_for(theme.favicon) %>">
+  <% } %>
+  <script>
+    (function(){try{var l=localStorage.getItem('site-language');if(l==='en'||l==='zh'){document.documentElement.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='zh'?'zh-CN':'en');}}catch(e){}})();
+  </script>
+  <%- css('css/site') %>
+</head>
+<body>
+  <div class="site-shell">
+    <%- partial('_partial/header') %>
+    <main class="site-main">
+      <%- body %>
+    </main>
+    <%- partial('_partial/footer') %>
+  </div>
+  <%- js('js/site') %>
+</body>
+</html>

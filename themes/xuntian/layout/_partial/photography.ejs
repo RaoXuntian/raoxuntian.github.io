@@ -1,0 +1,58 @@
+<section class="photography-page page-stack reveal">
+  <div class="page-title">
+    <p>photography</p>
+    <h1 data-i18n="photo.title">一些清晨、街道和自然光。</h1>
+  </div>
+
+  <%
+    var photoEntries = site.pages.filter(function(item) {
+      return item.type === 'photo';
+    }).sort(function(a, b) {
+      return b.date - a.date;
+    });
+    var featured = photoEntries.length ? photoEntries.data[0] : null;
+    var gallery = featured && featured.frames ? featured.frames : [];
+  %>
+
+  <section class="photo-feature">
+    <figure>
+      <% if (featured && featured.cover) { %>
+        <a href="<%- url_for(featured.path) %>"><img src="<%- url_for(featured.cover) %>" alt="<%= featured.title %>"></a>
+      <% } else { %>
+        <img src="<%- url_for('/pic/IMG_0878.JPG') %>" alt="Morning light photograph by Xuntian Rao">
+      <% } %>
+      <figcaption>
+        <span><%= featured && featured.frame ? featured.frame : 'Frame 01' %></span>
+        <strong><%= featured && featured.camera_note ? featured.camera_note : 'Morning light' %></strong>
+        <em><%= featured && featured.date ? date(featured.date, 'YYYY.MM') : '2020.05' %></em>
+      </figcaption>
+    </figure>
+    <div class="photo-notes">
+      <div><span>subject</span><p><%= featured && featured.summary ? featured.summary : '街头、晨昏、路过的树影和不太起眼的城市角落。' %></p></div>
+      <div><span>rhythm</span><p data-i18n="photo.rhythm">少一点摆拍，多一点观察；照片像技术笔记之外的生活索引。</p></div>
+      <div><span>current set</span><p data-i18n="photo.current">这一组保留低饱和、竖幅和自然光，让页面有一点真实的呼吸感。</p></div>
+    </div>
+  </section>
+
+  <section class="photo-grid" aria-label="Photo gallery">
+    <% if (gallery.length) { %>
+      <% gallery.forEach(function(item, index) { %>
+        <figure>
+          <a href="<%- url_for(featured.path) %>"><img src="<%- url_for(item.image) %>" alt="<%= item.caption || featured.title %>"></a>
+          <figcaption><%= item.caption || ('Frame ' + String(index + 2).padStart(2, '0')) %></figcaption>
+        </figure>
+      <% }) %>
+    <% } else { %>
+      <figure><img src="<%- url_for('/pic/IMG_0879.JPG') %>" alt="Street photograph by Xuntian Rao"><figcaption>Frame 02</figcaption></figure>
+      <figure><img src="<%- url_for('/pic/IMG_0880.JPG') %>" alt="Street photograph by Xuntian Rao"><figcaption>Frame 03</figcaption></figure>
+      <figure><img src="<%- url_for('/pic/IMG_0881.JPG') %>" alt="Street photograph by Xuntian Rao"><figcaption>Frame 04</figcaption></figure>
+      <figure><img src="<%- url_for('/pic/IMG_0882.JPG') %>" alt="Street photograph by Xuntian Rao"><figcaption>Frame 05</figcaption></figure>
+    <% } %>
+  </section>
+
+  <section class="link-row">
+    <% if (featured) { %><a href="<%- url_for(featured.path) %>"><span>set</span><strong><%= featured.title %></strong></a><% } %>
+    <a href="<%- url_for('/') %>"><span>home</span><strong data-i18n="photo.back">回到首页</strong></a>
+    <a href="mailto:377844918@qq.com"><span>contact</span><strong>377844918@qq.com</strong></a>
+  </section>
+</section>

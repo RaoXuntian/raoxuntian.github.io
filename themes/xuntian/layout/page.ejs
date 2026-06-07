@@ -1,0 +1,27 @@
+<% if (page.type === 'resume') { %>
+  <%- partial('_partial/resume') %>
+<% } else if (page.type === 'photography') { %>
+  <%- partial('_partial/photography') %>
+<% } else if (page.type === 'photo') { %>
+  <article class="article-page photo-entry-page reveal">
+    <header class="article-header">
+      <p class="eyebrow">photography</p>
+      <h1><%= page.title || 'Untitled' %></h1>
+      <% if (page.date) { %><time><%= date(page.date, 'YYYY.MM.DD') %></time><% } %>
+    </header>
+    <% if (page.cover) { %>
+      <figure class="photo-entry-cover">
+        <img src="<%- url_for(page.cover) %>" alt="<%= page.title || 'Photography' %>">
+      </figure>
+    <% } %>
+    <div class="article-body"><%- page.content %></div>
+  </article>
+<% } else { %>
+  <article class="article-page reveal">
+    <header class="article-header">
+      <p class="eyebrow">page</p>
+      <h1><%= page.title || 'Untitled' %></h1>
+    </header>
+    <div class="article-body"><%- page.content %></div>
+  </article>
+<% } %>

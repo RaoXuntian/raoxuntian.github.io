@@ -1,0 +1,12 @@
+menu:
+  home: /
+  writing: /archives
+  photography: /photography
+  resume: /resume
+
+favicon: /web-icon.jpg
+
+social:
+  github: https://github.com/Raoxuntian
+  email: 377844918@qq.com
+  microsoft_email: xuntianrao@microsoft.com

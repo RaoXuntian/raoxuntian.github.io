@@ -1,0 +1,26 @@
+<header class="site-header">
+  <a class="brand" href="<%- url_for('/') %>" aria-label="Xuntian Rao home">
+    <span class="brand-mark">XR</span>
+    <span class="brand-copy">
+      <strong>Xuntian Rao</strong>
+      <em data-i18n="brand.tagline">engineer / photographer</em>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="<%- url_for('/') %>" data-i18n="nav.home">首页</a>
+    <a href="<%- url_for('/archives') %>" data-i18n="nav.writing">文章</a>
+    <a href="<%- url_for('/photography') %>" data-i18n="nav.photography">摄影</a>
+    <a href="<%- url_for('/resume') %>" data-i18n="nav.resume">简历</a>
+  </nav>
+
+  <div class="header-actions" aria-label="Site controls">
+    <a class="icon-link" href="https://github.com/Raoxuntian" target="_blank" rel="noopener" aria-label="GitHub">
+      <span>GH</span>
+    </a>
+    <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch language">
+      <span data-lang-option="zh">中文</span>
+      <span data-lang-option="en">EN</span>
+    </button>
+  </div>
+</header>

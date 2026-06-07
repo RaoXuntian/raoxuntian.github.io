@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="饶巡天的个人主页、技术博客与摄影记录。">
+  <title>远程访问服务器上的jupyter notebook | Xuntian Rao</title>
+  
+    <link rel="icon" href="/web-icon.jpg">
+  
+  <script>
+    (function(){try{var l=localStorage.getItem('site-language');if(l==='en'||l==='zh'){document.documentElement.setAttribute('data-lang',l);document.documentElement.setAttribute('lang',l==='zh'?'zh-CN':'en');}}catch(e){}})();
+  </script>
+  
+<link rel="stylesheet" href="/css/site.css">
+
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+  <a class="brand" href="/" aria-label="Xuntian Rao home">
+    <span class="brand-mark">XR</span>
+    <span class="brand-copy">
+      <strong>Xuntian Rao</strong>
+      <em data-i18n="brand.tagline">engineer / photographer</em>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="/" data-i18n="nav.home">首页</a>
+    <a href="/archives" data-i18n="nav.writing">文章</a>
+    <a href="/photography" data-i18n="nav.photography">摄影</a>
+    <a href="/resume" data-i18n="nav.resume">简历</a>
+  </nav>
+
+  <div class="header-actions" aria-label="Site controls">
+    <a class="icon-link" href="https://github.com/Raoxuntian" target="_blank" rel="noopener" aria-label="GitHub">
+      <span>GH</span>
+    </a>
+    <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch language">
+      <span data-lang-option="zh">中文</span>
+      <span data-lang-option="en">EN</span>
+    </button>
+  </div>
+</header>
+
+    <main class="site-main">
+      <article class="article-page reveal">
+  <header class="article-header">
+    <p class="eyebrow">2020.12.17</p>
+    <h1>远程访问服务器上的jupyter notebook</h1>
+    
+      <div class="tag-line">
+        
+          <a href="/tags/jupyter/">#jupyter</a>
+        
+          <a href="/tags/ssh/">#ssh</a>
+        
+      </div>
+    
+  </header>
+  <div class="article-body">
+    <p>从北京回到武汉了，开始水我的毕业论文了。毕业论文需要用到神经网络训练模型，这个不用说，自己的机子肯定带不动，要连接实验室的服务器。运行深度学习的代码，习惯使用jupyter notebook，因此需要远程访问服务器上的jupyter notebook。在网上搜了几种远程访问的方法，有的成功了，有的估计因为实验室内网IP等原因没有成功……</p>
+<a id="more"></a>
+
+<h3 id="一-ssh远程使用jupyter-notebook"><a href="#一-ssh远程使用jupyter-notebook" class="headerlink" title="一.ssh远程使用jupyter notebook"></a>一.ssh远程使用jupyter notebook</h3><ol>
+<li><p>在远程服务器上，启动jupyter notebooks服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --no-browser --port&#x3D;8889</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本地终端中启动SSH：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L localhost:8888:localhost:8889 username@serverIP</span><br></pre></td></tr></table></figure>
+
+<p>其中： -N 告诉SSH没有命令要被远程执行； -f 告诉SSH在后台执行； -L 是指定port forwarding的配置，远端端口是8889，本地的端口号的8888。</p>
+</li>
+<li><p>最后打开浏览器，访问：<a href="http://localhost:8888/" target="_blank" rel="noopener">http://localhost:8888/</a></p>
+</li>
+</ol>
+<h3 id="二-利用jupyter-notebook自带的远程访问功能"><a href="#二-利用jupyter-notebook自带的远程访问功能" class="headerlink" title="二. 利用jupyter notebook自带的远程访问功能"></a>二. 利用jupyter notebook自带的远程访问功能</h3><p>官方指南在此：<a href="http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#notebook-server-security" target="_blank" rel="noopener">官方指南</a></p>
+<ol>
+<li><p>生成默认配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成访问密码(token)<br>终端输入<code>ipython</code>，设置你自己的jupyter访问密码，注意复制输出的<code>sha1:xxxxxxxx</code>密码串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: <span class="keyword">from</span> notebook.auth <span class="keyword">import</span> passwd</span><br><span class="line">In [<span class="number">2</span>]: passwd()</span><br><span class="line">Enter password:</span><br><span class="line">Verify password:</span><br><span class="line">Out[<span class="number">2</span>]: <span class="string">'sha1:xxxxxxxxxxxxxxxxx'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>./jupyter/jupyter_notebook_config.py</code>中对应行如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.ip='*'</span><br><span class="line">c.NotebookApp.password = u'sha:ce...刚才复制的那个密文'</span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.port =8888 #可自行指定一个端口, 访问时使用该端口</span><br><span class="line">c.NotebookApp.allow_remote_access = True</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在服务器上启动<code>jupyter notebook</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后打开浏览器，访问：<a href="http://ip:8888/" target="_blank" rel="noopener">http://ip:8888/</a></p>
+</li>
+</ol>
+<p>这个方法在第3步的时候做过很多尝试，似乎还是无法从本地访问服务器的8888端口，一开始以为是防火墙的问题，后面关闭防火墙了还是不太行，所以这个方法我一直没试成功……</p>
+<h3 id="三-ssh添加隧道"><a href="#三-ssh添加隧道" class="headerlink" title="三.ssh添加隧道"></a>三.ssh添加隧道</h3><p>关于ssh隧道，原理参考：<a href="https://juejin.cn/post/6844903946096476173#heading-4" target="_blank" rel="noopener">SecureCRT高效操作——反空闲、按钮栏、端口转发跳板</a></p>
+<p>Windows上有很多远程连接的软件是支持添加隧道的，但在Mac上并不多，一开始是在用FinalShell。</p>
+<p>如下就是我自己配置的隧道：</p>
+<img src="/2020/12/17/ssh-remote-jupyter/1.png" class="" title="image">
+
+<p>通过有隧道连接的ssh服务器之后，在服务器端运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --no-browser --port=8889</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，登陆对应的IP地址，即可访问远程jupyter notebook。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="#参考文章"></a>#参考文章</h3><ul>
+<li><a href="https://www.jianshu.com/p/8fc3cd032d3c" target="_blank" rel="noopener">远程访问服务器Jupyter Notebook的两种方法</a></li>
+<li><a href="https://juejin.cn/post/6844903946096476173#heading-4" target="_blank" rel="noopener">SecureCRT高效操作——反空闲、按钮栏、端口转发跳板</a></li>
+</ul>
+
+  </div>
+</article>
+
+    </main>
+    <footer class="site-footer">
+  <div>
+    <span>花凋镜破，寄语若何；光阴有尽，爱惜更多。</span>
+    <span class="footer-dot">/</span>
+    <span>&copy; 2026 Xuntian Rao</span>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:377844918@qq.com">Email</a>
+    <a href="https://github.com/Raoxuntian" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+  </div>
+  
+<script src="/js/site.js"></script>
+
+</body>
+</html>
