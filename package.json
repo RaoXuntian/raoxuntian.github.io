@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "hexo server",
+    "start": "hexo server",
     "build": "hexo generate",
-    "postbuild": "touch docs/.nojekyll",
+    "postbuild": "touch public/.nojekyll",
     "clean": "hexo clean",
     "server": "hexo server"
   },

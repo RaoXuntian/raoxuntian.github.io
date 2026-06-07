@@ -92,6 +92,19 @@ img {
   font-weight: 800;
 }
 
+.brand-mark-image {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+}
+
+.brand-mark-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .brand-copy {
   display: grid;
   gap: 2px;
@@ -210,40 +223,10 @@ html[data-lang="en"] [data-lang-panel="en"] {
 
 .profile-panel {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) minmax(220px, 320px);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
   gap: 22px;
   align-items: start;
   padding: 24px 0 16px;
-}
-
-.profile-media {
-  position: relative;
-  padding-left: 10px;
-}
-
-.profile-media::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  border-radius: 999px;
-  background: var(--accent);
-}
-
-.profile-media img {
-  display: block;
-  width: 86px;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 4px;
-  filter: grayscale(1) contrast(1.08);
-  transition: filter .3s ease;
-}
-
-.profile-media img:hover {
-  filter: grayscale(0) contrast(1);
 }
 
 .eyebrow,
@@ -882,10 +865,6 @@ html[data-lang="en"] [data-lang-panel="en"] {
 
   .profile-panel {
     padding-top: 8px;
-  }
-
-  .profile-media {
-    display: none;
   }
 
   .profile-stats,

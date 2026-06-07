@@ -8,19 +8,38 @@ This repository uses `master` as the maintainable source branch for the site. Th
 - `source/photography/`: photography pages. Each photo set is a Markdown page under `source/photography/<slug>/index.md`.
 - `source/resume/`: the resume page source.
 - `themes/xuntian/`: the current custom Hexo theme.
-- `docs/`: generated GitHub Pages output. Do not edit files here by hand.
+- `public/`: local generated output from Hexo. It is ignored by Git and should not be committed.
+- `.github/workflows/pages.yml`: builds and deploys the site to GitHub Pages after pushing `master`.
 
-## Commands
+## Local Development
 
 ```bash
 npm install
-npm run server
+npm run dev
+```
+
+The local Hexo server runs at [http://localhost:4000/](http://localhost:4000/).
+`npm run server` and `npm start` are aliases for the same local preview command.
+
+## Local Build Check
+
+```bash
+npm run clean
 npm run build
 ```
 
-`npm run build` generates the publishable site into `docs/`. GitHub Pages is configured to publish from `master` and `/docs`.
-The `postbuild` script creates `docs/.nojekyll` automatically after each build.
-There is no Hexo deploy step; commit the source changes and generated `docs/` output together.
+`npm run build` generates a local preview build into `public/` and creates `public/.nojekyll` automatically.
+`public/` is ignored by Git, so do not commit generated HTML.
+
+## Deploy
+
+Commit and push the source files to `master`:
+
+```bash
+git push origin master
+```
+
+GitHub Actions runs `.github/workflows/pages.yml`, builds Hexo on GitHub, uploads `public/`, and publishes it through GitHub Pages.
 
 ## Add A Blog Post
 
@@ -51,6 +70,19 @@ comments: false
 
 Page content here.
 ```
+
+## Change The Header Image
+
+Put the image under `source/pic/`, then update `_config.yml`:
+
+```yaml
+theme_config:
+  brand_mark:
+    image: /pic/profile.JPG
+    text: XR
+```
+
+If `image` is removed or left empty, the header falls back to the `text` value.
 
 ## Add A Photography Set
 

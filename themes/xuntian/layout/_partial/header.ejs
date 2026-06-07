@@ -1,6 +1,13 @@
 <header class="site-header">
   <a class="brand" href="<%- url_for('/') %>" aria-label="Xuntian Rao home">
-    <span class="brand-mark">XR</span>
+    <% var brandMark = theme.brand_mark || {}; %>
+    <% if (brandMark.image) { %>
+      <span class="brand-mark brand-mark-image">
+        <img src="<%- url_for(brandMark.image) %>" alt="" aria-hidden="true">
+      </span>
+    <% } else { %>
+      <span class="brand-mark"><%= brandMark.text || 'XR' %></span>
+    <% } %>
     <span class="brand-copy">
       <strong>Xuntian Rao</strong>
       <em data-i18n="brand.tagline">engineer / photographer</em>

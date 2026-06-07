@@ -23,7 +23,7 @@ pretty_urls:
 
 # Directory
 source_dir: source
-public_dir: docs
+public_dir: public
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
@@ -94,6 +94,12 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: xuntian
+
+# Theme customization
+theme_config:
+  brand_mark:
+    image: /pic/profile.JPG
+    text: XR
 
 # Search
 search:
