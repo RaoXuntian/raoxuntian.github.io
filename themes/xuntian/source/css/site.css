@@ -546,6 +546,16 @@ html[data-lang="en"] [data-lang-panel="en"] {
   background: rgba(255, 255, 255, .02);
 }
 
+.mini-list .mini-list-heading {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 .three-up strong,
 .mini-list strong {
   color: var(--text);
